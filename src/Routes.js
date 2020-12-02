@@ -4,19 +4,25 @@ import {
   Redirect,
   Switch,
   Route,
-  useHistory,
 } from "react-router-dom";
-import Header from './components/Views/Header'
+import Header from "./components/Views/Header";
 import Login from "./components/UserAuth/Login";
 import Register from "./components/UserAuth/Register";
-import Homepage from "./components/Home/Homepage";
+import { HomepageContainer } from "./components/Home/HomepageContainer";
 import UserPage from "./components/User/UserPage";
 import UserEdit from "./components/User/UserEdit";
 import PostDisplay from "./components/Posts/PostDisplay";
 
-export default function Routes(props, { refresh }) {
-  let history = useHistory();
+export default function Routes(props) {
   const [state, setState] = useState({ auth: false, redirect: false });
+  const checkAuth = async () => {
+    await props.refresh();
+    if (localStorage.getItem("refreshToken")) {
+      setState({ auth: true });
+    } else {
+      setState({ redirect: true });
+    }
+  };
   useEffect(() => {
     let isCancelled = false;
     const auth = async () => {
@@ -29,14 +35,7 @@ export default function Routes(props, { refresh }) {
       isCancelled = true;
     };
   }, []);
-  const checkAuth = async () => {
-    await props.refresh();
-    if (localStorage.getItem("refreshToken")) {
-      setState({ auth: true });
-    } else {
-      setState({ redirect: true });
-    }
-  };
+
   return (
     <Router>
       <Switch>
@@ -50,7 +49,7 @@ export default function Routes(props, { refresh }) {
             <Route
               path="/"
               exact
-              component={() => <Homepage refresh={props.refresh} />}
+              component={() => <HomepageContainer refresh={props.refresh} />}
             />
             <Route
               exact

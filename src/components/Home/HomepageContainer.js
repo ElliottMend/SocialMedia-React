@@ -1,0 +1,105 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Homepage from "./Homepage";
+
+export const HomepageContainer = () => {
+  const [state, setState] = useState({
+    radiusName: "",
+    radius: 0.8,
+    posts: [],
+    sorting: "recent",
+    follow: [],
+  });
+  useEffect(() => {
+    let isCancelled = false;
+    const fetchData = async () => {
+      if (!isCancelled) {
+        await seePosts(state.radius);
+      }
+    };
+    fetchData();
+    return () => {
+      isCancelled = true;
+    };
+  }, [state.radius]);
+  const seePosts = async (radius) => {
+    setState({ ...state, posts: [] });
+    const follows = await axios({
+      method: "post",
+      url:
+        "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/follows",
+      data: { user: localStorage.getItem("username") },
+    });
+    const locationPosts = await axios({
+      method: "post",
+      url:
+        "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/locationPosts",
+      data: { user: localStorage.getItem("username"), radius: radius },
+    });
+    let mySet = [...locationPosts.data];
+    setState({ ...state, posts: [...mySet], follow: [...follows.data] });
+  };
+
+  const changeRadius = (e) => {
+    switch (e.target.value) {
+      case "Global":
+        seePosts(1000);
+        return;
+      default:
+        seePosts(0.8);
+        return;
+    }
+  };
+  const newPost = async (e) => {
+    e.preventDefault();
+    const res = await axios({
+      method: "post",
+      url:
+        "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/newpost",
+      data: {
+        username: localStorage.getItem("username"),
+        body: state.body,
+      },
+    });
+    const data = res.data;
+    setTimeout(() => {
+      setState({ ...state, body: "", posts: [data, ...state.posts] });
+    }, 150);
+  };
+  const sortPosts = (e) => {
+    let arr = [];
+    if (e === "recent") {
+      arr = state.posts.sort((a, b) => (a.date > b.date ? 1 : -1));
+    } else {
+      arr = state.posts.sort((a, b) => (a.likes < b.likes ? 1 : -1));
+    }
+    setState({ ...state, posts: [...arr] });
+  };
+  const postSort = (e) => {
+    switch (e.target.value) {
+      case "liked":
+        sortPosts("liked");
+        return;
+      default:
+        sortPosts("recent");
+        return;
+    }
+  };
+  const handleChange = (e) => {
+    setState({
+      ...state,
+      body: e.target.value,
+    });
+  };
+  return (
+    <div>
+      <Homepage
+        newPost={newPost}
+        postSort={postSort}
+        changeRadius={changeRadius}
+        handleChange={handleChange}
+        data={state}
+      />
+    </div>
+  );
+};

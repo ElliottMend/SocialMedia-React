@@ -15,45 +15,46 @@ export default function Register(props) {
     e.preventDefault();
     setState({
       ...state,
-      errors: [],
+      errors: "",
     });
-    axios({
-      method: "post",
-      url: "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/register",
-      data: {
-        username: state.username,
-        password: state.password,
-        password2: state.password2,
-        email: state.email,
-      },
-    })
-      .then(() => {
-        console.log("redirect");
-        setState({ redirect: true });
-      })
-      .catch((err) => {
-        console.log(err.response);
-        if (err.response.data.message) {
-          setState({
-            ...state,
-            errors: [err.response.data.message],
-          });
-        } else {
-          if (err.response.data.errors.length > 1) {
-            err.response.data.errors.map((e) =>
-              setState({
-                ...state,
-                errors: [e.msg],
-              })
-            );
-          } else {
-            setState({
-              ...state,
-              errors: [err.response.data.errors[0].msg],
-            });
-          }
-        }
+    if (state.username.length < 5) {
+      setState({
+        ...state,
+        errors: "The username must be at least 5 characters",
       });
+    } else if (!state.email.includes("@") || !state.email.includes(".")) {
+      setState({
+        ...state,
+        errors: "The email must contain '@' and '.' symbols",
+      });
+    } else if (state.password.length < 5) {
+      setState({
+        ...state,
+        errors: "The password must be at least 5 characters",
+      });
+    } else if (state.password2 !== state.password) {
+      setState({
+        ...state,
+        errors: "The passwords do not match",
+      });
+    } else {
+      axios({
+        method: "post",
+        url:
+          "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/register",
+        data: {
+          username: state.username,
+          password: state.password,
+          password2: state.password2,
+          email: state.email,
+        },
+      })
+        .then(() => {
+          console.log("redirect");
+          setState({ redirect: true });
+        })
+        .catch((err) => {});
+    }
   };
   const handleChange = (e) => {
     setState({
