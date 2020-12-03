@@ -6,12 +6,12 @@ import {
   Route,
 } from "react-router-dom";
 import Header from "./components/Views/Header";
-import Login from "./components/UserAuth/Login";
-import Register from "./components/UserAuth/Register";
+import LoginContainer from "./components/UserAuth/LoginContainer";
+import RegisterContainer from "./components/UserAuth/RegisterContainer";
 import { HomepageContainer } from "./components/Home/HomepageContainer";
-import UserPage from "./components/User/UserPage";
-import UserEdit from "./components/User/UserEdit";
-import PostDisplay from "./components/Posts/PostDisplay";
+import { UserPageContainer } from "./components/User/UserPageContainer";
+import PostContainer from "./components/Posts/PostContainer";
+import { UserEditContainer } from "./components/User/UserEditContainer";
 
 export default function Routes(props) {
   const [state, setState] = useState({ auth: false, redirect: false });
@@ -44,7 +44,7 @@ export default function Routes(props) {
             <Header auth={checkAuth} />
             <Route
               path="/posts/:id"
-              component={() => <PostDisplay key={window.location.pathname} />}
+              component={() => <PostContainer key={window.location.pathname} />}
             />
             <Route
               path="/"
@@ -54,13 +54,13 @@ export default function Routes(props) {
             <Route
               exact
               path="/user/:id/edit"
-              component={() => <UserEdit auth={checkAuth} />}
+              component={() => <UserEditContainer auth={checkAuth} />}
             />
             <Route
               exact
               path="/user/:id"
               component={() => (
-                <UserPage
+                <UserPageContainer
                   refresh={props.refresh}
                   key={window.location.pathname}
                 />
@@ -75,11 +75,17 @@ export default function Routes(props) {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <Route path="/register" exact component={() => <Register />} />
+            <Route
+              path="/register"
+              exact
+              component={() => <RegisterContainer />}
+            />
             <Route
               path="/login"
               exact
-              component={() => <Login data={props.data} auth={checkAuth} />}
+              component={() => (
+                <LoginContainer data={props.data} auth={checkAuth} />
+              )}
             />
             {state.redirect && <Redirect to="/login" />}
           </React.Fragment>

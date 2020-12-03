@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import CommentDisplay from "./CommentDisplay";
+import CommentDisplay from "./CommentContainer";
 import { Link } from "react-router-dom";
-import PostDisplay from "./PostDisplay";
+import PostContainer from "./PostContainer";
 import Modal from "react-modal";
 export default function PostFeedDisplay(props) {
   useEffect(() => {});
@@ -130,7 +130,7 @@ export default function PostFeedDisplay(props) {
         onRequestClose={closeModal}
         style={customStyles}
       >
-        <PostDisplay
+        <PostContainer
           deleteComment={(index) => props.deleteComment(index)}
           onChange={props.onChange}
           createComment={props.createComment}

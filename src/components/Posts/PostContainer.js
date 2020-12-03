@@ -1,7 +1,7 @@
 import React from "react";
-import CommentDisplay from "./CommentDisplay";
+import CommentDisplay from "./CommentContainer";
 import { Link } from "react-router-dom";
-export default function PostDisplay(props) {
+export default function PostContainer(props) {
   const date = Date.now() / 1000 - props.data.date / 1000;
 
   return (

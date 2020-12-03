@@ -1,77 +1,61 @@
-import React, { useState } from "react";
-import axios from "axios";
-import RegisterDisplay from "./RegisterDisplay";
-import { Redirect } from "react-router-dom";
-
+import React from "react";
+import { Link } from "react-router-dom";
 export default function Register(props) {
-  const [state, setState] = useState({
-    username: "",
-    password: "",
-    password2: "",
-    email: "",
-    redirect: false,
-  });
-  const Submit = async (e) => {
-    e.preventDefault();
-    setState({
-      ...state,
-      errors: "",
-    });
-    if (state.username.length < 5) {
-      setState({
-        ...state,
-        errors: "The username must be at least 5 characters",
-      });
-    } else if (!state.email.includes("@") || !state.email.includes(".")) {
-      setState({
-        ...state,
-        errors: "The email must contain '@' and '.' symbols",
-      });
-    } else if (state.password.length < 5) {
-      setState({
-        ...state,
-        errors: "The password must be at least 5 characters",
-      });
-    } else if (state.password2 !== state.password) {
-      setState({
-        ...state,
-        errors: "The passwords do not match",
-      });
-    } else {
-      axios({
-        method: "post",
-        url:
-          "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/register",
-        data: {
-          username: state.username,
-          password: state.password,
-          password2: state.password2,
-          email: state.email,
-        },
-      })
-        .then(() => {
-          console.log("redirect");
-          setState({ redirect: true });
-        })
-        .catch((err) => {});
-    }
-  };
-  const handleChange = (e) => {
-    setState({
-      ...state,
-      [e.target.id]: e.target.value,
-    });
-  };
   return (
-    <div>
-      {state.redirect && <Redirect to="/login" />}
-      {!localStorage.getItem("accessToken") && (
-        <RegisterDisplay
-          onSubmit={Submit}
-          onChange={handleChange}
-          data={state}
-        />
-      )}
+    <div className="md:m-20 rounded-lg">
+      <form className="text-xl text-navy font-bold" onSubmit={props.onSubmit}>
+        <div className="rounded-lg bg-seafoam">
+          <div className="py-6 items-center flex flex-col">
+            <label className="" htmlFor="username">
+              Username:
+            </label>
+            <input
+              className="bg-gray-300 active:border-2 border-red-500 w-64 rounded-lg "
+              id="username"
+              onChange={props.onChange}
+            />
+          </div>
+          <div className="py-6 items-center flex flex-col">
+            <label htmlFor="password">Password:</label>
+            <input
+              className="bg-gray-300 active:border-2 border-red-500 w-64 rounded-lg "
+              id="password"
+              onChange={props.onChange}
+            />
+          </div>
+          <div className="py-6 items-center flex flex-col">
+            <label htmlFor="password2">Confirm Password:</label>
+            <input
+              className="bg-gray-300 active:border-2 border-red-500 w-64 rounded-lg "
+              id="password2"
+              onChange={props.onChange}
+            />
+          </div>
+          <div className="py-6 items-center flex flex-col">
+            <label htmlFor="email">Email:</label>
+            <input
+              className="bg-gray-300 active:border-2 border-red-500 w-64 rounded-lg "
+              id="email"
+              onChange={props.onChange}
+            ></input>
+          </div>
+          <button className="bg-salmon text-semibold text-xl rounded-full my-10 py-6 px-10">
+            Submit
+          </button>
+          <Link to="/login">
+            <p className="font-bold text-2xl">
+              Already have an account? Log in!
+            </p>
+          </Link>
+          <div className="flex py-10 justify-center">
+            {props.data.errors && (
+              <h6 className="bg-red-200 w-2/3 py-6 text-red-700">
+                {props.data.errors}
+              </h6>
+            )}
+          </div>
+        </div>
+      </form>
     </div>
   );
 }

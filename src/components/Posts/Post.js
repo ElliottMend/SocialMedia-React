@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import PostFeedDisplay from "./PostFeedDisplay";
+import PostFeedContainer from "./PostFeedContainer";
 import axios from "axios";
 import Modal from "react-modal";
 export default function Post(props) {
@@ -170,7 +170,7 @@ export default function Post(props) {
   return (
     <div>
       {state.show && (
-        <PostFeedDisplay
+        <PostFeedContainer
           key={state._id}
           deletePost={deletePost}
           img={img.img}

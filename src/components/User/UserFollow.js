@@ -1,80 +1,55 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import UserFollowDisplay from "./UserFollowDisplay";
+import React, { useState, useEffect } from "react";
+
 export default function UserFollow(props) {
-  const [state, setState] = useState();
-  const [follow, setFollow] = useState();
-  useEffect(() => {
-    followData();
-  }, [setState, setFollow]);
-  const followData = async () => {
-    if (props.data.modal === "0") {
-      const res = await axios({
-        method: "post",
-        url: "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/followData",
-        data: { followerUsers: props.follow.followerUsers },
-      });
-      getFollowers(res.data);
-    } else {
-      const res = await axios({
-        method: "post",
-        url: "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/followData",
-        data: { followingUsers: props.follow.followingUsers },
-      });
-      getFollowers(res.data);
-    }
+  const [state, setState] = useState({ checked: true });
+  useEffect(() => {}, [setState]);
+  const handleClick = (e) => {
+    props.onChange(e);
   };
-  const Follow = (e) => {
-    let check = e.target.checked;
-    setState({ ...state, checked: check ? true : false });
-    if (!check) {
-      axios({
-        method: "put",
-        url: "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/removeFollow",
-        data: {
-          user: localStorage.getItem("username"),
-          author: e.target.id,
-        },
-      });
-    } else {
-      axios({
-        method: "put",
-        url: "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/addFollow",
-        data: {
-          user: localStorage.getItem("username"),
-          author: e.target.id,
-        },
-      });
-    }
-  };
-  const getColor = () => {
-    color = !color;
-  };
-  const getFollowers = async (res) => {
-    const follow = await axios({
-      method: "post",
-      url: "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/checkFollow",
-      data: { user: localStorage.getItem("username") },
-    });
-    setState({ followData: [...res], follows: [follow.data] });
-  };
-  var color = false;
   return (
-    <div>
-      <div>
-        {state &&
-          state.followData.map((e, index) => (
-            <div>
-              {getColor()}
-              <UserFollowDisplay
-                color={color}
-                key={e.username}
-                follow={state.follows}
-                onChange={(e) => Follow(e)}
-                data={e}
-              />
-            </div>
-          ))}
+    <div className={props.color ? "bg-seafoam" : "bg-salmon"}>
+      <div className="flex items-center text-navy justify-between flex-row">
+        <img src={props.data.photo} alt="user Profile" />
+        <div className="flex flex-col">
+          <p className="text-xl mx-10 font-semibold">{props.data.username}</p>
+          <p>{props.data.bio}</p>
+        </div>
+        <input
+          onClick={props.onChange}
+          onChange={() =>
+            setState((prevState) => ({ checked: !prevState.checked }))
+          }
+          defaultChecked={state.checked}
+          id={props.data.username}
+          name="user"
+          className="hidden"
+          type="checkbox"
+        ></input>
+        {localStorage.getItem("username") !== props.data.username && (
+          <label className="mx-10" htmlFor={props.data.username}>
+            {state.checked ? (
+              <p
+                id="following"
+                onClick={handleClick}
+                className={
+                  props.color
+                    ? "bg-salmon self-center py-6 px-12 rounded-full "
+                    : "bg-seafoam self-center py-6 px-12 rounded-full "
+                }
+              >
+                Following
+              </p>
+            ) : (
+              <p
+                id="follow"
+                onClick={handleClick}
+                className="bg-blue-300 py-6 px-12 rounded-full"
+              >
+                Follow
+              </p>
+            )}
+          </label>
+        )}
       </div>
     </div>
   );

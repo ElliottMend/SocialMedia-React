@@ -5,22 +5,21 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 
 export default function UserEditLocation(props) {
-  const [state, setState] = useState({ address: " " });
+  const [state, setState] = useState();
   const handleChange = (address) => {
-    setState({ address });
+    setState(address );
   };
   useEffect(() => {
-    setState({ address: props.locate.locate });
-  }, [props.locate.locate]);
+    setState(props.locate);
+  }, [props.locate]);
 
   const handleSelect = (address) => {
-    setState({ address: address });
+    setState(address );
     geocodeByAddress(address)
-      .then(
-        (results) => (
-          props.location(results[0].formatted_address), getLatLng(results[0])
-        )
-      )
+      .then((results) => {
+        props.location(results[0].formatted_address);
+        getLatLng(results[0]);
+      })
       .then((latLng) => props.latlng(latLng))
       .catch((error) => console.error("Error", error));
   };
@@ -28,10 +27,10 @@ export default function UserEditLocation(props) {
   return (
     <div>
       <PlacesAutocomplete
-        value={state.address}
+        value={state}
         onChange={handleChange}
         onSelect={handleSelect}
-        defaultValue={props.locate.locate}
+        defaultValue={props.locate}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
