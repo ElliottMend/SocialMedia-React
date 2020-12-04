@@ -9,7 +9,7 @@ export default function Header(props) {
     history.push("/login");
   };
   return (
-    <div className="bg-gray-200 text-navy">
+    <div className="text-navy">
       <div className="container mx-auto">
         <div className="w-full px-8 rounded-lg text-3xl bg-seafoam">
           {localStorage.getItem("accessToken") && (

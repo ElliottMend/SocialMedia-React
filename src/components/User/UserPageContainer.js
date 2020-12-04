@@ -28,7 +28,6 @@ export const UserPageContainer = () => {
         "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/getUser",
       data: { user: state.user },
     }).then((res) => {
-      console.log(res.data.img);
       setUser({
         ...user,
         location: res.data.location,

@@ -10,13 +10,12 @@ export default function UserPage(props) {
       {props.state.error ? (
         <h1>{props.state.error}</h1>
       ) : (
-        <div className="bg-salmon font-semibold text-navy my-2 rounded-lg container md:mx-auto">
+        <div className="font-semibold my-2 rounded-lg container md:mx-auto">
           <div className="flex md:mx-6 justify-between items-center flex-col md:flex-row">
             <img className="m-4 w-64" src={props.user.img} alt="Profile" />
             <div className="flex my-10  flex-col">
               <h1 className="text-3xl font-semibold">{props.state.user}</h1>
               <div className="flex flex-row">
-                {console.log(props.user.img)}
                 <p
                   id="0"
                   onClick={props.openModal}

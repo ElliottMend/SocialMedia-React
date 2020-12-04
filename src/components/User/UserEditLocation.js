@@ -7,20 +7,21 @@ import PlacesAutocomplete, {
 export default function UserEditLocation(props) {
   const [state, setState] = useState();
   const handleChange = (address) => {
-    setState(address );
+    setState(address);
   };
   useEffect(() => {
     setState(props.locate);
   }, [props.locate]);
 
   const handleSelect = (address) => {
-    setState(address );
+    setState(address);
     geocodeByAddress(address)
       .then((results) => {
         props.location(results[0].formatted_address);
-        getLatLng(results[0]);
+        getLatLng(results[0]).then((res) => {
+          props.latlng(res);
+        });
       })
-      .then((latLng) => props.latlng(latLng))
       .catch((error) => console.error("Error", error));
   };
 

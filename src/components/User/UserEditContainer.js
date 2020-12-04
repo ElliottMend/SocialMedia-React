@@ -8,23 +8,21 @@ export const UserEditContainer = () => {
   const [locat, setLocation] = useState();
   const [state, setState] = useState({ bio: "" });
   useEffect(() => {
-    console.log("gddfg");
     axios({
       method: "post",
       url:
         "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/getUser",
       data: { user: localStorage.getItem("username") },
     }).then((res) => {
-      console.log(res.data);
       setLocate(res.data.location);
       setLocation(res.data.latlng);
 
       setState({
         ...state,
         bio: res.data.bio,
-      })
+      });
     });
-  }, [locate, locat, state]);
+  }, []);
 
   const fileSelectedHandler = async (e) => {
     await setState({ ...state, selectedFile: e.target.files[0] });
@@ -49,6 +47,7 @@ export const UserEditContainer = () => {
     await setLocate(e);
   };
   const editSubmit = async (e) => {
+    console.log(locat);
     e.preventDefault();
     if (state.selectedFile) {
       getBase64(state.selectedFile, (result) => {
@@ -60,8 +59,8 @@ export const UserEditContainer = () => {
             user: localStorage.getItem("username"),
             bio: state.bio,
             image: result,
-            location: locate.locate,
-            latlng: locat.latLng,
+            location: locate,
+            latlng: locat,
           },
         });
       });
