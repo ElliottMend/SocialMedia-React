@@ -42,7 +42,7 @@ export default function RegisterContainer() {
       axios({
         method: "post",
         url:
-          "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/register",
+          "https://social-mediasite.herokuapp.com/register",
         data: {
           username: state.username,
           password: state.password,

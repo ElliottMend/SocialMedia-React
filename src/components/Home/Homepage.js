@@ -1,5 +1,5 @@
 import React from "react";
-import Post from "../Posts/Post";
+import Post from "../Posts/PostContainer";
 import { FollowsContainer } from "./FollowsContainer";
 export default function Homepage(props) {
   return (
@@ -16,7 +16,7 @@ export default function Homepage(props) {
               </label>
               <input
                 value={props.data.body}
-                className="text-2xl w-2/3 bg-gray-300 rounded-lg mb-10"
+                className="text-2xl px-3 w-2/3 bg-gray-300 rounded-lg mb-10"
                 id="body"
                 size="75"
                 onChange={props.handleChange}

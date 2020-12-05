@@ -11,6 +11,7 @@ export const HomepageContainer = () => {
     follow: [],
   });
   useEffect(() => {
+    console.log("hfdhdf");
     let isCancelled = false;
     const fetchData = async () => {
       if (!isCancelled) {
@@ -28,13 +29,24 @@ export const HomepageContainer = () => {
       method: "post",
       url:
         "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/follows",
-      data: { user: localStorage.getItem("username") },
+      data: {
+        user: localStorage.getItem("username"),
+        accessToken: localStorage.getItem("accessToken"),
+        refreshToken: localStorage.getItem("refreshToken"),
+        username: localStorage.getItem("username"),
+      },
     });
     const locationPosts = await axios({
       method: "post",
       url:
         "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/locationPosts",
-      data: { user: localStorage.getItem("username"), radius: radius },
+      data: {
+        user: localStorage.getItem("username"),
+        radius: radius,
+        accessToken: localStorage.getItem("accessToken"),
+        refreshToken: localStorage.getItem("refreshToken"),
+        username: localStorage.getItem("username"),
+      },
     });
     let mySet = [...locationPosts.data];
     setState({ ...state, posts: [...mySet], follow: [...follows.data] });

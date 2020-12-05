@@ -4,15 +4,13 @@ import UserEdit from "./UserEdit";
 import { useHistory } from "react-router-dom";
 export const UserEditContainer = () => {
   const history = useHistory();
-  const [locate, setLocate] = useState(" ");
+  const [locate, setLocate] = useState();
   const [locat, setLocation] = useState();
   const [state, setState] = useState({ bio: "" });
   useEffect(() => {
     axios({
-      method: "post",
-      url:
-        "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/getUser",
-      data: { user: localStorage.getItem("username") },
+      method: "get",
+      url: "https://social-mediasite.herokuapp.com/getUser",
     }).then((res) => {
       setLocate(res.data.location);
       setLocation(res.data.latlng);
@@ -53,8 +51,7 @@ export const UserEditContainer = () => {
       getBase64(state.selectedFile, (result) => {
         axios({
           method: "put",
-          url:
-            "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/userEdit",
+          url: "https://social-mediasite.herokuapp.com/userEdit",
           data: {
             user: localStorage.getItem("username"),
             bio: state.bio,
@@ -67,8 +64,7 @@ export const UserEditContainer = () => {
     } else {
       axios({
         method: "put",
-        url:
-          "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/userEdit",
+        url: "https://social-mediasite.herokuapp.com/userEdit",
         data: {
           user: localStorage.getItem("username"),
           bio: state.bio,

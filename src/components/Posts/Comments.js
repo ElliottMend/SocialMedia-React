@@ -1,5 +1,5 @@
 import React from "react";
-export default function CommentDisplay(props) {
+export default function Comments(props) {
   const date = Date.now() / 1000 - props.data.date / 1000;
   return (
     <div className="my-1 flex text-navy text-lg flex-col items-center justify-center py-3 bg-seafoam">

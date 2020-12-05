@@ -18,7 +18,7 @@ export default function Header(props) {
                 <p className="">Home</p>
               </Link>
               <Link to={`/user/${localStorage.getItem("username")}`}>
-                <p className="">My Account</p>
+                <p className="">Account</p>
               </Link>
               <p className="" onClick={DeleteToken}>
                 Logout

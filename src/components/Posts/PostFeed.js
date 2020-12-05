@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import CommentDisplay from "./CommentContainer";
+import Comments from "./Comments";
 import { Link } from "react-router-dom";
 import PostContainer from "./PostContainer";
 import Modal from "react-modal";
-export default function PostFeedDisplay(props) {
+export default function PostFeed(props) {
   useEffect(() => {});
   const date = Date.now() / 1000 - props.data.date / 1000;
   const [modal, setModal] = useState(false);
@@ -62,7 +62,7 @@ export default function PostFeedDisplay(props) {
               <p className="ml-10">{props.data.likes}</p>
               <label className="flex" htmlFor={props.data._id}>
                 <svg
-                  xmlns="https://cors-anywhere.herokuapp.com/https://www.w3.org/2000/svg"
+                  xmlns="https://www.w3.org/2000/svg"
                   fill={props.data.liked ? "salmon" : "none"}
                   viewBox="0 0 24 24"
                   stroke="salmon"
@@ -112,7 +112,7 @@ export default function PostFeedDisplay(props) {
             .map(
               (e, index) =>
                 e.show && (
-                  <CommentDisplay
+                  <Comments
                     postAuthor={props.data.author}
                     deleteComment={() => props.deleteComment(index)}
                     key={e._id}

@@ -27,6 +27,7 @@ export const UserPageContainer = () => {
       url:
         "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/getUser",
       data: { user: state.user },
+      withCredentials: true,
     }).then((res) => {
       setUser({
         ...user,
@@ -41,8 +42,12 @@ export const UserPageContainer = () => {
       method: "post",
       url:
         "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/checkFollow",
-      data: { user: state.user },
+      data: {
+        user: state.user,
+      },
+      withCredentials: true,
     }).then((res) => {
+      console.log(res.data);
       setFollows({
         follow: !res.data.followerUsers.includes(
           localStorage.getItem("username")
@@ -61,6 +66,7 @@ export const UserPageContainer = () => {
       method: "post",
       url: `https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/users/:id`,
       data: { username: state.user },
+      withCredentials: true,
     })
       .then((res) => {
         setState({

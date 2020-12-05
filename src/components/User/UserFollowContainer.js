@@ -12,7 +12,7 @@ export default function UserFollowContainer(props) {
       const res = await axios({
         method: "post",
         url:
-          "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/followData",
+          "https://social-mediasite.herokuapp.com/followData",
         data: { followerUsers: props.follow.followerUsers },
       });
       getFollowers(res.data);
@@ -21,7 +21,7 @@ export default function UserFollowContainer(props) {
         const res = await axios({
           method: "post",
           url:
-            "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/followData",
+            "https://social-mediasite.herokuapp.com/followData",
           data: { followingUsers: props.follow.followingUsers },
         });
         getFollowers(res.data);
@@ -35,7 +35,7 @@ export default function UserFollowContainer(props) {
       axios({
         method: "put",
         url:
-          "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/removeFollow",
+          "https://social-mediasite.herokuapp.com/removeFollow",
         data: {
           user: localStorage.getItem("username"),
           author: e.target.id,
@@ -45,7 +45,7 @@ export default function UserFollowContainer(props) {
       axios({
         method: "put",
         url:
-          "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/addFollow",
+          "https://social-mediasite.herokuapp.com/addFollow",
         data: {
           user: localStorage.getItem("username"),
           author: e.target.id,
@@ -60,7 +60,7 @@ export default function UserFollowContainer(props) {
     const follow = await axios({
       method: "post",
       url:
-        "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/checkFollow",
+        "https://social-mediasite.herokuapp.com/checkFollow",
       data: { user: localStorage.getItem("username") },
     });
     setState({ followData: [...res], follows: [follow.data] });

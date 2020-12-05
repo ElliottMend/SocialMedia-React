@@ -1,5 +1,5 @@
 import React from "react";
-import Post from "../Posts/Post";
+import Post from "../Posts/PostContainer";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import UserFollowContainer from "./UserFollowContainer";
@@ -10,7 +10,7 @@ export default function UserPage(props) {
       {props.state.error ? (
         <h1>{props.state.error}</h1>
       ) : (
-        <div className="font-semibold my-2 rounded-lg container md:mx-auto">
+        <div className="font-semibold bg-blue-100 my-2 rounded-lg container md:mx-auto">
           <div className="flex md:mx-6 justify-between items-center flex-col md:flex-row">
             <img className="m-4 w-64" src={props.user.img} alt="Profile" />
             <div className="flex my-10  flex-col">

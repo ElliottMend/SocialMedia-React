@@ -13,7 +13,7 @@ export const FollowsContainer = (props) => {
       axios({
         method: "put",
         url:
-          "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/removeFollow",
+          "https://social-mediasite.herokuapp.com/removeFollow",
         data: {
           user: localStorage.getItem("username"),
           author: props.data.username,
@@ -23,7 +23,7 @@ export const FollowsContainer = (props) => {
       axios({
         method: "put",
         url:
-          "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/addFollow",
+          "https://social-mediasite.herokuapp.com/addFollow",
         data: {
           user: localStorage.getItem("username"),
           author: props.data.username,
