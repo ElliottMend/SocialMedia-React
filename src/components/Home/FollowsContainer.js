@@ -15,7 +15,6 @@ export const FollowsContainer = (props) => {
         url:
           "https://social-mediasite.herokuapp.com/removeFollow",
         data: {
-          user: localStorage.getItem("username"),
           author: props.data.username,
         },
       });
@@ -25,7 +24,6 @@ export const FollowsContainer = (props) => {
         url:
           "https://social-mediasite.herokuapp.com/addFollow",
         data: {
-          user: localStorage.getItem("username"),
           author: props.data.username,
         },
       });

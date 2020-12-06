@@ -11,6 +11,7 @@ export const UserEditContainer = () => {
     axios({
       method: "get",
       url: "https://social-mediasite.herokuapp.com/getUser",
+      withCredentials: true,
     }).then((res) => {
       setLocate(res.data.location);
       setLocation(res.data.latlng);
@@ -45,7 +46,6 @@ export const UserEditContainer = () => {
     await setLocate(e);
   };
   const editSubmit = async (e) => {
-    console.log(locat);
     e.preventDefault();
     if (state.selectedFile) {
       getBase64(state.selectedFile, (result) => {
@@ -53,12 +53,12 @@ export const UserEditContainer = () => {
           method: "put",
           url: "https://social-mediasite.herokuapp.com/userEdit",
           data: {
-            user: localStorage.getItem("username"),
             bio: state.bio,
             image: result,
             location: locate,
             latlng: locat,
           },
+          withCredentials: true,
         });
       });
     } else {
@@ -66,11 +66,11 @@ export const UserEditContainer = () => {
         method: "put",
         url: "https://social-mediasite.herokuapp.com/userEdit",
         data: {
-          user: localStorage.getItem("username"),
           bio: state.bio,
           location: locate,
           latlng: locat,
         },
+        withCredentials: true,
       });
     }
     setTimeout(() => {

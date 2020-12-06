@@ -26,26 +26,16 @@ export const HomepageContainer = () => {
   const seePosts = async (radius) => {
     setState({ ...state, posts: [] });
     const follows = await axios({
-      method: "post",
+      method: "get",
       url:
         "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/follows",
-      data: {
-        user: localStorage.getItem("username"),
-        accessToken: localStorage.getItem("accessToken"),
-        refreshToken: localStorage.getItem("refreshToken"),
-        username: localStorage.getItem("username"),
-      },
     });
     const locationPosts = await axios({
       method: "post",
       url:
         "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/locationPosts",
       data: {
-        user: localStorage.getItem("username"),
         radius: radius,
-        accessToken: localStorage.getItem("accessToken"),
-        refreshToken: localStorage.getItem("refreshToken"),
-        username: localStorage.getItem("username"),
       },
     });
     let mySet = [...locationPosts.data];
@@ -69,7 +59,6 @@ export const HomepageContainer = () => {
       url:
         "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/newpost",
       data: {
-        username: localStorage.getItem("username"),
         body: state.body,
       },
     });

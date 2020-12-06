@@ -5,7 +5,6 @@ export default function Homepage(props) {
   return (
     <div className="text-navy">
       <div className="container mx-auto">
-        {localStorage.getItem("accessToken") && (
           <div className="shadow-xl my-2 border-black border-2">
             <form
               className="flex rounded-lg items-center  mt-3 flex-col"
@@ -58,7 +57,6 @@ export default function Homepage(props) {
               </div>
             </div>
           </div>
-        )}
       </div>
     </div>
   );

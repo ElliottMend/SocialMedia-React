@@ -41,8 +41,7 @@ export default function RegisterContainer() {
     } else {
       axios({
         method: "post",
-        url:
-          "https://social-mediasite.herokuapp.com/register",
+        url: "https://social-mediasite.herokuapp.com/register",
         data: {
           username: state.username,
           password: state.password,
@@ -65,9 +64,7 @@ export default function RegisterContainer() {
   return (
     <div>
       {state.redirect && <Redirect to="/login" />}
-      {!localStorage.getItem("accessToken") && (
-        <Register onSubmit={Submit} onChange={handleChange} data={state} />
-      )}
+      <Register onSubmit={Submit} onChange={handleChange} data={state} />
     </div>
   );
 }

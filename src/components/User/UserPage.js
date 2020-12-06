@@ -46,13 +46,11 @@ export default function UserPage(props) {
               <p className="my-12">{props.user.bio}</p>
               <p>{props.user.location}</p>
             </div>
-            {localStorage.getItem("username") === props.state.user && (
-              <Link className="" to={`/user/${props.state.user}/edit`}>
-                <button className="bg-seafoam h-20 w-40 rounded-full">
-                  Edit
-                </button>
-              </Link>
-            )}
+            <Link className="" to={`/user/${props.state.user}/edit`}>
+              <button className="bg-seafoam h-20 w-40 rounded-full">
+                Edit
+              </button>
+            </Link>
             <input
               onClick={props.changeFollow}
               defaultChecked={props.follows.follow}

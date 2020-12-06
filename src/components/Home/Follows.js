@@ -20,19 +20,15 @@ export default function Follows(props) {
               <p className="my-2">{props.data.bio}</p>
             </div>
           </Link>
-          {localStorage.getItem("username") !== props.data.user && (
-            <label className="my-auto" htmlFor={props.data.username}>
-              {props.data.follow ? (
-                <p className="bg-blue-300 mr-2 py-3 px-2 rounded-full">
-                  Following
-                </p>
-              ) : (
-                <p className="bg-blue-300 mr-2 py-3 px-5 rounded-full">
-                  Follow
-                </p>
-              )}
-            </label>
-          )}
+          <label className="my-auto" htmlFor={props.data.username}>
+            {props.data.follow ? (
+              <p className="bg-blue-300 mr-2 py-3 px-2 rounded-full">
+                Following
+              </p>
+            ) : (
+              <p className="bg-blue-300 mr-2 py-3 px-5 rounded-full">Follow</p>
+            )}
+          </label>
           <input
             onClick={props.Follow}
             onChange={() => (checked = !checked)}

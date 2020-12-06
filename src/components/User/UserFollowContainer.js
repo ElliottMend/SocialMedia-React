@@ -37,7 +37,6 @@ export default function UserFollowContainer(props) {
         url:
           "https://social-mediasite.herokuapp.com/removeFollow",
         data: {
-          user: localStorage.getItem("username"),
           author: e.target.id,
         },
       });
@@ -47,7 +46,6 @@ export default function UserFollowContainer(props) {
         url:
           "https://social-mediasite.herokuapp.com/addFollow",
         data: {
-          user: localStorage.getItem("username"),
           author: e.target.id,
         },
       });
@@ -58,10 +56,9 @@ export default function UserFollowContainer(props) {
   };
   const getFollowers = async (res) => {
     const follow = await axios({
-      method: "post",
+      method: "get",
       url:
         "https://social-mediasite.herokuapp.com/checkFollow",
-      data: { user: localStorage.getItem("username") },
     });
     setState({ followData: [...res], follows: [follow.data] });
   };

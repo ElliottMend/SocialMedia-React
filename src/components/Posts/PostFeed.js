@@ -85,15 +85,12 @@ export default function PostFeed(props) {
               />
               <div>{props.data.location}</div>
             </div>
-            {(localStorage.getItem("username") === props.data.author ||
-              localStorage.getItem("username") === props.data.author) && (
-              <button
-                className="bg-salmon py-4 px-8 m-2 rounded-lg"
-                onClick={props.deletePost}
-              >
-                Delete Post
-              </button>
-            )}
+            <button
+              className="bg-salmon py-4 px-8 m-2 rounded-lg"
+              onClick={props.deletePost}
+            >
+              Delete Post
+            </button>
             <form className="bg-cream" onSubmit={props.createComment}>
               <input
                 className="text-2xl w-2/3 rounded-lg mb-10"

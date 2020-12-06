@@ -25,7 +25,6 @@ export default function UserFollow(props) {
           className="hidden"
           type="checkbox"
         ></input>
-        {localStorage.getItem("username") !== props.data.username && (
           <label className="mx-10" htmlFor={props.data.username}>
             {state.checked ? (
               <p
@@ -49,7 +48,6 @@ export default function UserFollow(props) {
               </p>
             )}
           </label>
-        )}
       </div>
     </div>
   );

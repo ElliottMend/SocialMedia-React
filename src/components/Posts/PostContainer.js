@@ -59,9 +59,8 @@ export default function PostContainer(props) {
 
   const checkLikes = async () => {
     const res = await axios({
-      method: "post",
+      method: "get",
       url: "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/checklike",
-      data: { user: localStorage.getItem("username") },
     });
     if (res.data.includes(props.data._id)) {
       setState({ ...state, liked: true });
@@ -78,7 +77,6 @@ export default function PostContainer(props) {
       data: {
         id: props.data._id,
         text: state.commentText,
-        author: localStorage.getItem("username"),
         likes: 0,
       },
     });
@@ -139,7 +137,7 @@ export default function PostContainer(props) {
       axios({
         method: "put",
         url: "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/unlike",
-        data: { id: props.data._id, user: localStorage.getItem("username") },
+        data: { id: props.data._id },
       })
         .then(function (res) {
           setState({
@@ -154,7 +152,7 @@ export default function PostContainer(props) {
       axios({
         method: "put",
         url: "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/like",
-        data: { id: props.data._id, user: localStorage.getItem("username") },
+        data: { id: props.data._id },
       })
         .then(function (res) {
           setState({

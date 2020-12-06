@@ -21,15 +21,12 @@ export default function Comments(props) {
         31535965.4396976 < date && <p>{Math.round(date / 31104000)}y ago</p>
       )}
 
-      {(localStorage.getItem("username") === props.data.author ||
-        localStorage.getItem("username") === props.postAuthor) && (
-        <button
-          className="bg-salmon py-2 px-4 m-2 rounded-lg"
-          onClick={props.deleteComment}
-        >
-          Delete Comment
-        </button>
-      )}
+      <button
+        className="bg-salmon py-2 px-4 m-2 rounded-lg"
+        onClick={props.deleteComment}
+      >
+        Delete Comment
+      </button>
     </div>
   );
 }
