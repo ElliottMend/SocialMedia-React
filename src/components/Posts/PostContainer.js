@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PostFeedContainer from "./PostFeed";
 import axios from "axios";
 import Modal from "react-modal";
+import { usernameContext } from "../Context/usernameContext";
 export default function PostContainer(props) {
   const [state, setState] = useState({
     author: props.data.author,
@@ -13,7 +14,7 @@ export default function PostContainer(props) {
     commentText: "",
     img: "",
   });
-
+  const [user] = useState(useContext(usernameContext));
   const [img, setImg] = useState({ img: "" });
   const [comm, setComm] = useState();
   useEffect(() => {
@@ -38,15 +39,17 @@ export default function PostContainer(props) {
     await setComm(arr);
     await axios({
       method: "put",
-      url: "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/removeComment",
+      url: "https://social-mediasite.herokuapp.com/removeComment",
       data: { id: comm[index]._id },
+      withCredentials: true,
     });
   };
   const checkUser = async () => {
     const res = await axios({
       method: "post",
-      url: "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/getUser",
+      url: "https://social-mediasite.herokuapp.com/getUser",
       data: { user: props.data.author },
+      withCredentials: true,
     });
     setImg({ img: res.data.photo });
   };
@@ -60,7 +63,8 @@ export default function PostContainer(props) {
   const checkLikes = async () => {
     const res = await axios({
       method: "get",
-      url: "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/checklike",
+      url: "https://social-mediasite.herokuapp.com/checklike",
+      withCredentials: true,
     });
     if (res.data.includes(props.data._id)) {
       setState({ ...state, liked: true });
@@ -73,17 +77,18 @@ export default function PostContainer(props) {
     e.preventDefault();
     const res = await axios({
       method: "post",
-      url: "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/createComment",
+      url: "https://social-mediasite.herokuapp.com/createComment",
       data: {
         id: props.data._id,
         text: state.commentText,
         likes: 0,
       },
+      withCredentials: true,
     });
     setTimeout(async () => {
       await setComm([
         {
-          author: localStorage.getItem("username"),
+          author: user,
           likes: 0,
           show: true,
           text: state.commentText,
@@ -104,8 +109,9 @@ export default function PostContainer(props) {
     }
     const res = await axios({
       method: "post",
-      url: "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/getComments",
+      url: "https://social-mediasite.herokuapp.com/getComments",
       data: { id: props.data._id, posts: postArr },
+      withCredentials: true,
     });
     let arr = [];
     res.data.map((e) => {
@@ -126,8 +132,9 @@ export default function PostContainer(props) {
     }, 100);
     await axios({
       method: "put",
-      url: "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/removePost",
+      url: "https://social-mediasite.herokuapp.com/removePost",
       data: { id: props.data._id },
+      withCredentials: true,
     });
   };
   const Like = async (e) => {
@@ -136,8 +143,9 @@ export default function PostContainer(props) {
     if (!check) {
       axios({
         method: "put",
-        url: "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/unlike",
+        url: "https://social-mediasite.herokuapp.com/unlike",
         data: { id: props.data._id },
+        withCredentials: true,
       })
         .then(function (res) {
           setState({
@@ -151,8 +159,9 @@ export default function PostContainer(props) {
     } else {
       axios({
         method: "put",
-        url: "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/like",
+        url: "https://social-mediasite.herokuapp.com/like",
         data: { id: props.data._id },
+        withCredentials: true,
       })
         .then(function (res) {
           setState({

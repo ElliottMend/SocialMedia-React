@@ -11,18 +11,18 @@ export default function UserFollowContainer(props) {
     if (props.data.modal === "0" && props.follow.followerUsers.length > 0) {
       const res = await axios({
         method: "post",
-        url:
-          "https://social-mediasite.herokuapp.com/followData",
+        url: "https://social-mediasite.herokuapp.com/followData",
         data: { followerUsers: props.follow.followerUsers },
+        withCredentials: true,
       });
       getFollowers(res.data);
     } else {
       if (props.follow.followingUsers.length > 0) {
         const res = await axios({
           method: "post",
-          url:
-            "https://social-mediasite.herokuapp.com/followData",
+          url: "https://social-mediasite.herokuapp.com/followData",
           data: { followingUsers: props.follow.followingUsers },
+          withCredentials: true,
         });
         getFollowers(res.data);
       }
@@ -34,19 +34,19 @@ export default function UserFollowContainer(props) {
     if (!check) {
       axios({
         method: "put",
-        url:
-          "https://social-mediasite.herokuapp.com/removeFollow",
+        url: "https://social-mediasite.herokuapp.com/removeFollow",
         data: {
           author: e.target.id,
+          withCredentials: true,
         },
       });
     } else {
       axios({
         method: "put",
-        url:
-          "https://social-mediasite.herokuapp.com/addFollow",
+        url: "https://social-mediasite.herokuapp.com/addFollow",
         data: {
           author: e.target.id,
+          withCredentials: true,
         },
       });
     }
@@ -57,8 +57,8 @@ export default function UserFollowContainer(props) {
   const getFollowers = async (res) => {
     const follow = await axios({
       method: "get",
-      url:
-        "https://social-mediasite.herokuapp.com/checkFollow",
+      url: "https://social-mediasite.herokuapp.com/checkFollow",
+      withCredentials: true,
     });
     setState({ followData: [...res], follows: [follow.data] });
   };

@@ -29,6 +29,7 @@ export const HomepageContainer = () => {
       method: "get",
       url:
         "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/follows",
+      // withCredentials: true,
     });
     const locationPosts = await axios({
       method: "post",
@@ -37,6 +38,7 @@ export const HomepageContainer = () => {
       data: {
         radius: radius,
       },
+      // withCredentials: true,
     });
     let mySet = [...locationPosts.data];
     setState({ ...state, posts: [...mySet], follow: [...follows.data] });
@@ -61,6 +63,7 @@ export const HomepageContainer = () => {
       data: {
         body: state.body,
       },
+      // withCredentials: true,
     });
     const data = res.data;
     setTimeout(() => {

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Modal from "react-modal";
 import UserPage from "./UserPage";
+import { usernameContext } from "../Context/usernameContext";
 
 export const UserPageContainer = () => {
   const [user, setUser] = useState({ img: "", bio: "" });
@@ -11,6 +12,7 @@ export const UserPageContainer = () => {
     followerUsers: [],
     followingUsers: [],
   });
+  const [username] = useState(useContext(usernameContext));
   const [modalIsOpen, setIsOpen] = React.useState({
     isOpen: false,
     modal: null,
@@ -49,11 +51,7 @@ export const UserPageContainer = () => {
     }).then((res) => {
       console.log(res.data);
       setFollows({
-        follow: !res.data.followerUsers.includes(
-          localStorage.getItem("username")
-        )
-          ? false
-          : true,
+        follow: !res.data.followerUsers.includes(username) ? false : true,
         followers: res.data.followers,
         following: res.data.following,
         followerUsers: res.data.followerUsers,
@@ -120,6 +118,7 @@ export const UserPageContainer = () => {
       });
     }
   };
+
   useEffect(() => {
     Modal.setAppElement("body");
     let isCancelled = false;
@@ -149,6 +148,7 @@ export const UserPageContainer = () => {
   return (
     <div>
       <UserPage
+        username={username}
         closeModal={closeModal}
         customStyles={customStyles}
         changeFollow={changeFollow}

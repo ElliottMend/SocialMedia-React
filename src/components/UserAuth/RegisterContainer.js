@@ -41,6 +41,7 @@ export default function RegisterContainer() {
     } else {
       axios({
         method: "post",
+        withCredentials: true,
         url: "https://social-mediasite.herokuapp.com/register",
         data: {
           username: state.username,
@@ -48,6 +49,7 @@ export default function RegisterContainer() {
           password2: state.password2,
           email: state.email,
         },
+        
       })
         .then(() => {
           setState({ redirect: true });

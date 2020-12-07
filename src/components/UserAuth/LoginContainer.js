@@ -17,7 +17,6 @@ export default function LoginContainer(props) {
     });
   };
   const guestLogin = async () => {
-    console.log("gues");
     const username = Math.random().toString(36).substring(2, 15);
     const email =
       Math.random().toString(36).substring(2, 15) +
@@ -30,20 +29,20 @@ export default function LoginContainer(props) {
     const password2 = password;
     await axios({
       method: "post",
-      url:
-        "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/register",
+      url: "https://social-mediasite.herokuapp.com/register",
       data: {
         username: username,
         password: password,
         password2: password2,
         email: email,
       },
+      withCredentials: true,
     });
-    const log = await axios({
+    await axios({
       method: "post",
-      url:
-        "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/login",
+      url: "https://social-mediasite.herokuapp.com/login",
       data: { email: email, password: password },
+      withCredentials: true,
     });
     setState({ ...state, redirectEdit: true });
   };
@@ -57,9 +56,9 @@ export default function LoginContainer(props) {
     try {
       const res = await axios({
         method: "post",
-        url:
-          "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/login",
+        url: "https://social-mediasite.herokuapp.com/login",
         data: state,
+        withCredentials: true,
       });
       const user = res.data.username;
       const bio = res.data.bio;
@@ -78,7 +77,6 @@ export default function LoginContainer(props) {
       }
       await props.auth();
     } catch (err) {
-      console.log(err);
       const a = err.response.data.message;
       setState({
         ...state,
@@ -96,7 +94,6 @@ export default function LoginContainer(props) {
         loginAuth={UserAuth}
         guestLogin={guestLogin}
       />
-      {console.log('gfd')}
     </div>
   );
 }

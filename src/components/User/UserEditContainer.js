@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import UserEdit from "./UserEdit";
 import { useHistory } from "react-router-dom";
+import { usernameContext } from "../Context/usernameContext";
 export const UserEditContainer = () => {
   const history = useHistory();
   const [locate, setLocate] = useState();
   const [locat, setLocation] = useState();
+  const [user] = useState(useContext(usernameContext));
   const [state, setState] = useState({ bio: "" });
   useEffect(() => {
     axios({
@@ -15,7 +17,6 @@ export const UserEditContainer = () => {
     }).then((res) => {
       setLocate(res.data.location);
       setLocation(res.data.latlng);
-
       setState({
         ...state,
         bio: res.data.bio,
@@ -74,7 +75,7 @@ export const UserEditContainer = () => {
       });
     }
     setTimeout(() => {
-      history.push(`/user/${localStorage.getItem("username")}`);
+      history.push(`/user/${user}`);
     }, 150);
   };
   return (

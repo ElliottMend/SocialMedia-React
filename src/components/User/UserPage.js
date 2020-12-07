@@ -59,7 +59,7 @@ export default function UserPage(props) {
               type="checkbox"
             ></input>
 
-            {localStorage.getItem("username") !== props.state.user && (
+            {props.username !== props.state.user && (
               <label className="md:mx-20" htmlFor={props.state.user}>
                 {props.follows.follow ? (
                   <p className="self-center bg-blue-300 h-20 w-40 rounded-full">

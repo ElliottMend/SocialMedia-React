@@ -12,20 +12,20 @@ export const FollowsContainer = (props) => {
     if (!check) {
       axios({
         method: "put",
-        url:
-          "https://social-mediasite.herokuapp.com/removeFollow",
+        url: "https://social-mediasite.herokuapp.com/removeFollow",
         data: {
           author: props.data.username,
         },
+        withCredentials: true,
       });
     } else {
       axios({
         method: "put",
-        url:
-          "https://social-mediasite.herokuapp.com/addFollow",
+        url: "https://social-mediasite.herokuapp.com/addFollow",
         data: {
           author: props.data.username,
         },
+        withCredentials: true,
       });
     }
   };
