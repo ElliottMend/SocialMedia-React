@@ -46,7 +46,7 @@ export default function PostContainer(props) {
   };
   const checkUser = async () => {
     const res = await axios({
-      method: "post",
+      method: "get",
       url: "https://social-mediasite.herokuapp.com/getUser",
       data: { user: props.data.author },
       withCredentials: true,
@@ -146,38 +146,30 @@ export default function PostContainer(props) {
         url: "https://social-mediasite.herokuapp.com/unlike",
         data: { id: props.data._id },
         withCredentials: true,
-      })
-        .then(function (res) {
-          setState({
-            ...state,
-            likes: res.data,
-          });
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      });
+      setState((prevState) => ({
+        ...prevState,
+        likes: prevState.likes - 1,
+      }));
     } else {
+      console.log(props.data._id);
       axios({
         method: "put",
         url: "https://social-mediasite.herokuapp.com/like",
         data: { id: props.data._id },
         withCredentials: true,
-      })
-        .then(function (res) {
-          setState({
-            ...state,
-            likes: res.data,
-          });
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      });
+      setState((prevState) => ({
+        ...prevState,
+        likes: prevState.likes + 1,
+      }));
     }
   };
   return (
     <div>
       {state.show && (
         <PostFeedContainer
+          username={user}
           key={state._id}
           deletePost={deletePost}
           img={img.img}

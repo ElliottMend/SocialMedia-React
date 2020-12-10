@@ -43,17 +43,17 @@ export default function PostFeed(props) {
 
             <div className="flex mt-10 justify-center flex-row">
               {date < 60 ? (
-                <p>{Math.round(date)}s ago</p>
+                <p>{Math.round(date)} seconds ago</p>
               ) : date < 3600 ? (
-                <p>{Math.round(date / 60)}m ago</p>
+                <p>{Math.round(date / 60)} months ago</p>
               ) : date < 86400 ? (
-                <p>{Math.round(date / 3600)}h ago</p>
+                <p>{Math.round(date / 3600)} hours ago</p>
               ) : date < 604800 ? (
-                <p>{Math.round(date / 86400)}d ago</p>
+                <p>{Math.round(date / 86400)} days ago</p>
               ) : date < 2.628e6 ? (
-                <p>{Math.round(date / 604800)}w ago</p>
+                <p>{Math.round(date / 604800)} weeks ago</p>
               ) : date < 31535965.4396976 ? (
-                <p>{Math.round(date / 2592000)}mnth ago</p>
+                <p>{Math.round(date / 2592000)} months ago</p>
               ) : (
                 31535965.4396976 < date && (
                   <p>{Math.round(date / 31104000)}y ago</p>
@@ -85,12 +85,14 @@ export default function PostFeed(props) {
               />
               <div>{props.data.location}</div>
             </div>
-            <button
-              className="bg-salmon py-4 px-8 m-2 rounded-lg"
-              onClick={props.deletePost}
-            >
-              Delete Post
-            </button>
+            {props.data.author === props.username && (
+              <button
+                className="bg-salmon py-4 px-8 m-2 rounded-lg"
+                onClick={props.deletePost}
+              >
+                Delete Post
+              </button>
+            )}
             <form className="bg-cream" onSubmit={props.createComment}>
               <input
                 className="text-2xl w-2/3 rounded-lg mb-10"

@@ -25,9 +25,8 @@ export const UserPageContainer = () => {
 
   const getUser = () => {
     axios({
-      method: "post",
-      url:
-        "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/getUser",
+      method: "get",
+      url: "https://social-mediasite.herokuapp.com/getUser",
       data: { user: state.user },
       withCredentials: true,
     }).then((res) => {
@@ -40,16 +39,16 @@ export const UserPageContainer = () => {
     });
   };
   const checkFollow = () => {
+    console.log(state.user)
     axios({
-      method: "post",
-      url:
-        "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/checkFollow",
+      method: "get",
+      url: `https://social-mediasite.herokuapp.com/checkFollow/${state.user}`,
       data: {
         user: state.user,
       },
       withCredentials: true,
     }).then((res) => {
-      console.log(res.data);
+      console.log(res.data)
       setFollows({
         follow: !res.data.followerUsers.includes(username) ? false : true,
         followers: res.data.followers,
@@ -62,7 +61,7 @@ export const UserPageContainer = () => {
   const getPosts = () => {
     axios({
       method: "post",
-      url: `https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/users/:id`,
+      url: `https://social-mediasite.herokuapp.com/users/:id`,
       data: { username: state.user },
       withCredentials: true,
     })
@@ -98,11 +97,11 @@ export const UserPageContainer = () => {
       follow: check,
       followers: check ? follows.followers + 1 : follows.followers - 1,
     });
+    console.log(check,state.user)
     if (!check) {
       axios({
         method: "put",
-        url:
-          "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/removeFollow",
+        url: "https://social-mediasite.herokuapp.com/removeFollow",
         data: {
           author: state.user,
         },
@@ -110,8 +109,7 @@ export const UserPageContainer = () => {
     } else {
       axios({
         method: "put",
-        url:
-          "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/addFollow",
+        url: "https://social-mediasite.herokuapp.com/addFollow",
         data: {
           author: state.user,
         },
@@ -133,7 +131,7 @@ export const UserPageContainer = () => {
     return () => {
       isCancelled = true;
     };
-  }, [setFollows]);
+  }, []);
   const customStyles = {
     content: {
       top: "50%",

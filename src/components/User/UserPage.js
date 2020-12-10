@@ -19,7 +19,7 @@ export default function UserPage(props) {
                 <p
                   id="0"
                   onClick={props.openModal}
-                  className="md:mx-4 rounded-lg py-3 px-6 bg-gray-300"
+                  className="md:mx-4 cursor-pointer rounded-lg py-3 px-6 bg-gray-300"
                 >
                   Followers: {props.follows.followers}
                 </p>
@@ -38,7 +38,7 @@ export default function UserPage(props) {
                 <p
                   id="1"
                   onClick={props.openModal}
-                  className="md:mx-4  rounded-lg py-3 px-6 bg-gray-300"
+                  className="md:mx-4 cursor-pointer rounded-lg py-3 px-6 bg-gray-300"
                 >
                   Following: {props.follows.following}
                 </p>
@@ -46,11 +46,13 @@ export default function UserPage(props) {
               <p className="my-12">{props.user.bio}</p>
               <p>{props.user.location}</p>
             </div>
-            <Link className="" to={`/user/${props.state.user}/edit`}>
-              <button className="bg-seafoam h-20 w-40 rounded-full">
-                Edit
-              </button>
-            </Link>
+            {props.state.user === props.username && (
+              <Link className="" to={`/user/${props.state.user}/edit`}>
+                <button className="bg-seafoam h-20 w-40 rounded-full">
+                  Edit
+                </button>
+              </Link>
+            )}
             <input
               onClick={props.changeFollow}
               defaultChecked={props.follows.follow}
@@ -60,13 +62,17 @@ export default function UserPage(props) {
             ></input>
 
             {props.username !== props.state.user && (
-              <label className="md:mx-20" htmlFor={props.state.user}>
+              <label className="" htmlFor={props.state.user}>
                 {props.follows.follow ? (
-                  <p className="self-center bg-blue-300 h-20 w-40 rounded-full">
-                    Following
-                  </p>
+                  <div>
+                    <button className="bg-blue-300 h-20 w-40 rounded-full">
+                      Following
+                    </button>
+                  </div>
                 ) : (
-                  <p className="bg-blue-300 h-20 w-40 rounded-full">Follow</p>
+                  <div>
+                    <p className="bg-blue-300 h-20 w-40 rounded-full">Follow</p>
+                  </div>
                 )}
               </label>
             )}

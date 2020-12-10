@@ -25,14 +25,12 @@ export default function UserEdit(props) {
               type="file"
             />
           </div>
-          {props.locate && (
-            <UserEditLocation
-              locate={props.locate}
-              latlng={props.getLatLng}
-              location={props.getLocation}
-              required
-            />
-          )}
+          <UserEditLocation
+            locate={props.locate}
+            latlng={props.getLatLng}
+            location={props.getLocation}
+            required
+          />
 
           <button>Submit</button>
         </form>

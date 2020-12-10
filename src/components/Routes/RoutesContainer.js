@@ -1,30 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import Routes from "./Routes";
 import axios from "axios";
 import { usernameContext } from "../Context/usernameContext";
 export const RoutesContainer = () => {
+  const [user, setUser] = useState();
   const [state, setState] = useState(true);
   useEffect(() => {
     loggedIn();
-  },[state]);
+    getUserName();
+  }, [state,user]);
+   
+  const getUserName = () => {
+    axios({
+      method: "get",
+      url: "https://social-mediasite.herokuapp.com/checkJWT",
+      withCredentials: true,
+    }).then((res) => {
+      setUser(res.data);
+    });
+  };
   const loggedIn = () => {
     axios({
       method: "get",
-      url: "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/verify",
-    //   withCredentials: true,
+      url: "https://social-mediasite.herokuapp.com/verify",
+      withCredentials: true,
     })
       .then((res) => {
-          console.log(res.data)
         setState(true);
       })
       .catch((err) => {
-          console.log(err.response)
         setState(false);
       });
   };
   return (
     <div>
-      <usernameContext.Provider>
+      <usernameContext.Provider value={user}>
         <Routes state={state} />
       </usernameContext.Provider>
     </div>

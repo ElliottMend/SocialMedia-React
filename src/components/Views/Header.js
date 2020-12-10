@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
-
+import axios from "axios";
+import { usernameContext } from "../Context/usernameContext";
 export default function Header(props) {
   const history = useHistory();
   const DeleteToken = async () => {
+    await axios({
+      method: "get",
+      url: `https://social-mediasite.herokuapp.com/logout`,
+      withCredentials: true,
+    });
     history.push("/login");
   };
   return (
@@ -14,7 +20,7 @@ export default function Header(props) {
             <Link to="/">
               <p className="">Home</p>
             </Link>
-            <Link to={`/user/${localStorage.getItem("username")}`}>
+            <Link to={`/user/${useContext(usernameContext)}`}>
               <p className="">Account</p>
             </Link>
             <p className="" onClick={DeleteToken}>

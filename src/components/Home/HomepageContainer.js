@@ -11,34 +11,31 @@ export const HomepageContainer = () => {
     follow: [],
   });
   useEffect(() => {
-    console.log("hfdhdf");
     let isCancelled = false;
-    const fetchData = async () => {
+    const fetchData = () => {
       if (!isCancelled) {
-        await seePosts(state.radius);
+        seePosts(state.radius);
       }
     };
     fetchData();
     return () => {
       isCancelled = true;
     };
-  }, [state.radius]);
+  }, []);
   const seePosts = async (radius) => {
     setState({ ...state, posts: [] });
     const follows = await axios({
       method: "get",
-      url:
-        "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/follows",
-      // withCredentials: true,
+      url: "https://social-mediasite.herokuapp.com/follows",
+      withCredentials: true,
     });
     const locationPosts = await axios({
       method: "post",
-      url:
-        "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/locationPosts",
+      url: "https://social-mediasite.herokuapp.com/locationPosts",
       data: {
         radius: radius,
       },
-      // withCredentials: true,
+      withCredentials: true,
     });
     let mySet = [...locationPosts.data];
     setState({ ...state, posts: [...mySet], follow: [...follows.data] });
@@ -58,12 +55,11 @@ export const HomepageContainer = () => {
     e.preventDefault();
     const res = await axios({
       method: "post",
-      url:
-        "https://cors-anywhere.herokuapp.com/https://social-mediasite.herokuapp.com/newpost",
+      url: "https://social-mediasite.herokuapp.com/newpost",
       data: {
         body: state.body,
       },
-      // withCredentials: true,
+      withCredentials: true,
     });
     const data = res.data;
     setTimeout(() => {

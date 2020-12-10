@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import UserFollowDisplay from "./UserFollow";
+import UserFollow from "./UserFollow";
 export default function UserFollowContainer(props) {
   const [state, setState] = useState();
   const [follow, setFollow] = useState();
@@ -15,7 +15,8 @@ export default function UserFollowContainer(props) {
         data: { followerUsers: props.follow.followerUsers },
         withCredentials: true,
       });
-      getFollowers(res.data);
+      console.log(res)
+      setState({ followData: [...res], follows: [props.follow] });
     } else {
       if (props.follow.followingUsers.length > 0) {
         const res = await axios({
@@ -24,7 +25,7 @@ export default function UserFollowContainer(props) {
           data: { followingUsers: props.follow.followingUsers },
           withCredentials: true,
         });
-        getFollowers(res.data);
+        setState({ followData: [...res], follows: [props.follow] });
       }
     }
   };
@@ -55,6 +56,7 @@ export default function UserFollowContainer(props) {
     color = !color;
   };
   const getFollowers = async (res) => {
+    console.log(res);
     const follow = await axios({
       method: "get",
       url: "https://social-mediasite.herokuapp.com/checkFollow",
@@ -70,7 +72,7 @@ export default function UserFollowContainer(props) {
           state.followData.map((e, index) => (
             <div>
               {getColor()}
-              <UserFollowDisplay
+              <UserFollow
                 color={color}
                 key={e.username}
                 follow={state.follows}
