@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import PostFeedContainer from "./PostFeed";
+import Post from "./Post";
 import axios from "axios";
 import Modal from "react-modal";
 import { usernameContext } from "../Context/usernameContext";
@@ -14,9 +14,19 @@ export default function PostContainer(props) {
     commentText: "",
     img: "",
   });
+
+  const [modal, setModal] = useState(false);
   const [user] = useState(useContext(usernameContext));
   const [img, setImg] = useState({ img: "" });
   const [comm, setComm] = useState();
+  const openModal = () => {
+    setModal(true);
+  };
+
+  const afterModalOpen = () => {};
+  const closeModal = () => {
+    setModal(false);
+  };
   useEffect(() => {
     let isCancelled = false;
     Modal.setAppElement("body");
@@ -152,7 +162,6 @@ export default function PostContainer(props) {
         likes: prevState.likes - 1,
       }));
     } else {
-      console.log(props.data._id);
       axios({
         method: "put",
         url: "https://social-mediasite.herokuapp.com/like",
@@ -168,9 +177,12 @@ export default function PostContainer(props) {
   return (
     <div>
       {state.show && (
-        <PostFeedContainer
+        <Post
+          modal={modal}
+          afterModalOpen={afterModalOpen}
           username={user}
-          key={state._id}
+          openModal={openModal}
+          closeModal={closeModal}
           deletePost={deletePost}
           img={img.img}
           deleteComment={deleteComment}
@@ -178,7 +190,7 @@ export default function PostContainer(props) {
           commentChange={commentChange}
           createComment={createComment}
           data={state}
-          liked={state.liked}
+          more={props.more}
           onChange={Like}
         />
       )}

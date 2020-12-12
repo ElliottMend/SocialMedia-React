@@ -1,8 +1,8 @@
 import React from "react";
-import Post from "../Posts/PostContainer";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import UserFollowContainer from "./UserFollowContainer";
+import PostContainer from "../Posts/PostContainer";
 
 export default function UserPage(props) {
   return (
@@ -10,12 +10,13 @@ export default function UserPage(props) {
       {props.state.error ? (
         <h1>{props.state.error}</h1>
       ) : (
-        <div className="font-semibold bg-blue-100 my-2 rounded-lg container md:mx-auto">
+        <div className="font-semibold bg-blue-100 my-2 rounded-lg container mx-auto">
           <div className="flex md:mx-6 justify-between items-center flex-col md:flex-row">
             <img className="m-4 w-64" src={props.user.img} alt="Profile" />
             <div className="flex my-10  flex-col">
               <h1 className="text-3xl font-semibold">{props.state.user}</h1>
               <div className="flex flex-row">
+                {console.log("gfdgdf")}
                 <p
                   id="0"
                   onClick={props.openModal}
@@ -30,6 +31,7 @@ export default function UserPage(props) {
                   style={props.customStyles}
                 >
                   <UserFollowContainer
+                    user={props.state.user}
                     changeFollow={props.changeFollow}
                     follow={props.follows}
                     data={props.modalIsOpen}
@@ -60,18 +62,19 @@ export default function UserPage(props) {
               className="hidden"
               type="checkbox"
             ></input>
-
             {props.username !== props.state.user && (
               <label className="" htmlFor={props.state.user}>
                 {props.follows.follow ? (
                   <div>
-                    <button className="bg-blue-300 h-20 w-40 rounded-full">
+                    <p className="bg-salmon cursor-pointer w-40 h-20 flex items-center justify-center rounded-full ">
                       Following
-                    </button>
+                    </p>
                   </div>
                 ) : (
                   <div>
-                    <p className="bg-blue-300 h-20 w-40 rounded-full">Follow</p>
+                    <p className="bg-blue-300 cursor-pointer w-40 h-20 flex items-center justify-center rounded-full ">
+                      Follow
+                    </p>
                   </div>
                 )}
               </label>
@@ -81,7 +84,7 @@ export default function UserPage(props) {
       )}
       <div className="container mx-auto">
         {props.state.postItems.map((e) => (
-          <Post key={e._id} data={e} />
+          <PostContainer data={e} />
         ))}
       </div>
     </div>

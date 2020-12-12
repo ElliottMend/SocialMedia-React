@@ -22,11 +22,11 @@ export default function Follows(props) {
           </Link>
           <label className="my-auto" htmlFor={props.data.username}>
             {props.data.follow ? (
-              <p className="bg-blue-300 mr-2 py-3 px-2 rounded-full">
+              <p className="bg-salmon w-40 h-20 flex items-center justify-center rounded-full ">
                 Following
               </p>
             ) : (
-              <p className="bg-blue-300 mr-2 py-3 px-5 rounded-full">Follow</p>
+              <p className="bg-blue-300 w-40 h-20 flex items-center justify-center rounded-full ">Follow</p>
             )}
           </label>
           <input

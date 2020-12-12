@@ -16,6 +16,7 @@ export const RoutesContainer = () => {
       url: "https://social-mediasite.herokuapp.com/checkJWT",
       withCredentials: true,
     }).then((res) => {
+      console.log('checkJWT')
       setUser(res.data);
     });
   };
@@ -26,6 +27,7 @@ export const RoutesContainer = () => {
       withCredentials: true,
     })
       .then((res) => {
+        console.log('verify')
         setState(true);
       })
       .catch((err) => {

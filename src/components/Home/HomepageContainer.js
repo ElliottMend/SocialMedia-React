@@ -10,6 +10,7 @@ export const HomepageContainer = () => {
     sorting: "recent",
     follow: [],
   });
+  const [more] = useState(true);
   useEffect(() => {
     let isCancelled = false;
     const fetchData = () => {
@@ -94,6 +95,7 @@ export const HomepageContainer = () => {
   return (
     <div>
       <Homepage
+        more={more}
         newPost={newPost}
         postSort={postSort}
         changeRadius={changeRadius}

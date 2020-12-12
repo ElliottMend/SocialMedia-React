@@ -25,29 +25,28 @@ export default function UserFollow(props) {
           className="hidden"
           type="checkbox"
         ></input>
-          <label className="mx-10" htmlFor={props.data.username}>
-            {state.checked ? (
-              <p
-                id="following"
-                onClick={handleClick}
-                className={
-                  props.color
-                    ? "bg-salmon self-center py-6 px-12 rounded-full "
-                    : "bg-seafoam self-center py-6 px-12 rounded-full "
-                }
-              >
-                Following
-              </p>
-            ) : (
-              <p
-                id="follow"
-                onClick={handleClick}
-                className="bg-blue-300 py-6 px-12 rounded-full"
-              >
-                Follow
-              </p>
-            )}
-          </label>
+        <label
+          className="flex items-center justify-center"
+          htmlFor={props.data.username}
+        >
+          {state.checked ? (
+            <p
+              id="following"
+              onClick={handleClick}
+              className="bg-salmon w-40 h-20 flex items-center justify-center rounded-full "
+            >
+              Following
+            </p>
+          ) : (
+            <p
+              id="follow"
+              onClick={handleClick}
+              className="bg-blue-300 h-20 flex items-center justify-center w-40 rounded-full"
+            >
+              Follow
+            </p>
+          )}
+        </label>
       </div>
     </div>
   );

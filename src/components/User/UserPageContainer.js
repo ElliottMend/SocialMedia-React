@@ -39,7 +39,6 @@ export const UserPageContainer = () => {
     });
   };
   const checkFollow = () => {
-    console.log(state.user)
     axios({
       method: "get",
       url: `https://social-mediasite.herokuapp.com/checkFollow/${state.user}`,
@@ -48,7 +47,6 @@ export const UserPageContainer = () => {
       },
       withCredentials: true,
     }).then((res) => {
-      console.log(res.data)
       setFollows({
         follow: !res.data.followerUsers.includes(username) ? false : true,
         followers: res.data.followers,
@@ -60,12 +58,12 @@ export const UserPageContainer = () => {
   };
   const getPosts = () => {
     axios({
-      method: "post",
-      url: `https://social-mediasite.herokuapp.com/users/:id`,
-      data: { username: state.user },
+      method: "get",
+      url: `https://social-mediasite.herokuapp.com/users/${state.user}`,
       withCredentials: true,
     })
       .then((res) => {
+        console.log(res.data)
         setState({
           ...state,
           postItems: [...res.data],
@@ -92,12 +90,12 @@ export const UserPageContainer = () => {
 
   const changeFollow = async (e) => {
     const check = e.target.checked;
+    console.log(check)
     await setFollows({
       ...follows,
       follow: check,
       followers: check ? follows.followers + 1 : follows.followers - 1,
     });
-    console.log(check,state.user)
     if (!check) {
       axios({
         method: "put",
