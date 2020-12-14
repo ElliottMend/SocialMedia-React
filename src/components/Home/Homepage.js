@@ -23,32 +23,41 @@ export default function Homepage(props) {
               Submit
             </button>
           </form>
-          <div className="rounded-b-lg text-xl bg-lime ">
+          <div className="text-xl bg-lime ">
             <p className="text-2xl font-semibold">Sort Posts</p>
             <select
-              className="rounded-full p-3 m-4"
+              className=" w-32 rounded-lg h-16 m-4"
               onChange={props.changeRadius}
             >
-              <option value="Local">Local</option>
-              <option value="Global">Global</option>
+              <option className="" value="Local">
+                Local
+              </option>
+              <option className="flex justify-center" value="Global">
+                Global
+              </option>
             </select>
-            <select className="rounded-full p-3 m-4" onChange={props.postSort}>
-              <option value="recent">Recent</option>
-              <option value="liked">Liked</option>
+            <select className="w-32 h-16 rounded-lg" onChange={props.postSort}>
+              <option className="flex justify-center" value="recent">
+                Recent
+              </option>
+              <option className="flex justify-center" value="liked">
+                Liked
+              </option>
             </select>
           </div>
         </section>
         <div className="w-full">
-          {props.data.posts &&
-            props.data.posts.map((e) => (
+          {props.posts &&
+            props.posts.map((e) => (
               <PostContainer more={props.more} key={e._id} data={e} />
             ))}
         </div>
         <div className="mt-1 inset-x-0 top-0 left-0 rounded-lg md:sticky ml-2 ">
           <p className="text-2xl font-semibold">Who to Follow</p>
-          {props.data.follow.map((e) => (
-            <FollowsContainer key={e.username} data={e} />
-          ))}
+          {props.follows &&
+            props.follows.map((e) => (
+              <FollowsContainer key={e.username} data={e} />
+            ))}
         </div>
       </div>
     </div>

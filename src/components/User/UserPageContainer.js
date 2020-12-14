@@ -23,60 +23,33 @@ export const UserPageContainer = () => {
     user: window.location.pathname.split("/")[2],
   });
 
-  const getUser = () => {
-    axios({
+  const getUser = async () => {
+    const user = await axios({
       method: "get",
       url: "https://social-mediasite.herokuapp.com/getUser",
       data: { user: state.user },
       withCredentials: true,
-    }).then((res) => {
-      setUser({
-        ...user,
-        location: res.data.location,
-        img: res.data.photo,
-        bio: res.data.bio,
-      });
     });
+    return user;
   };
-  const checkFollow = () => {
-    axios({
+  const checkFollow = async () => {
+    const follows = await axios({
       method: "get",
       url: `https://social-mediasite.herokuapp.com/checkFollow/${state.user}`,
       data: {
         user: state.user,
       },
       withCredentials: true,
-    }).then((res) => {
-      setFollows({
-        follow: !res.data.followerUsers.includes(username) ? false : true,
-        followers: res.data.followers,
-        following: res.data.following,
-        followerUsers: res.data.followerUsers,
-        followingUsers: res.data.followingUsers,
-      });
     });
+    return follows;
   };
-  const getPosts = () => {
-    axios({
+  const getPosts = async () => {
+    const posts = await axios({
       method: "get",
       url: `https://social-mediasite.herokuapp.com/users/${state.user}`,
       withCredentials: true,
-    })
-      .then((res) => {
-        console.log(res.data)
-        setState({
-          ...state,
-          postItems: [...res.data],
-        });
-      })
-      .catch((err) => {
-        if (err.response) {
-          setState({
-            ...state,
-            error: err.response.data.message,
-          });
-        }
-      });
+    });
+    return posts;
   };
 
   const openModal = (e) => {
@@ -88,45 +61,50 @@ export const UserPageContainer = () => {
     setIsOpen(false);
   }
 
-  const changeFollow = async (e) => {
-    const check = e.target.checked;
-    console.log(check)
-    await setFollows({
-      ...follows,
-      follow: check,
-      followers: check ? follows.followers + 1 : follows.followers - 1,
-    });
-    if (!check) {
-      axios({
-        method: "put",
-        url: "https://social-mediasite.herokuapp.com/removeFollow",
-        data: {
-          author: state.user,
-        },
-      });
-    } else {
-      axios({
-        method: "put",
-        url: "https://social-mediasite.herokuapp.com/addFollow",
-        data: {
-          author: state.user,
-        },
-      });
-    }
-  };
-
   useEffect(() => {
-    Modal.setAppElement("body");
     let isCancelled = false;
-    const fetchData = () => {
+    Modal.setAppElement("body");
+    checkFollow().then((res) => {
       if (!isCancelled) {
-        checkFollow();
-        getUser();
-        getPosts();
+        setFollows({
+          followers: res.data.followers,
+          following: res.data.following,
+          followerUsers: res.data.followerUsers,
+          followingUsers: res.data.followingUsers,
+        });
       }
-    };
-    fetchData();
+    });
+    getUser().then((res) => {
+      if (!isCancelled) {
+        setUser((prevState) => ({
+          prevState,
+          location: res.data.location,
+          img: res.data.photo,
+          bio: res.data.bio,
+        }));
+      }
+    });
+    getPosts()
+      .then((res) => {
+        if (!isCancelled) {
+          setState((prevState) => ({
+            prevState,
+            postItems: [...res.data],
+          }));
+        }
+      })
+      .catch((err) => {
+        if (!isCancelled) {
+          if (err.response) {
+            setState((prevState) => ({
+              prevState,
+              error: err.response.data.message,
+            }));
+          }
+        }
+      });
     return () => {
+      console.log("return");
       isCancelled = true;
     };
   }, []);
@@ -147,7 +125,6 @@ export const UserPageContainer = () => {
         username={username}
         closeModal={closeModal}
         customStyles={customStyles}
-        changeFollow={changeFollow}
         afterOpenModal={afterOpenModal}
         modalIsOpen={modalIsOpen}
         openModal={openModal}

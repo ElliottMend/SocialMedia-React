@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import Homepage from "./Homepage";
 
@@ -6,49 +6,54 @@ export const HomepageContainer = () => {
   const [state, setState] = useState({
     radiusName: "",
     radius: 0.8,
-    posts: [],
     sorting: "recent",
-    follow: [],
   });
+  const [posts, setPosts] = useState();
+  const [follows, setFollows] = useState();
   const [more] = useState(true);
   useEffect(() => {
     let isCancelled = false;
-    const fetchData = () => {
+    getPosts().then((items) => {
       if (!isCancelled) {
-        seePosts(state.radius);
+        setPosts(items);
       }
-    };
-    fetchData();
+    });
+    getFollows().then((items) => {
+      if (!isCancelled) {
+        setFollows(items);
+      }
+    });
     return () => {
       isCancelled = true;
     };
-  }, []);
-  const seePosts = async (radius) => {
-    setState({ ...state, posts: [] });
-    const follows = await axios({
+  }, [state.radius]);
+  const getPosts = async () => {
+    const post = await axios({
+      method: "post",
+      url: "https://social-mediasite.herokuapp.com/locationPosts",
+      data: {
+        radius: state.radius,
+      },
+      withCredentials: true,
+    });
+
+    return post.data;
+  };
+  const getFollows = async () => {
+    const follow = await axios({
       method: "get",
       url: "https://social-mediasite.herokuapp.com/follows",
       withCredentials: true,
     });
-    const locationPosts = await axios({
-      method: "post",
-      url: "https://social-mediasite.herokuapp.com/locationPosts",
-      data: {
-        radius: radius,
-      },
-      withCredentials: true,
-    });
-    let mySet = [...locationPosts.data];
-    setState({ ...state, posts: [...mySet], follow: [...follows.data] });
+    return follow.data;
   };
-
   const changeRadius = (e) => {
     switch (e.target.value) {
       case "Global":
-        seePosts(1000);
+        setState({ ...state, radius: 1000 });
         return;
       default:
-        seePosts(0.8);
+        setState({ ...state, radius: 0.8 });
         return;
     }
   };
@@ -101,6 +106,8 @@ export const HomepageContainer = () => {
         changeRadius={changeRadius}
         handleChange={handleChange}
         data={state}
+        follows={follows}
+        posts={posts}
       />
     </div>
   );

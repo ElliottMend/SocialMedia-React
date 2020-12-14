@@ -5,7 +5,7 @@ export const FollowsContainer = (props) => {
   const [state, setState] = useState({ checked: true });
   const Follow = async (e) => {
     const check = e.target.checked;
-    await setState({
+    setState({
       ...state,
       follow: check,
     });

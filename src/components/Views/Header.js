@@ -14,7 +14,7 @@ export default function Header(props) {
   };
   return (
     <div className="text-navy">
-      <div className="container mx-auto">
+      <div className="mx-auto">
         <div className="w-full px-8 rounded-lg text-3xl bg-seafoam">
           <div className="flex md:mx-32 justify-between flex-row">
             <Link to="/">

@@ -25,13 +25,13 @@ export const UserEditContainer = () => {
   }, []);
 
   const fileSelectedHandler = async (e) => {
-    await setState({ ...state, selectedFile: e.target.files[0] });
+    setState({ ...state, selectedFile: e.target.files[0] });
   };
   const handleChange = (e) => {
     setState({ ...state, bio: e.target.value });
   };
   const getLatLng = async (e) => {
-    await setLocation(e);
+    setLocation(e);
   };
   const getBase64 = (file, cb) => {
     let reader = new FileReader();
@@ -44,7 +44,7 @@ export const UserEditContainer = () => {
     };
   };
   const getLocation = async (e) => {
-    await setLocate(e);
+    setLocate(e);
   };
   const editSubmit = async (e) => {
     e.preventDefault();

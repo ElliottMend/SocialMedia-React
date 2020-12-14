@@ -4,10 +4,8 @@ import UserFollow from "./UserFollow";
 export default function UserFollowContainer(props) {
   const [state, setState] = useState();
   useEffect(() => {
-    console.log(typeof props.follow.followerUsers);
-    console.log(props.follow.followerUsers);
     followData();
-  }, [setState]);
+  }, []);
   const followData = async () => {
     const res = await axios({
       method: "post",
@@ -20,31 +18,10 @@ export default function UserFollowContainer(props) {
       },
       withCredentials: true,
     });
-    console.log(res.data);
     setState({ followData: [...res.data], follows: [props.follow] });
   };
   const Follow = (e) => {
-    let check = e.target.checked;
-    setState({ ...state, checked: check ? true : false });
-    if (!check) {
-      axios({
-        method: "put",
-        url: "https://social-mediasite.herokuapp.com/removeFollow",
-        data: {
-          author: e.target.id,
-          withCredentials: true,
-        },
-      });
-    } else {
-      axios({
-        method: "put",
-        url: "https://social-mediasite.herokuapp.com/addFollow",
-        data: {
-          author: e.target.id,
-          withCredentials: true,
-        },
-      });
-    }
+    
   };
   const getColor = () => {
     color = !color;

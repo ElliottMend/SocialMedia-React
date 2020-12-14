@@ -30,23 +30,34 @@ export default function PostContainer(props) {
   useEffect(() => {
     let isCancelled = false;
     Modal.setAppElement("body");
-    const fetchData = async () => {
+    checkUser().then((items) => {
       if (!isCancelled) {
-        await checkUser();
-        await displayComments();
-        await checkLikes();
+        setImg({ img: items.data.photo });
       }
-    };
-    fetchData();
+    });
+    displayComments().then((items) => {
+      if (!isCancelled) {
+        setComm(items);
+      }
+    });
+    checkLikes().then((items) => {
+      if (!isCancelled) {
+        if (items.data.includes(props.data._id)) {
+          setState({ ...state, liked: true });
+        } else {
+          setState({ ...state, liked: false });
+        }
+      }
+    });
     return () => {
       isCancelled = true;
     };
-  }, [state.likes, state.show]);
+  }, []);
 
   const deleteComment = async (index) => {
     let arr = [...comm, setComm];
     arr.splice(index, 1);
-    await setComm(arr);
+    setComm(arr);
     await axios({
       method: "put",
       url: "https://social-mediasite.herokuapp.com/removeComment",
@@ -61,7 +72,7 @@ export default function PostContainer(props) {
       data: { user: props.data.author },
       withCredentials: true,
     });
-    setImg({ img: res.data.photo });
+    return res;
   };
   const commentChange = (e) => {
     setState({
@@ -76,11 +87,7 @@ export default function PostContainer(props) {
       url: "https://social-mediasite.herokuapp.com/checklike",
       withCredentials: true,
     });
-    if (res.data.includes(props.data._id)) {
-      setState({ ...state, liked: true });
-    } else {
-      setState({ ...state, liked: false });
-    }
+    return res;
   };
 
   const createComment = async (e) => {
@@ -96,7 +103,7 @@ export default function PostContainer(props) {
       withCredentials: true,
     });
     setTimeout(async () => {
-      await setComm([
+      setComm([
         {
           author: user,
           likes: 0,
@@ -134,7 +141,7 @@ export default function PostContainer(props) {
     let a = arr.map((i) => {
       return i;
     });
-    setComm(a);
+    return a;
   };
   const deletePost = async () => {
     setTimeout(() => {
@@ -149,7 +156,7 @@ export default function PostContainer(props) {
   };
   const Like = async (e) => {
     const check = e.target.checked;
-    await setState({ ...state, liked: e.target.checked });
+    setState({ ...state, liked: e.target.checked });
     if (!check) {
       axios({
         method: "put",

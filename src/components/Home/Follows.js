@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { FollowButtonContainer } from "../Reusable/FollowButtonContainer";
 export default function Follows(props) {
   let checked = props.data.check;
   return (
@@ -20,15 +20,7 @@ export default function Follows(props) {
               <p className="my-2">{props.data.bio}</p>
             </div>
           </Link>
-          <label className="my-auto" htmlFor={props.data.username}>
-            {props.data.follow ? (
-              <p className="bg-salmon w-40 h-20 flex items-center justify-center rounded-full ">
-                Following
-              </p>
-            ) : (
-              <p className="bg-blue-300 w-40 h-20 flex items-center justify-center rounded-full ">Follow</p>
-            )}
-          </label>
+          <FollowButtonContainer user={props.data.username} />
           <input
             onClick={props.Follow}
             onChange={() => (checked = !checked)}

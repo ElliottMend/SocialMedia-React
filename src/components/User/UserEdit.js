@@ -10,7 +10,7 @@ export default function UserEdit(props) {
           onSubmit={props.editSubmit}
         >
           <textarea
-            className="h-20 md:h-40 bg-gray-200 md:w-full text-center"
+            className="h-20 md:h-40 bg-gray-100 md:w-full text-center bg-gray-100 p-3 focus:border-blue-300 focus:outline-none focus:ring border-black shadow-inner border w-full rounded-lg "
             name="bio"
             defaultValue={props.data.bio}
             onChange={props.handleChange}
@@ -32,7 +32,7 @@ export default function UserEdit(props) {
             required
           />
 
-          <button>Submit</button>
+          <button className="my-4">Submit</button>
         </form>
       </div>
     </div>

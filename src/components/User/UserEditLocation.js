@@ -5,7 +5,7 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 
 export default function UserEditLocation(props) {
-  const [state, setState] = useState();
+  const [state, setState] = useState('');
   const handleChange = (address) => {
     setState(address);
   };
@@ -37,7 +37,7 @@ export default function UserEditLocation(props) {
           <div>
             <input
               {...getInputProps({
-                className: "md:w-full py-4 text-center location-search-input",
+                className: "bg-gray-100 p-3 focus:border-blue-300 focus:outline-none focus:ring border-black h-10 shadow-inner border w-full rounded-lg location-search-input",
               })}
             />
 
@@ -45,8 +45,8 @@ export default function UserEditLocation(props) {
               {loading && <div>Loading...</div>}
               {suggestions.map((suggestion) => {
                 const className = suggestion.active
-                  ? "suggestion-item--active"
-                  : "suggestion-item";
+                  ? "bg-gray-100 border-black h-10 shadow-inner border w-full rounded-lg"
+                  : "bg-gray-100 border-black h-10 shadow-inner border w-full rounded-lg";
                 const style = suggestion.active
                   ? { backgroundColor: "#fafafa", cursor: "pointer" }
                   : { backgroundColor: "#ffffff", cursor: "pointer" };

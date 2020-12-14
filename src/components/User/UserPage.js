@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import UserFollowContainer from "./UserFollowContainer";
 import PostContainer from "../Posts/PostContainer";
-
+import { FollowButtonContainer } from "../Reusable/FollowButtonContainer";
 export default function UserPage(props) {
   return (
     <div>
@@ -16,7 +16,6 @@ export default function UserPage(props) {
             <div className="flex my-10  flex-col">
               <h1 className="text-3xl font-semibold">{props.state.user}</h1>
               <div className="flex flex-row">
-                {console.log("gfdgdf")}
                 <p
                   id="0"
                   onClick={props.openModal}
@@ -55,36 +54,14 @@ export default function UserPage(props) {
                 </button>
               </Link>
             )}
-            <input
-              onClick={props.changeFollow}
-              defaultChecked={props.follows.follow}
-              id={props.state.user}
-              className="hidden"
-              type="checkbox"
-            ></input>
-            {props.username !== props.state.user && (
-              <label className="" htmlFor={props.state.user}>
-                {props.follows.follow ? (
-                  <div>
-                    <p className="bg-salmon cursor-pointer w-40 h-20 flex items-center justify-center rounded-full ">
-                      Following
-                    </p>
-                  </div>
-                ) : (
-                  <div>
-                    <p className="bg-blue-300 cursor-pointer w-40 h-20 flex items-center justify-center rounded-full ">
-                      Follow
-                    </p>
-                  </div>
-                )}
-              </label>
-            )}
+           
+            {props.username !== props.state.user && <FollowButtonContainer user={props.state.user} />}
           </div>
         </div>
       )}
       <div className="container mx-auto">
         {props.state.postItems.map((e) => (
-          <PostContainer data={e} />
+          <PostContainer key={e._id} data={e} />
         ))}
       </div>
     </div>

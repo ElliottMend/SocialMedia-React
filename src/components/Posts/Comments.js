@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
 import { usernameContext } from "../Context/usernameContext";
+import { Link } from "react-router-dom";
 export default function Comments(props) {
   const date = Date.now() / 1000 - props.data.date / 1000;
   return (
     <div className="my-1 flex text-navy text-lg flex-col items-center justify-center py-3 bg-seafoam">
-      <p className="font-bold">{props.data.author}</p>
-      <p>{props.data.text}</p>
+      <Link to={`/user/${props.data.author}`}>
+        <p className="font-bold">{props.data.author}</p>
+        <p>{props.data.text}</p>
+      </Link>
       {date < 60 ? (
         <p>{Math.round(date)} seconds ago</p>
       ) : date < 3600 ? (
