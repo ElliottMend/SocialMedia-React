@@ -40,7 +40,6 @@ export const UserEditContainer = () => {
       cb(reader.result);
     };
     reader.onerror = function (error) {
-      console.log("Error: ", error);
     };
   };
   const getLocation = async (e) => {

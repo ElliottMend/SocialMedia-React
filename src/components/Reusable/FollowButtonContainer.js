@@ -31,8 +31,6 @@ export const FollowButtonContainer = (props) => {
           author: e.target.id,
         },
         withCredentials: true,
-      }).catch((err) => {
-        console.log(err.response);
       });
     } else {
       axios({
@@ -42,8 +40,6 @@ export const FollowButtonContainer = (props) => {
           author: e.target.id,
         },
         withCredentials: true,
-      }).catch((err) => {
-        console.log(err.response);
       });
     }
   };

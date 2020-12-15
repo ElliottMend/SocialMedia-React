@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Login from "./Login";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 export default function LoginContainer(props) {
+  const history = useHistory();
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -60,23 +61,15 @@ export default function LoginContainer(props) {
         data: state,
         withCredentials: true,
       });
-      const user = res.data.username;
       const bio = res.data.bio;
       if (bio !== "") {
-        setState({
-          ...state,
-          username: user,
-          redirectHome: true,
-        });
+        history.push(`/user/${state.username}/edit`);
       } else {
-        setState({
-          ...state,
-          username: user,
-          redirectEdit: true,
-        });
+        history.push(`/`);
       }
       await props.auth();
     } catch (err) {
+      console.log(err.response)
       const a = err.response.data.message;
       setState({
         ...state,
@@ -86,8 +79,6 @@ export default function LoginContainer(props) {
   };
   return (
     <div>
-      {state.redirectHome && <Redirect exact to={"/"} />}
-      {state.redirectEdit && <Redirect to={`/user/${state.username}/edit`} />}
       <Login
         data={state}
         onChange={handleChange}

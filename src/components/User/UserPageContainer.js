@@ -104,7 +104,6 @@ export const UserPageContainer = () => {
         }
       });
     return () => {
-      console.log("return");
       isCancelled = true;
     };
   }, []);

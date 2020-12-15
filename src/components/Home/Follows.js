@@ -5,9 +5,9 @@ export default function Follows(props) {
   let checked = props.data.check;
   return (
     <div className="border-2 rounded-lg border-black">
-      <div className="bg-white py-8">
-        <div className="flex justify-between flex-row">
-          <Link className="flex" to={`/user/${props.data.username}/`}>
+      <div className="bg-white m-3">
+        <div className="flex justify-between items-center flex-row">
+          <Link className="flex items-center justify-between" to={`/user/${props.data.username}/`}>
             <img
               className="rounded-full m-5 w-3/12"
               src={props.data.photo}

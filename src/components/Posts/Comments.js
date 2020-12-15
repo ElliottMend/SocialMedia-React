@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Comments(props) {
   const date = Date.now() / 1000 - props.data.date / 1000;
   return (
-    <div className="my-1 flex text-navy text-lg flex-col items-center justify-center py-3 bg-seafoam">
+    <div className="border-b flex text-navy text-lg flex-col items-center justify-center py-3 bg-seafoam">
       <Link to={`/user/${props.data.author}`}>
         <p className="font-bold">{props.data.author}</p>
         <p>{props.data.text}</p>

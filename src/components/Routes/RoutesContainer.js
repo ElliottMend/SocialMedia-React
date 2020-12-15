@@ -26,7 +26,6 @@ export const RoutesContainer = () => {
       withCredentials: true,
     })
       .then((res) => {
-        console.log(res.status)
         setState(true);
       })
       .catch((err) => {
