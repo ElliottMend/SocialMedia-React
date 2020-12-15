@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Homepage from "./Homepage";
 
-export const HomepageContainer = () => {
+export default function HomepageContainer() {
   const [state, setState] = useState({
     radiusName: "",
     radius: 0.8,
@@ -111,4 +111,4 @@ export const HomepageContainer = () => {
       />
     </div>
   );
-};
+}

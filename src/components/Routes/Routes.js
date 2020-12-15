@@ -1,21 +1,21 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
 } from "react-router-dom";
+import history from "./History";
 import Header from "../Views/Header";
-import LoginContainer from "../UserAuth/LoginContainer";
-import RegisterContainer from "../UserAuth/RegisterContainer";
-import { HomepageContainer } from "../Home/HomepageContainer";
-import { UserPageContainer } from "../User/UserPageContainer";
-import PostContainer from "../Posts/PostContainer";
-import { UserEditContainer } from "../User/UserEditContainer";
-
+const LoginContainer = lazy(() => import("../UserAuth/LoginContainer"));
+const RegisterContainer = lazy(() => import("../UserAuth/RegisterContainer"));
+const UserPageContainer = lazy(() => import("../User/UserPageContainer"));
+const PostContainer = lazy(() => import("../Posts/PostContainer"));
+const HomepageContainer = lazy(() => import("../Home/HomepageContainer"));
+const UserEditContainer = lazy(() => import("../User/UserEditContainer"));
 export default function Routes(props) {
   return (
-    <Router>
+    <Suspense fallback={<p>Loading</p>}>
       <Switch>
         {props.state ? (
           <React.Fragment>
@@ -61,6 +61,6 @@ export default function Routes(props) {
           </React.Fragment>
         )}
       </Switch>
-    </Router>
+    </Suspense>
   );
 }

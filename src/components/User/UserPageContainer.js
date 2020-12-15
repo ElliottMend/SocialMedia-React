@@ -4,7 +4,7 @@ import Modal from "react-modal";
 import UserPage from "./UserPage";
 import { usernameContext } from "../Context/usernameContext";
 
-export const UserPageContainer = () => {
+export default function UserPageContainer () {
   const [user, setUser] = useState({ img: "", bio: "" });
   const [follows, setFollows] = useState({
     followers: 0,

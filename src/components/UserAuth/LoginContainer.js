@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import Login from "./Login";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
-export default function LoginContainer(props) {
-  const history = useHistory();
+import history from '../Routes/History'
+export default function LoginContainer() {
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -55,26 +54,22 @@ export default function LoginContainer(props) {
       redirectEdit: false,
     });
     try {
-      const res = await axios({
+      await axios({
         method: "post",
         url: "https://social-mediasite.herokuapp.com/login",
         data: state,
         withCredentials: true,
       });
-      const bio = res.data.bio;
-      if (bio !== "") {
-        history.push(`/user/${state.username}/edit`);
-      } else {
-        history.push(`/`);
-      }
-      await props.auth();
+      history.push(`/`);
     } catch (err) {
-      console.log(err.response)
-      const a = err.response.data.message;
-      setState({
-        ...state,
-        error: a,
-      });
+      console.log(err);
+      // if (err.response.data.message) {
+      //   const a = err.response.data.message;
+      //   setState({
+      //     ...state,
+      //     error: a,
+      //   });
+      // }
     }
   };
   return (

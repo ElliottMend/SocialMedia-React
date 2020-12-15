@@ -5,6 +5,7 @@ import { usernameContext } from "../Context/usernameContext";
 export default function Header(props) {
   const history = useHistory();
   const DeleteToken = async () => {
+    console.log("click");
     await axios({
       method: "get",
       url: `https://social-mediasite.herokuapp.com/logout`,
@@ -23,7 +24,7 @@ export default function Header(props) {
             <Link to={`/user/${useContext(usernameContext)}`}>
               <p className="">Account</p>
             </Link>
-            <p className="" onClick={DeleteToken}>
+            <p className="cursor-pointer" onClick={DeleteToken}>
               Logout
             </p>
           </div>
