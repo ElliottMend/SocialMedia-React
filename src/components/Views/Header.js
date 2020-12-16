@@ -1,17 +1,18 @@
-import React, { useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
 import { usernameContext } from "../Context/usernameContext";
 export default function Header(props) {
-  const history = useHistory();
+  const [redirect, setRedirect] = useState(false);
   const DeleteToken = async () => {
-    console.log("click");
     await axios({
       method: "get",
       url: `https://social-mediasite.herokuapp.com/logout`,
       withCredentials: true,
+    }).then(async () => {
+      await props.logout();
+      setRedirect(true);
     });
-    history.push("/login");
   };
   return (
     <div className="text-navy">
@@ -27,6 +28,7 @@ export default function Header(props) {
             <p className="cursor-pointer" onClick={DeleteToken}>
               Logout
             </p>
+            {redirect && <Redirect to="/login" />}
           </div>
         </div>
       </div>

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Login from "./Login";
 import axios from "axios";
-import history from '../Routes/History'
-export default function LoginContainer() {
+import history from "../Routes/History";
+export default function LoginContainer(props) {
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -60,16 +60,10 @@ export default function LoginContainer() {
         data: state,
         withCredentials: true,
       });
+      await props.login();
       history.push(`/`);
     } catch (err) {
       console.log(err);
-      // if (err.response.data.message) {
-      //   const a = err.response.data.message;
-      //   setState({
-      //     ...state,
-      //     error: a,
-      //   });
-      // }
     }
   };
   return (

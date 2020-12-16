@@ -34,10 +34,16 @@ export const RoutesContainer = () => {
         setState(false);
       });
   };
+  const login = () => {
+    setState(true);
+  };
+  const logout = () => {
+    setState(false);
+  };
   return (
     <div>
       <usernameContext.Provider value={user}>
-        <Routes state={state} />
+        <Routes login={login} logout={logout} state={state} />
       </usernameContext.Provider>
     </div>
   );

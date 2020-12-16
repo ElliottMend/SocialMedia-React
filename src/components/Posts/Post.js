@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Comments from "./Comments";
 import { Link } from "react-router-dom";
 import PostContainer from "./PostContainer";

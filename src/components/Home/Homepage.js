@@ -47,6 +47,7 @@ export default function Homepage(props) {
           </div>
         </section>
         <div className="w-full">
+        {console.log(props.posts)}
           {props.posts &&
             props.posts.map((e) => (
               <PostContainer more={props.more} key={e._id} data={e} />

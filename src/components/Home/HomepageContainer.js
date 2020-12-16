@@ -28,6 +28,7 @@ export default function HomepageContainer() {
     };
   }, [state.radius]);
   const getPosts = async () => {
+    console.log(state.radius)
     const post = await axios({
       method: "post",
       url: "https://social-mediasite.herokuapp.com/locationPosts",
@@ -36,7 +37,6 @@ export default function HomepageContainer() {
       },
       withCredentials: true,
     });
-
     return post.data;
   };
   const getFollows = async () => {
@@ -59,6 +59,7 @@ export default function HomepageContainer() {
   };
   const newPost = async (e) => {
     e.preventDefault();
+
     const res = await axios({
       method: "post",
       url: "https://social-mediasite.herokuapp.com/newpost",
@@ -69,25 +70,27 @@ export default function HomepageContainer() {
     });
     const data = res.data;
     setTimeout(() => {
-      setState({ ...state, body: "", posts: [data, ...state.posts] });
-    }, 150);
+      setPosts([data, ...posts]);
+    }, 100);
   };
-  const sortPosts = (e) => {
+  const sortPostDate = () => {
+    console.log(posts);
     let arr = [];
-    if (e === "recent") {
-      arr = state.posts.sort((a, b) => (a.date > b.date ? 1 : -1));
-    } else {
-      arr = state.posts.sort((a, b) => (a.likes < b.likes ? 1 : -1));
-    }
-    setState({ ...state, posts: [...arr] });
+    arr = posts.sort((a, b) => (a.date < b.date ? 1 : -1));
+    setPosts([...arr]);
+  };
+  const sortPostLikes = () => {
+    let arr = [];
+    arr = posts.sort((a, b) => (a.likes > b.likes ? 1 : -1));
+    setPosts([...arr]);
   };
   const postSort = (e) => {
     switch (e.target.value) {
       case "liked":
-        sortPosts("liked");
+        sortPostLikes("liked");
         return;
       default:
-        sortPosts("recent");
+        sortPostDate("recent");
         return;
     }
   };

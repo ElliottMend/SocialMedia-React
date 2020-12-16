@@ -19,7 +19,7 @@ export default function Routes(props) {
       <Switch>
         {props.state ? (
           <React.Fragment>
-            <Header />
+            <Header logout={props.logout} />
             <Route
               path="/posts/:id"
               component={() => <PostContainer key={window.location.pathname} />}
@@ -55,7 +55,7 @@ export default function Routes(props) {
             <Route
               path="/login"
               exact
-              component={() => <LoginContainer data={props.data} />}
+              component={() => <LoginContainer login={props.login} data={props.data} />}
             />
             {!props.state && <Redirect to="/login" />}
           </React.Fragment>
