@@ -41,12 +41,6 @@ export default function Routes(props) {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            {/* <Route
-              path="/*"
-              render={() => {
-                return <Redirect to="/" />;
-              }}
-            /> */}
             <Route
               path="/register"
               exact

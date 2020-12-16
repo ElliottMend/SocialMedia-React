@@ -3,7 +3,7 @@ import axios from "axios";
 import UserEdit from "./UserEdit";
 import { useHistory } from "react-router-dom";
 import { usernameContext } from "../Context/usernameContext";
-export const UserEditContainer = () => {
+export default function UserEditContainer() {
   const history = useHistory();
   const [locate, setLocate] = useState();
   const [locat, setLocation] = useState();
@@ -39,8 +39,7 @@ export const UserEditContainer = () => {
     reader.onload = function () {
       cb(reader.result);
     };
-    reader.onerror = function (error) {
-    };
+    reader.onerror = function (error) {};
   };
   const getLocation = async (e) => {
     setLocate(e);
@@ -90,4 +89,4 @@ export const UserEditContainer = () => {
       />
     </div>
   );
-};
+}

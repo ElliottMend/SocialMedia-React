@@ -47,15 +47,15 @@ export default function UserPage(props) {
               <p className="my-12">{props.user.bio}</p>
               <p>{props.user.location}</p>
             </div>
-            {props.state.user === props.username && (
+            {props.state.user === props.username ? (
               <Link className="" to={`/user/${props.state.user}/edit`}>
                 <button className="bg-seafoam h-20 w-40 rounded-full">
                   Edit
                 </button>
               </Link>
+            ) : (
+              <FollowButtonContainer user={props.state.user} />
             )}
-           
-            {props.username !== props.state.user && <FollowButtonContainer user={props.state.user} />}
           </div>
         </div>
       )}

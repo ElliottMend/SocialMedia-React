@@ -6,17 +6,27 @@ import Modal from "react-modal";
 export default function Post(props) {
   useEffect(() => {});
   const date = Date.now() / 1000 - props.data.date / 1000;
-
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      width: "90%",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
   return (
     <div className="my-10">
       <div className="rounded-lg font-semibold text-navy bg-seafoam">
         {props.data && (
           <div>
-            <div className="flex items-center justify-between flex-row">
+            <div className="flex items-center mx-2 justify-between flex-row">
               <div>
                 <Link to={`/user/${props.data.author}`}>
                   <img
-                    className="w-32 m-6 rounded-full"
+                    className="w-20 md:w-32 m-2 rounded-full"
                     alt="Profile"
                     src={props.img}
                   />
@@ -24,14 +34,15 @@ export default function Post(props) {
               </div>
               <div>
                 <Link to={`/user/${props.data.author}`}>
-                  <h6 className="text-2xl mr-32 self-middle align-middle font-bold">
+                  <h6 className="text-2xl self-middle align-middle font-bold">
                     {props.data.author}
                   </h6>
                 </Link>
               </div>
             </div>
-            <p>{props.data.body}</p>
-
+            <div className="flex justify-center">
+              <p>{props.data.body}</p>
+            </div>
             <div className="flex mt-10 justify-center flex-row">
               {date < 60 ? (
                 <p>{Math.round(date)} seconds ago</p>
@@ -84,13 +95,16 @@ export default function Post(props) {
                 Delete Post
               </button>
             )}
-            <form className="bg-cream px-4" onSubmit={props.createComment}>
+            <form
+              className="bg-cream flex flex-col justify-center"
+              onSubmit={props.createComment}
+            >
               <input
-                className="text-2xl px-3 w-2/3 rounded-lg mb-10"
+                className="bg-gray-100 p-3 focus:border-blue-300 focus:outline-none focus:ring border-black h-10 shadow-inner border w-full rounded-lg "
                 onChange={props.commentChange}
-                placeholder="comment"
+                placeholder="Comment"
               ></input>
-              <button className="m-10 text-2xl">Submit</button>
+              <button className="m-2 md:m-10 text-2xl">Submit</button>
             </form>
           </div>
         )}
@@ -120,6 +134,8 @@ export default function Post(props) {
         isOpen={props.modal}
         onAfterOpen={props.afterModalOpen}
         onRequestClose={props.closeModal}
+        style={customStyles}
+        // className="w-full flex mx-auto md:w-6/12 bg-blue-300"
       >
         <PostContainer
           deleteComment={(index) => props.deleteComment(index)}

@@ -88,7 +88,7 @@ export default function UserPageContainer () {
       .then((res) => {
         if (!isCancelled) {
           setState((prevState) => ({
-            prevState,
+            ...prevState,
             postItems: [...res.data],
           }));
         }
@@ -97,7 +97,7 @@ export default function UserPageContainer () {
         if (!isCancelled) {
           if (err.response) {
             setState((prevState) => ({
-              prevState,
+              ...prevState,
               error: err.response.data.message,
             }));
           }

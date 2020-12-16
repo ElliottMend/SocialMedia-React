@@ -5,15 +5,15 @@ export default function Follows(props) {
   let checked = props.data.check;
   return (
     <div className="border-2 rounded-lg border-black">
-      <div className="bg-white m-3">
-        <div className="flex justify-between items-center flex-row">
-          <Link className="flex items-center justify-between" to={`/user/${props.data.username}/`}>
+      <div className="bg-white">
+        <div className="flex px-2 items-center justify-center flex-row">
+          <Link className="flex items-center" to={`/user/${props.data.username}/`}>
             <img
-              className="rounded-full m-5 w-3/12"
+              className="rounded-full m-1 w-3/12"
               src={props.data.photo}
               alt="userProfile"
             />
-            <div className="flex  flex-col">
+            <div className="flex justify-center mx-4 flex-col">
               <div>
                 <p className="my-2 text-lg">{props.data.username}</p>
               </div>

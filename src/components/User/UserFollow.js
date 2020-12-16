@@ -4,8 +4,8 @@ import { FollowButtonContainer } from "../Reusable/FollowButtonContainer";
 export default function UserFollow(props) {
   const [state, setState] = useState({ checked: true });
   return (
-    <div className={props.color ? "bg-seafoam" : "bg-salmon"}>
-      <div className="flex items-center text-navy justify-between flex-row">
+    <div>
+      <div className="flex pr-2 items-center border border-black text-navy justify-between flex-row">
         <Link to={`/user/${props.data.username}`}>
           <div className="flex items-center text-navy justify-between flex-row">
             <img src={props.data.photo} alt="user Profile" />
@@ -17,7 +17,7 @@ export default function UserFollow(props) {
             </div>
           </div>
         </Link>
-        <FollowButtonContainer user={props.data.username} />
+        <FollowButtonContainer  user={props.data.username} />
       </div>
     </div>
   );

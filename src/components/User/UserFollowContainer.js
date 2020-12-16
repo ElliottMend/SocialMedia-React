@@ -20,28 +20,18 @@ export default function UserFollowContainer(props) {
     });
     setState({ followData: [...res.data], follows: [props.follow] });
   };
-  const Follow = (e) => {
-    
-  };
-  const getColor = () => {
-    color = !color;
-  };
-  var color = false;
+  const Follow = (e) => {};
   return (
     <div>
       <div>
         {state &&
           state.followData.map((e, index) => (
-            <div>
-              {getColor()}
-              <UserFollow
-                color={color}
-                key={e.username}
-                follow={state.follows}
-                onChange={(e) => Follow(e)}
-                data={e}
-              />
-            </div>
+            <UserFollow
+              key={index}
+              follow={state.follows}
+              onChange={(e) => Follow(e)}
+              data={e}
+            />
           ))}
       </div>
     </div>
