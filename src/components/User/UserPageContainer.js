@@ -4,7 +4,7 @@ import Modal from "react-modal";
 import UserPage from "./UserPage";
 import { usernameContext } from "../Context/usernameContext";
 
-export default function UserPageContainer () {
+export default function UserPageContainer() {
   const [user, setUser] = useState({ img: "", bio: "" });
   const [follows, setFollows] = useState({
     followers: 0,
@@ -12,12 +12,13 @@ export default function UserPageContainer () {
     followerUsers: [],
     followingUsers: [],
   });
+  const [display, setDisplays] = useState(0);
   const [username] = useState(useContext(usernameContext));
   const [modalIsOpen, setIsOpen] = React.useState({
     isOpen: false,
     modal: null,
   });
-
+  const [userLikes, setLikes] = useState([]);
   const [state, setState] = useState({
     postItems: [],
     user: window.location.pathname.split("/")[2],
@@ -42,6 +43,9 @@ export default function UserPageContainer () {
       withCredentials: true,
     });
     return follows;
+  };
+  const displays = async (e) => {
+    setDisplays(Number(e.target.id));
   };
   const getPosts = async () => {
     const posts = await axios({
@@ -107,6 +111,14 @@ export default function UserPageContainer () {
       isCancelled = true;
     };
   }, []);
+  const getUserLikes = async () => {
+    const likes = await axios({
+      method: "get",
+      url: `https://social-mediasite.herokuapp.com/getUserLikes/${state.user}`,
+      withCredentials: true,
+    });
+    setLikes(likes);
+  };
   const customStyles = {
     content: {
       top: "50%",
@@ -121,6 +133,9 @@ export default function UserPageContainer () {
   return (
     <div>
       <UserPage
+        userLikes={userLikes}
+        display={display}
+        clickDisplays={displays}
         username={username}
         closeModal={closeModal}
         customStyles={customStyles}
@@ -133,4 +148,4 @@ export default function UserPageContainer () {
       />
     </div>
   );
-};
+}

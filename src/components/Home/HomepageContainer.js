@@ -8,6 +8,7 @@ export default function HomepageContainer() {
     radius: 0.8,
     sorting: "recent",
   });
+  const [error, setError] = useState();
   const [posts, setPosts] = useState();
   const [follows, setFollows] = useState();
   const [more] = useState(true);
@@ -28,7 +29,6 @@ export default function HomepageContainer() {
     };
   }, [state.radius]);
   const getPosts = async () => {
-    console.log(state.radius)
     const post = await axios({
       method: "post",
       url: "https://social-mediasite.herokuapp.com/locationPosts",
@@ -59,7 +59,6 @@ export default function HomepageContainer() {
   };
   const newPost = async (e) => {
     e.preventDefault();
-
     const res = await axios({
       method: "post",
       url: "https://social-mediasite.herokuapp.com/newpost",
@@ -74,7 +73,6 @@ export default function HomepageContainer() {
     }, 100);
   };
   const sortPostDate = () => {
-    console.log(posts);
     let arr = [];
     arr = posts.sort((a, b) => (a.date < b.date ? 1 : -1));
     setPosts([...arr]);
@@ -95,15 +93,20 @@ export default function HomepageContainer() {
     }
   };
   const handleChange = (e) => {
-    setState({
-      ...state,
-      body: e.target.value,
-    });
+    if (e.target.value.length > 140) {
+      setError("The maximum length of a post is 140 characters");
+    } else {
+      setState({
+        ...state,
+        body: e.target.value,
+      });
+    }
   };
   return (
     <div>
       <Homepage
         more={more}
+        error={error}
         newPost={newPost}
         postSort={postSort}
         changeRadius={changeRadius}

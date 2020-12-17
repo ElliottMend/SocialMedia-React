@@ -22,11 +22,11 @@ export default function Post(props) {
       <div className="rounded-lg font-semibold text-navy bg-seafoam">
         {props.data && (
           <div>
-            <div className="flex items-center mx-2 justify-between flex-row">
+            <div className="flex items-center mx-2 md:mx-10 justify-between flex-row">
               <div>
                 <Link to={`/user/${props.data.author}`}>
                   <img
-                    className="w-20 md:w-32 m-2 rounded-full"
+                    className="w-20 md:w-32 md:m-10 m-2 rounded-full"
                     alt="Profile"
                     src={props.img}
                   />
@@ -104,7 +104,7 @@ export default function Post(props) {
                 onChange={props.commentChange}
                 placeholder="Comment"
               ></input>
-              <button className="m-2 md:m-10 text-2xl">Submit</button>
+              <button className="m-2 md:m-4 text-2xl">Submit</button>
             </form>
           </div>
         )}

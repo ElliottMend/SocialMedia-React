@@ -59,10 +59,40 @@ export default function UserPage(props) {
           </div>
         </div>
       )}
+      <ul className="list-reset flex justify-center container flex mx-auto border-b">
+        <li className="-mb-px mr-1">
+          <button
+            id="0"
+            onClick={props.clickDisplays}
+            className={
+              props.display === 0
+                ? "bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-white bg-blue-300 font-semibold" 
+                : "bg-white inline-block py-2 px-4 text-blue-300 font-semibold"
+            }
+          >
+            Posts
+          </button>
+        </li>
+        <li className="mr-1">
+          <button
+            onClick={props.clickDisplays}
+            id="1"
+            className={
+              props.display === 0
+                ? "bg-white inline-block py-2 px-4 text-blue-300 font-semibold"
+                : "bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-white bg-blue-300 font-semibold"
+            }
+          >
+            Likes
+          </button>
+        </li>
+      </ul>
       <div className="container mx-auto">
-        {props.state.postItems.map((e) => (
-          <PostContainer key={e._id} data={e} />
-        ))}
+        {props.display === 0
+          ? props.state.postItems.map((e) => (
+              <PostContainer key={e._id} data={e} />
+            ))
+          : props.userLikes.map((e) => <PostContainer key={e._id} data={e} />)}
       </div>
     </div>
   );

@@ -19,6 +19,7 @@ export default function Homepage(props) {
               size="75"
               onChange={props.handleChange}
             />
+            {props.error && <p className="text-red-500">{props.error}</p>}
             <button className="bg-seafoam text-xl my-4 px-12 py-6">
               Submit
             </button>
@@ -47,7 +48,6 @@ export default function Homepage(props) {
           </div>
         </section>
         <div className="w-full">
-          {console.log(props.posts)}
           {props.posts &&
             props.posts.map((e) => (
               <PostContainer more={props.more} key={e._id} data={e} />
