@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 export default function Comments(props) {
   const date = Date.now() / 1000 - props.data.date / 1000;
   return (
-    <div className="border-b flex text-navy text-lg flex-col items-center justify-center py-3 bg-seafoam">
-      <Link to={`/user/${props.data.author}`}>
+    <div className="border-b flex text-navy text-lg flex-col justify-center py-3 bg-seafoam">
+      <Link className="" to={`/user/${props.data.author}`}>
         <p className="font-bold">{props.data.author}</p>
-        <p>{props.data.text}</p>
+        <div className="break-words text-center my-3 px-10 md:px-20">
+          <p>{props.data.text}</p>
+        </div>
       </Link>
       {date < 60 ? (
         <p>{Math.round(date)} seconds ago</p>

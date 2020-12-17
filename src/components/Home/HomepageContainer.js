@@ -59,18 +59,23 @@ export default function HomepageContainer() {
   };
   const newPost = async (e) => {
     e.preventDefault();
-    const res = await axios({
-      method: "post",
-      url: "https://social-mediasite.herokuapp.com/newpost",
-      data: {
-        body: state.body,
-      },
-      withCredentials: true,
-    });
-    const data = res.data;
-    setTimeout(() => {
-      setPosts([data, ...posts]);
-    }, 100);
+    if (state.body.length > 140) {
+      setError("The maximum length of a post is 140 characters");
+      return;
+    } else {
+      const res = await axios({
+        method: "post",
+        url: "https://social-mediasite.herokuapp.com/newpost",
+        data: {
+          body: state.body,
+        },
+        withCredentials: true,
+      });
+      const data = res.data;
+      setTimeout(() => {
+        setPosts([data, ...posts]);
+      }, 100);
+    }
   };
   const sortPostDate = () => {
     let arr = [];
@@ -93,9 +98,10 @@ export default function HomepageContainer() {
     }
   };
   const handleChange = (e) => {
-    if (e.target.value.length > 140) {
+    if (e.target.value.length === 140) {
       setError("The maximum length of a post is 140 characters");
     } else {
+      setError("");
       setState({
         ...state,
         body: e.target.value,

@@ -66,7 +66,7 @@ export default function UserPage(props) {
             onClick={props.clickDisplays}
             className={
               props.display === 0
-                ? "bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-white bg-blue-300 font-semibold" 
+                ? "bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-white bg-blue-300 font-semibold"
                 : "bg-white inline-block py-2 px-4 text-blue-300 font-semibold"
             }
           >
@@ -86,6 +86,7 @@ export default function UserPage(props) {
             Likes
           </button>
         </li>
+        {console.log(props.userLikes)}
       </ul>
       <div className="container mx-auto">
         {props.display === 0

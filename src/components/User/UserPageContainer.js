@@ -46,6 +46,9 @@ export default function UserPageContainer() {
   };
   const displays = async (e) => {
     setDisplays(Number(e.target.id));
+    if (e.target.id == 1) {
+      await getUserLikes();
+    }
   };
   const getPosts = async () => {
     const posts = await axios({
@@ -117,7 +120,7 @@ export default function UserPageContainer() {
       url: `https://social-mediasite.herokuapp.com/getUserLikes/${state.user}`,
       withCredentials: true,
     });
-    setLikes(likes);
+    setLikes([...likes.data]);
   };
   const customStyles = {
     content: {

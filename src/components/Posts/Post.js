@@ -40,7 +40,7 @@ export default function Post(props) {
                 </Link>
               </div>
             </div>
-            <div className="flex justify-center">
+            <div className="break-words text-center my-3 px-10 md:px-20">
               <p>{props.data.body}</p>
             </div>
             <div className="flex mt-10 justify-center flex-row">
@@ -88,18 +88,21 @@ export default function Post(props) {
               <div>{props.data.location}</div>
             </div>
             {props.data.author === props.username && (
-              <button
-                className="bg-salmon py-4 px-8 m-2 rounded-lg"
-                onClick={props.deletePost}
-              >
-                Delete Post
-              </button>
+              <div className="flex justify-center">
+                <button
+                  className="bg-salmon py-4 px-8 m-2 rounded-lg"
+                  onClick={props.deletePost}
+                >
+                  Delete Post
+                </button>
+              </div>
             )}
             <form
               className="bg-cream flex flex-col justify-center"
               onSubmit={props.createComment}
             >
               <input
+                maxLength="140"
                 className="bg-gray-100 p-3 focus:border-blue-300 focus:outline-none focus:ring border-black h-10 shadow-inner border w-full rounded-lg "
                 onChange={props.commentChange}
                 placeholder="Comment"

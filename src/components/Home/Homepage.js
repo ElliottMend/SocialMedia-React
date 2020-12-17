@@ -14,6 +14,7 @@ export default function Homepage(props) {
               Create Post
             </label>
             <textarea
+              maxLength="140"
               className="h-20 md:h-40 bg-gray-100 text-center bg-gray-100 p-3 focus:border-blue-300 focus:outline-none focus:ring border-black shadow-inner border w-8/12 rounded-lg "
               id="body"
               size="75"
