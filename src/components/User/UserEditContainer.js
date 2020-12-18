@@ -1,27 +1,33 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import UserEdit from "./UserEdit";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { usernameContext } from "../Context/usernameContext";
-export default function UserEditContainer() {
+export default function UserEditContainer(props) {
   const history = useHistory();
   const [locate, setLocate] = useState();
   const [locat, setLocation] = useState();
   const [user] = useState(useContext(usernameContext));
   const [state, setState] = useState({ bio: "" });
+  const currUser = window.location.pathname.split("/")[2];
+  const [redirect, setRedirect] = useState(false);
   useEffect(() => {
-    axios({
-      method: "get",
-      url: "https://social-mediasite.herokuapp.com/getUser",
-      withCredentials: true,
-    }).then((res) => {
-      setLocate(res.data.location);
-      setLocation(res.data.latlng);
-      setState({
-        ...state,
-        bio: res.data.bio,
+    if (currUser === user) {
+      axios({
+        method: "get",
+        url: "https://social-mediasite.herokuapp.com/getUserEdit",
+        withCredentials: true,
+      }).then((res) => {
+        setLocate(res.data.location);
+        setLocation(res.data.latlng);
+        setState({
+          ...state,
+          bio: res.data.bio,
+        });
       });
-    });
+    } else {
+      setRedirect(true);
+    }
   }, []);
 
   const fileSelectedHandler = async (e) => {
@@ -87,6 +93,7 @@ export default function UserEditContainer() {
         locate={locate}
         data={state}
       />
+      {redirect && <Redirect to="/" />}
     </div>
   );
 }

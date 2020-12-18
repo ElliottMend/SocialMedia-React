@@ -5,6 +5,7 @@ import UserFollowContainer from "./UserFollowContainer";
 import PostContainer from "../Posts/PostContainer";
 import { FollowButtonContainer } from "../Reusable/FollowButtonContainer";
 export default function UserPage(props) {
+  const more = true;
   return (
     <div>
       {props.state.error ? (
@@ -48,7 +49,7 @@ export default function UserPage(props) {
               <p>{props.user.location}</p>
             </div>
             {props.state.user === props.username ? (
-              <Link className="" to={`/user/${props.state.user}/edit`}>
+              <Link to={`/user/${props.state.user}/edit`}>
                 <button className="bg-seafoam h-20 w-40 rounded-full">
                   Edit
                 </button>
@@ -65,9 +66,9 @@ export default function UserPage(props) {
             id="0"
             onClick={props.clickDisplays}
             className={
-              props.display === 0
-                ? "bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-white bg-blue-300 font-semibold"
-                : "bg-white inline-block py-2 px-4 text-blue-300 font-semibold"
+              props.display != 0
+                ? "bg-white inline-block py-2 px-4 text-blue-300 font-semibold"
+                : "bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-white bg-blue-300 font-semibold"
             }
           >
             Posts
@@ -78,7 +79,7 @@ export default function UserPage(props) {
             onClick={props.clickDisplays}
             id="1"
             className={
-              props.display === 0
+              props.display != 1
                 ? "bg-white inline-block py-2 px-4 text-blue-300 font-semibold"
                 : "bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-white bg-blue-300 font-semibold"
             }
@@ -86,14 +87,34 @@ export default function UserPage(props) {
             Likes
           </button>
         </li>
-        {console.log(props.userLikes)}
+        <li className="mr-1">
+          <button
+            onClick={props.clickDisplays}
+            id="2"
+            className={
+              props.display != 2
+                ? "bg-white inline-block py-2 px-4 text-blue-300 font-semibold"
+                : "bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-white bg-blue-300 font-semibold"
+            }
+          >
+            Comments
+          </button>
+        </li>
       </ul>
+      {console.log(props.comments)}
       <div className="container mx-auto">
         {props.display === 0
-          ? props.state.postItems.map((e) => (
-              <PostContainer key={e._id} data={e} />
+          ? props.posts.map((e) => (
+              <PostContainer more={more} key={e._id} data={e} />
             ))
-          : props.userLikes.map((e) => <PostContainer key={e._id} data={e} />)}
+          : props.display === 1
+          ? props.userLikes.map((e) => (
+              <PostContainer more={more} key={e._id} data={e} />
+            ))
+          : props.display === 2 &&
+            props.comments.map((e) => (
+              <PostContainer more={more} key={e._id} data={e} />
+            ))}
       </div>
     </div>
   );

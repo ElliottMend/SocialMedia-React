@@ -12,9 +12,11 @@ export default function Post(props) {
       left: "50%",
       right: "auto",
       width: "90%",
+      height: "90%",
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
+      overflow: "auto",
     },
   };
   return (
@@ -88,14 +90,12 @@ export default function Post(props) {
               <div>{props.data.location}</div>
             </div>
             {props.data.author === props.username && (
-              <div className="flex justify-center">
-                <button
-                  className="bg-salmon py-4 px-8 m-2 rounded-lg"
-                  onClick={props.deletePost}
-                >
-                  Delete Post
-                </button>
-              </div>
+              <button
+                className="bg-salmon py-4 px-8 m-2 rounded-lg"
+                onClick={props.deletePost}
+              >
+                Delete Post
+              </button>
             )}
             <form
               className="bg-cream flex flex-col justify-center"

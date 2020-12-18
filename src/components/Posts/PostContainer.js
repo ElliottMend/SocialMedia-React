@@ -68,8 +68,7 @@ export default function PostContainer(props) {
   const checkUser = async () => {
     const res = await axios({
       method: "get",
-      url: "https://social-mediasite.herokuapp.com/getUser",
-      data: { user: props.data.author },
+      url: `https://social-mediasite.herokuapp.com/users/${props.data.author}`,
       withCredentials: true,
     });
     return res;
@@ -115,7 +114,7 @@ export default function PostContainer(props) {
         },
         ...comm,
       ]);
-    }, 150);
+    }, 100);
   };
   const displayComments = async () => {
     const postArr = [];

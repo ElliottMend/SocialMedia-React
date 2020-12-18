@@ -16,45 +16,45 @@ const UserEditContainer = lazy(() => import("../User/UserEditContainer"));
 export default function Routes(props) {
   return (
     <Suspense fallback={<p>Loading</p>}>
-      <Switch>
-        {props.state ? (
-          <React.Fragment>
-            <Header logout={props.logout} />
+      {props.state ? (
+        <React.Fragment>
+          <Header logout={props.logout} />
+          <Switch>
             <Route
               path="/posts/:id"
               component={() => <PostContainer key={window.location.pathname} />}
             />
             <Route path="/" exact component={() => <HomepageContainer />} />
             <Route
-              exact
               path="/user/:id/edit"
               component={() => <UserEditContainer />}
             />
             <Route
-              exact
               path="/user/:id"
               component={() => (
                 <UserPageContainer key={window.location.pathname} />
               )}
             />
-            {props.state && <Redirect to="/" />}
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            <Route
-              path="/register"
-              exact
-              component={() => <RegisterContainer />}
-            />
-            <Route
-              path="/login"
-              exact
-              component={() => <LoginContainer login={props.login} data={props.data} />}
-            />
-            {!props.state && <Redirect to="/login" />}
-          </React.Fragment>
-        )}
-      </Switch>
+            <Route render={() => <Redirect to="/" />} />
+          </Switch>
+        </React.Fragment>
+      ) : (
+        <Switch>
+          <Route
+            path="/register"
+            exact
+            component={() => <RegisterContainer />}
+          />
+          <Route
+            path="/login"
+            exact
+            component={() => (
+              <LoginContainer login={props.login} data={props.data} />
+            )}
+          />
+          {!props.state && <Redirect to="/login" />}
+        </Switch>
+      )}
     </Suspense>
   );
 }

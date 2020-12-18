@@ -51,7 +51,7 @@ export default function Homepage(props) {
         <div className="w-full">
           {props.posts &&
             props.posts.map((e) => (
-              <PostContainer more={props.more} key={e._id} data={e} />
+              <PostContainer key={e._id} data={e} />
             ))}
         </div>
         <div className="mt-1 inset-x-0 top-0 left-0 rounded-lg md:sticky mx-2" >

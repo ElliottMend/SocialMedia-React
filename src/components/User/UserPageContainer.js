@@ -19,6 +19,8 @@ export default function UserPageContainer() {
     modal: null,
   });
   const [userLikes, setLikes] = useState([]);
+  const [userComments, setComments] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [state, setState] = useState({
     postItems: [],
     user: window.location.pathname.split("/")[2],
@@ -27,7 +29,7 @@ export default function UserPageContainer() {
   const getUser = async () => {
     const user = await axios({
       method: "get",
-      url: "https://social-mediasite.herokuapp.com/getUser",
+      url: `https://social-mediasite.herokuapp.com/users/${state.user}`,
       data: { user: state.user },
       withCredentials: true,
     });
@@ -46,17 +48,6 @@ export default function UserPageContainer() {
   };
   const displays = async (e) => {
     setDisplays(Number(e.target.id));
-    if (e.target.id == 1) {
-      await getUserLikes();
-    }
-  };
-  const getPosts = async () => {
-    const posts = await axios({
-      method: "get",
-      url: `https://social-mediasite.herokuapp.com/users/${state.user}`,
-      withCredentials: true,
-    });
-    return posts;
   };
 
   const openModal = (e) => {
@@ -81,22 +72,18 @@ export default function UserPageContainer() {
         });
       }
     });
-    getUser().then((res) => {
-      if (!isCancelled) {
-        setUser((prevState) => ({
-          prevState,
-          location: res.data.location,
-          img: res.data.photo,
-          bio: res.data.bio,
-        }));
-      }
-    });
-    getPosts()
+    getUser()
       .then((res) => {
         if (!isCancelled) {
-          setState((prevState) => ({
-            ...prevState,
-            postItems: [...res.data],
+          console.log(res.data)
+          setPosts([...res.data.posts]);
+          setLikes([...res.data.likes]);
+          setComments([...res.data.comments]);
+          setUser((prevState) => ({
+            prevState,
+            location: res.data.location,
+            img: res.data.photo,
+            bio: res.data.bio,
           }));
         }
       })
@@ -114,14 +101,6 @@ export default function UserPageContainer() {
       isCancelled = true;
     };
   }, []);
-  const getUserLikes = async () => {
-    const likes = await axios({
-      method: "get",
-      url: `https://social-mediasite.herokuapp.com/getUserLikes/${state.user}`,
-      withCredentials: true,
-    });
-    setLikes([...likes.data]);
-  };
   const customStyles = {
     content: {
       top: "50%",
@@ -136,7 +115,9 @@ export default function UserPageContainer() {
   return (
     <div>
       <UserPage
+        comments={userComments}
         userLikes={userLikes}
+        posts={posts}
         display={display}
         clickDisplays={displays}
         username={username}
