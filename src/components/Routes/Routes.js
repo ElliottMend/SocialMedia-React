@@ -5,7 +5,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import history from "./History";
+import Loading from "./Loading";
 import Header from "../Views/Header";
 const LoginContainer = lazy(() => import("../UserAuth/LoginContainer"));
 const RegisterContainer = lazy(() => import("../UserAuth/RegisterContainer"));
@@ -15,7 +15,7 @@ const HomepageContainer = lazy(() => import("../Home/HomepageContainer"));
 const UserEditContainer = lazy(() => import("../User/UserEditContainer"));
 export default function Routes(props) {
   return (
-    <Suspense fallback={<p>Loading</p>}>
+    <Suspense fallback={<Loading />}>
       {props.state ? (
         <React.Fragment>
           <Header logout={props.logout} />
@@ -52,7 +52,7 @@ export default function Routes(props) {
               <LoginContainer login={props.login} data={props.data} />
             )}
           />
-          {!props.state && <Redirect to="/login" />}
+          <Route render={() => <Redirect to="/login" />} />
         </Switch>
       )}
     </Suspense>
