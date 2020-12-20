@@ -75,7 +75,6 @@ export default function UserPageContainer() {
     getUser()
       .then((res) => {
         if (!isCancelled) {
-          console.log(res.data)
           setPosts([...res.data.posts]);
           setLikes([...res.data.likes]);
           setComments([...res.data.comments]);

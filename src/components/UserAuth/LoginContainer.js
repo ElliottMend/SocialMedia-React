@@ -63,7 +63,6 @@ export default function LoginContainer(props) {
       await props.login();
       history.push(`/`);
     } catch (err) {
-      console.log(err);
     }
   };
   return (
