@@ -46,10 +46,8 @@ export default function RegisterContainer() {
         data: {
           username: state.username,
           password: state.password,
-          password2: state.password2,
           email: state.email,
         },
-        
       })
         .then(() => {
           setState({ redirect: true });

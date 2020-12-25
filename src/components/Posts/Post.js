@@ -3,6 +3,7 @@ import Comments from "./Comments";
 import { Link } from "react-router-dom";
 import PostContainer from "./PostContainer";
 import Modal from "react-modal";
+import { DateTime } from "../Reusable/DateTime";
 export default function Post(props) {
   useEffect(() => {});
   const date = Date.now() / 1000 - props.data.date / 1000;
@@ -46,23 +47,7 @@ export default function Post(props) {
               <p>{props.data.body}</p>
             </div>
             <div className="flex mt-10 justify-center flex-row">
-              {date < 60 ? (
-                <p>{Math.round(date)} seconds ago</p>
-              ) : date < 3600 ? (
-                <p>{Math.round(date / 60)} minutes ago</p>
-              ) : date < 86400 ? (
-                <p>{Math.round(date / 3600)} hours ago</p>
-              ) : date < 604800 ? (
-                <p>{Math.round(date / 86400)} days ago</p>
-              ) : date < 2.628e6 ? (
-                <p>{Math.round(date / 604800)} weeks ago</p>
-              ) : date < 31535965.4396976 ? (
-                <p>{Math.round(date / 2592000)} months ago</p>
-              ) : (
-                31535965.4396976 < date && (
-                  <p>{Math.round(date / 31104000)}years ago</p>
-                )
-              )}
+              <DateTime date={date} />
               <p className="ml-10">{props.data.likes}</p>
               <label className="flex" htmlFor={props.data._id}>
                 <svg

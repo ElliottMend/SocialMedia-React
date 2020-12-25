@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Homepage from "./Homepage";
-
+import { usernameContext } from "../Context/usernameContext";
+import history from "../Routes/History";
 export default function HomepageContainer() {
   const [state, setState] = useState({
     radiusName: "",
     radius: 0.8,
     sorting: "recent",
   });
+  const [username] = useState(usernameContext);
   const [error, setError] = useState();
   const [posts, setPosts] = useState();
   const [follows, setFollows] = useState();
@@ -29,15 +31,20 @@ export default function HomepageContainer() {
     };
   }, [state.radius]);
   const getPosts = async () => {
-    const post = await axios({
+    await axios({
       method: "post",
       url: "https://social-mediasite.herokuapp.com/locationPosts",
       data: {
         radius: state.radius,
       },
       withCredentials: true,
-    });
-    return post.data;
+    })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        history.pushState(`/users/${username}`);
+      });
   };
   const getFollows = async () => {
     const follow = await axios({
