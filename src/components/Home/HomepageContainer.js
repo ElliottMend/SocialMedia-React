@@ -31,22 +31,19 @@ export default function HomepageContainer() {
     };
   }, [state.radius]);
   const getPosts = async () => {
-    await axios({
+    const posts = await axios({
       method: "post",
       url: "https://social-mediasite.herokuapp.com/locationPosts",
       data: {
         radius: state.radius,
       },
       withCredentials: true,
-    })
-      .then((res) => {
-        console.log(res.data);
-        return res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-        history.push(`/users/${username}`);
-      });
+    });
+    if (posts.status === 200) {
+      return posts.data;
+    } else {
+      history.push(`/users/${username}/edit`);
+    }
   };
   const getFollows = async () => {
     const follow = await axios({
