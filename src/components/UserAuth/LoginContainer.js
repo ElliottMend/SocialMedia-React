@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Login from "./Login";
 import axios from "axios";
 import history from "../Routes/History";
+import { Redirect } from "react-router-dom";
 export default function LoginContainer(props) {
   const [state, setState] = useState({
     email: "",
@@ -62,8 +63,7 @@ export default function LoginContainer(props) {
       });
       await props.login();
       history.push(`/`);
-    } catch (err) {
-    }
+    } catch (err) {}
   };
   return (
     <div>
@@ -73,6 +73,7 @@ export default function LoginContainer(props) {
         loginAuth={UserAuth}
         guestLogin={guestLogin}
       />
+      {Redirect && <Redirect to={"/"} />}
     </div>
   );
 }

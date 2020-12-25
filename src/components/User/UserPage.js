@@ -101,7 +101,6 @@ export default function UserPage(props) {
           </button>
         </li>
       </ul>
-      {console.log(props.comments)}
       <div className="container mx-auto">
         {props.display === 0
           ? props.posts.map((e) => (

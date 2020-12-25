@@ -40,10 +40,12 @@ export default function HomepageContainer() {
       withCredentials: true,
     })
       .then((res) => {
+        console.log(res.data);
         return res.data;
       })
       .catch((err) => {
-        history.pushState(`/users/${username}`);
+        console.log(err);
+        history.push(`/users/${username}`);
       });
   };
   const getFollows = async () => {
