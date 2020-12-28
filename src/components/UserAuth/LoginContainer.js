@@ -62,7 +62,7 @@ export default function LoginContainer(props) {
         withCredentials: true,
       });
       await props.login();
-      history.push(`/`);
+      state.redirectHome(true);
     } catch (err) {}
   };
   return (
@@ -73,7 +73,7 @@ export default function LoginContainer(props) {
         loginAuth={UserAuth}
         guestLogin={guestLogin}
       />
-      {Redirect && <Redirect to={"/"} />}
+      {state.redirectHome && <Redirect to={"/"} />}
     </div>
   );
 }
