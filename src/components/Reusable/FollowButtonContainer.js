@@ -26,7 +26,7 @@ export const FollowButtonContainer = (props) => {
     if (!check) {
       axios({
         method: "put",
-        url: "https://social-mediasite.herokuapp.com/removeFollow",
+        url: "http://localhost:5000/removeFollow",
         data: {
           author: e.target.id,
         },
@@ -35,7 +35,7 @@ export const FollowButtonContainer = (props) => {
     } else {
       axios({
         method: "put",
-        url: "https://social-mediasite.herokuapp.com/addFollow",
+        url: "http://localhost:5000/addFollow",
         data: {
           author: e.target.id,
         },
@@ -46,7 +46,7 @@ export const FollowButtonContainer = (props) => {
   const checkFollow = async () => {
     const follows = await axios({
       method: "get",
-      url: `https://social-mediasite.herokuapp.com/checkFollow/${props.user}`,
+      url: `http://localhost:5000/checkFollow/${props.user}`,
       data: {
         user: props.user,
       },

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FollowButtonContainer } from "../Reusable/FollowButtonContainer";
-export default function UserFollow(props) {
-  const [state, setState] = useState({ checked: true });
+import { IFollowData } from "./UserFollowContainer";
+interface IProps {
+  data: IFollowData;
+}
+export default function UserFollow(props: IProps) {
   return (
     <div>
       <div className="flex pr-2 items-center border border-black text-navy justify-between flex-row">
@@ -17,7 +20,7 @@ export default function UserFollow(props) {
             </div>
           </div>
         </Link>
-        <FollowButtonContainer  user={props.data.username} />
+        <FollowButtonContainer user={props.data.username} />
       </div>
     </div>
   );

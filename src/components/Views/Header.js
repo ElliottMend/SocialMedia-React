@@ -7,7 +7,7 @@ export default function Header(props) {
   const DeleteToken = async () => {
     await axios({
       method: "get",
-      url: `https://social-mediasite.herokuapp.com/logout`,
+      url: `http://localhost:5000/logout`,
       withCredentials: true,
     }).then(async () => {
       await props.logout();

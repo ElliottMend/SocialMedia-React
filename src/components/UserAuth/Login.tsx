@@ -1,10 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
-export default function Login(props) {
+import { IState } from "./LoginContainer";
+interface IProps {
+  data: IState;
+  submitLogin: (event: React.FormEvent<HTMLFormElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  guestLogin: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+}
+export default function Login(props: IProps) {
   return (
     <div>
       <div className="bg-white shadow-2xl rounded-lg text-navy text-xl font-semibold md:m-20">
-        <form onSubmit={props.loginAuth}>
+        <form onSubmit={props.submitLogin}>
           <div className="flex py-6 items-center mb-10 flex-col">
             <label htmlFor="email">Email:</label>
             <input

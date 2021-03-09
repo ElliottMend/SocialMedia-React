@@ -1,17 +1,26 @@
 import React, { useState } from "react";
 import Login from "./Login";
 import axios from "axios";
-import history from "../Routes/History";
 import { Redirect } from "react-router-dom";
-export default function LoginContainer(props) {
-  const [state, setState] = useState({
+export interface IState {
+  email: string;
+  password: string;
+  error: string;
+  redirectHome: boolean;
+  redirectEdit: boolean;
+}
+interface IProps {
+  login: () => void;
+}
+export default function LoginContainer(props: IProps) {
+  const [state, setState] = useState<IState>({
     email: "",
     password: "",
     error: "",
     redirectHome: false,
     redirectEdit: false,
   });
-  const handleChange = (e) => {
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setState({
       ...state,
       [e.target.id]: e.target.value,
@@ -27,27 +36,25 @@ export default function LoginContainer(props) {
     const password =
       Math.random().toString(36).substring(2, 15) +
       Math.random().toString(36).substring(2, 15);
-    const password2 = password;
     await axios({
       method: "post",
-      url: "https://social-mediasite.herokuapp.com/register",
+      url: "http://localhost:5000/login",
       data: {
         username: username,
         password: password,
-        password2: password2,
         email: email,
       },
       withCredentials: true,
     });
     await axios({
       method: "post",
-      url: "https://social-mediasite.herokuapp.com/login",
+      url: "http://localhost:5000/login",
       data: { email: email, password: password },
       withCredentials: true,
     });
     setState({ ...state, redirectEdit: true });
   };
-  const UserAuth = async (e) => {
+  const submitLogin = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setState({
       ...state,
@@ -57,12 +64,12 @@ export default function LoginContainer(props) {
     try {
       await axios({
         method: "post",
-        url: "https://social-mediasite.herokuapp.com/login",
+        url: "http://localhost:5000/login",
         data: state,
         withCredentials: true,
       });
       await props.login();
-      state.redirectHome(true);
+      setState({ ...state, redirectHome: true });
     } catch (err) {}
   };
   return (
@@ -70,7 +77,7 @@ export default function LoginContainer(props) {
       <Login
         data={state}
         onChange={handleChange}
-        loginAuth={UserAuth}
+        submitLogin={submitLogin}
         guestLogin={guestLogin}
       />
       {state.redirectHome && <Redirect to={"/"} />}

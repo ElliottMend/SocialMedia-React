@@ -1,6 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-export default function Register(props) {
+import { IState } from "./RegisterContainer";
+interface IProps {
+  onSubmit: (e: React.SyntheticEvent) => Promise<void>;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  data: IState;
+}
+export default function Register(props: IProps) {
   return (
     <div className="md:m-20 rounded-lg">
       <form className="text-xl text-navy font-bold" onSubmit={props.onSubmit}>

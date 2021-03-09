@@ -3,23 +3,28 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
-
-export default function UserEditLocation(props) {
-  const [state, setState] = useState('');
-  const handleChange = (address) => {
+import { IState, ILatLng } from "./UserEditContainer";
+interface IProps {
+  getLatLng: (e: ILatLng) => Promise<void>;
+  getLocation: (e: string) => Promise<void>;
+  data: IState;
+}
+export default function UserEditLocation(props: IProps) {
+  const [state, setState] = useState<string>();
+  const handleChange = (address: any) => {
     setState(address);
   };
   useEffect(() => {
-    setState(props.locate);
-  }, [props.locate]);
+    setState(props.data.location);
+  }, [props.data.location]);
 
-  const handleSelect = (address) => {
+  const handleSelect = (address: string) => {
     setState(address);
     geocodeByAddress(address)
       .then((results) => {
-        props.location(results[0].formatted_address);
+        props.getLocation(results[0].formatted_address);
         getLatLng(results[0]).then((res) => {
-          props.latlng(res);
+          props.getLatLng(res);
         });
       })
       .catch((error) => console.error("Error", error));
@@ -31,13 +36,13 @@ export default function UserEditLocation(props) {
         value={state}
         onChange={handleChange}
         onSelect={handleSelect}
-        defaultValue={props.locate}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
             <input
               {...getInputProps({
-                className: "bg-gray-100 p-3 focus:border-blue-300 focus:outline-none focus:ring border-black h-10 shadow-inner border w-full rounded-lg location-search-input",
+                className:
+                  "bg-gray-100 p-3 focus:border-blue-300 focus:outline-none focus:ring border-black h-10 shadow-inner border w-full rounded-lg location-search-input",
               })}
             />
 

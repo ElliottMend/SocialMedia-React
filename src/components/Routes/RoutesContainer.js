@@ -15,7 +15,7 @@ export const RoutesContainer = () => {
   const getUserName = () => {
     axios({
       method: "get",
-      url: "https://social-mediasite.herokuapp.com/checkJWT",
+      url: "http://localhost:5000/checkJWT",
       withCredentials: true,
     }).then((res) => {
       setUser(res.data);
@@ -24,7 +24,7 @@ export const RoutesContainer = () => {
   const loggedIn = () => {
     axios({
       method: "get",
-      url: "https://social-mediasite.herokuapp.com/verify",
+      url: "http://localhost:5000/verify",
       withCredentials: true,
     })
       .then((res) => {

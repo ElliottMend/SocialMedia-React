@@ -6,14 +6,16 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "@types/react-places-autocomplete": "^7.2.6",
     "axios": "^0.20.0",
-    "postcss": "^8.1.10",
+    "postcss": "^8.2.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-modal": "^3.11.2",
     "react-places-autocomplete": "^7.3.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "typescript": "^4.2.3"
   },
   "scripts": {
     "start": "npm run watch:css && react-scripts start",
@@ -39,6 +41,9 @@
     ]
   },
   "devDependencies": {
+    "@types/react": "^17.0.3",
+    "@types/react-modal": "^3.12.0",
+    "@types/react-router-dom": "^5.1.7",
     "autoprefixer": "^9.8.6",
     "postcss-cli": "^7.1.2",
     "tailwindcss": "^1.8.10"

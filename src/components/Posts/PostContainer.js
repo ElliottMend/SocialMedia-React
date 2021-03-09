@@ -60,7 +60,7 @@ export default function PostContainer(props) {
     setComm(arr);
     await axios({
       method: "put",
-      url: "https://social-mediasite.herokuapp.com/removeComment",
+      url: "http://localhost:5000/removeComment",
       data: { id: comm[index]._id },
       withCredentials: true,
     });
@@ -68,7 +68,7 @@ export default function PostContainer(props) {
   const checkUser = async () => {
     const res = await axios({
       method: "get",
-      url: `https://social-mediasite.herokuapp.com/users/${props.data.author}`,
+      url: `http://localhost:5000/users/${props.data.author}`,
       withCredentials: true,
     });
     return res;
@@ -83,7 +83,7 @@ export default function PostContainer(props) {
   const checkLikes = async () => {
     const res = await axios({
       method: "get",
-      url: "https://social-mediasite.herokuapp.com/checklike",
+      url: "http://localhost:5000/checklike",
       withCredentials: true,
     });
     return res;
@@ -93,7 +93,7 @@ export default function PostContainer(props) {
     e.preventDefault();
     const res = await axios({
       method: "post",
-      url: "https://social-mediasite.herokuapp.com/createComment",
+      url: "http://localhost:5000/createComment",
       data: {
         id: props.data._id,
         text: state.commentText,
@@ -125,7 +125,7 @@ export default function PostContainer(props) {
     }
     const res = await axios({
       method: "post",
-      url: "https://social-mediasite.herokuapp.com/getComments",
+      url: "http://localhost:5000/getComments",
       data: { id: props.data._id, posts: postArr },
       withCredentials: true,
     });
@@ -148,7 +148,7 @@ export default function PostContainer(props) {
     }, 100);
     await axios({
       method: "put",
-      url: "https://social-mediasite.herokuapp.com/removePost",
+      url: "http://localhost:5000/removePost",
       data: { id: props.data._id },
       withCredentials: true,
     });
@@ -159,7 +159,7 @@ export default function PostContainer(props) {
     if (!check) {
       axios({
         method: "put",
-        url: "https://social-mediasite.herokuapp.com/unlike",
+        url: "http://localhost:5000/unlike",
         data: { id: props.data._id },
         withCredentials: true,
       });
@@ -170,7 +170,7 @@ export default function PostContainer(props) {
     } else {
       axios({
         method: "put",
-        url: "https://social-mediasite.herokuapp.com/like",
+        url: "http://localhost:5000/like",
         data: { id: props.data._id },
         withCredentials: true,
       });

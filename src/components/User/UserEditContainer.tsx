@@ -3,43 +3,60 @@ import axios from "axios";
 import UserEdit from "./UserEdit";
 import { useHistory, Redirect } from "react-router-dom";
 import { usernameContext } from "../Context/usernameContext";
-export default function UserEditContainer(props) {
+
+export interface ILatLng {
+  lat: number;
+  lng: number;
+}
+export interface IState {
+  bio: string;
+  selectedFile: any;
+  location: string;
+  latlng: ILatLng;
+}
+export default function UserEditContainer() {
   const history = useHistory();
-  const [locate, setLocate] = useState();
-  const [locat, setLocation] = useState();
   const [user] = useState(useContext(usernameContext));
-  const [state, setState] = useState({ bio: "" });
+  const [file, setFile] = useState<File | undefined>();
+  const [state, setState] = useState<IState>({
+    bio: "",
+    selectedFile: null,
+    location: "",
+    latlng: { lat: 0, lng: 0 },
+  });
   const currUser = window.location.pathname.split("/")[2];
   const [redirect, setRedirect] = useState(false);
   useEffect(() => {
     if (currUser === user) {
       axios({
         method: "get",
-        url: "https://social-mediasite.herokuapp.com/getUserEdit",
+        url: "http://localhost:5000/getUserEdit",
         withCredentials: true,
       }).then((res) => {
-        setLocate(res.data.location);
-        setLocation(res.data.latlng);
-        setState({
-          ...state,
-          bio: res.data.bio,
-        });
+        setState(res.data);
       });
     } else {
       setRedirect(true);
     }
   }, []);
 
-  const fileSelectedHandler = async (e) => {
-    setState({ ...state, selectedFile: e.target.files[0] });
+  const fileSelectedHandler = async (
+    e: React.ChangeEvent<HTMLInputElement> | null
+  ) => {
+    if (e?.target.files) {
+      setFile(e.target.files[0]);
+    }
   };
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setState({ ...state, bio: e.target.value });
   };
-  const getLatLng = async (e) => {
-    setLocation(e);
+  const getLatLng = async (e: ILatLng) => {
+    setState({ ...state, latlng: e });
   };
-  const getBase64 = (file, cb) => {
+  const getBase64 = (
+    file: File,
+    cb: (e: string | ArrayBuffer | null) => void
+  ) => {
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = function () {
@@ -47,21 +64,21 @@ export default function UserEditContainer(props) {
     };
     reader.onerror = function (error) {};
   };
-  const getLocation = async (e) => {
-    setLocate(e);
+  const getLocation = async (e: string) => {
+    setState({ ...state, location: e });
   };
-  const editSubmit = async (e) => {
+  const editSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (state.selectedFile) {
-      getBase64(state.selectedFile, (result) => {
+    if (file) {
+      getBase64(state.selectedFile, (result: string | ArrayBuffer | null) => {
         axios({
           method: "put",
-          url: "https://social-mediasite.herokuapp.com/userEdit",
+          url: "http://localhost:5000/userEdit",
           data: {
             bio: state.bio,
             image: result,
-            location: locate,
-            latlng: locat,
+            location: state.location,
+            latlng: state.latlng,
           },
           withCredentials: true,
         });
@@ -69,11 +86,11 @@ export default function UserEditContainer(props) {
     } else {
       axios({
         method: "put",
-        url: "https://social-mediasite.herokuapp.com/userEdit",
+        url: "http://localhost:5000/userEdit",
         data: {
           bio: state.bio,
-          location: locate,
-          latlng: locat,
+          location: state.location,
+          latlng: state.latlng,
         },
         withCredentials: true,
       });
@@ -90,7 +107,6 @@ export default function UserEditContainer(props) {
         getLatLng={getLatLng}
         fileSelectedHandler={fileSelectedHandler}
         handleChange={handleChange}
-        locate={locate}
         data={state}
       />
       {redirect && <Redirect to="/" />}

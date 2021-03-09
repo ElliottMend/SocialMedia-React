@@ -1,7 +1,15 @@
 import React from "react";
 import UserEditLocation from "./UserEditLocation";
-
-export default function UserEdit(props) {
+import { IState, ILatLng } from "./UserEditContainer";
+export interface IProps {
+  editSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  getLatLng: (e: ILatLng) => Promise<void>;
+  getLocation: (e: string) => Promise<void>;
+  fileSelectedHandler: React.ChangeEventHandler<HTMLInputElement>;
+  handleChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  data: IState;
+}
+export default function UserEdit(props: IProps) {
   return (
     <div>
       <div className="flex flex-col  bg-gray-200 align-middle my-20 md:my-40 md:mx-20 items-center shadow-xl">
@@ -26,13 +34,14 @@ export default function UserEdit(props) {
             />
           </div>
           <UserEditLocation
-            locate={props.locate}
-            latlng={props.getLatLng}
-            location={props.getLocation}
-            required
+            data={props.data}
+            getLatLng={props.getLatLng}
+            getLocation={props.getLocation}
           />
 
-          <button className="my-4 border-black border-2 w-20 h-12">Submit</button>
+          <button className="my-4 border-black border-2 w-20 h-12">
+            Submit
+          </button>
         </form>
       </div>
     </div>
