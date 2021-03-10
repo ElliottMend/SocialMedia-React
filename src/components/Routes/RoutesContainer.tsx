@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Routes from "./Routes";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { usernameContext } from "../Context/usernameContext";
 export const RoutesContainer = () => {
-  const history = useHistory();
   const [user, setUser] = useState();
   const [state, setState] = useState(true);
   useEffect(() => {
@@ -15,7 +13,7 @@ export const RoutesContainer = () => {
   const getUserName = () => {
     axios({
       method: "get",
-      url: "https://social-mediasite.herokuapp.com/checkJWT",
+      url: "http://localhost:5000/checkJWT",
       withCredentials: true,
     }).then((res) => {
       setUser(res.data);
@@ -24,7 +22,7 @@ export const RoutesContainer = () => {
   const loggedIn = () => {
     axios({
       method: "get",
-      url: "https://social-mediasite.herokuapp.com/verify",
+      url: "http://localhost:5000/verify",
       withCredentials: true,
     })
       .then((res) => {

@@ -33,7 +33,7 @@ export default function HomepageContainer() {
   const getPosts = async () => {
     const posts = await axios({
       method: "post",
-      url: "https://social-mediasite.herokuapp.com/locationPosts",
+      url: "http://localhost:5000/locationPosts",
       data: {
         radius: state.radius,
       },
@@ -48,7 +48,7 @@ export default function HomepageContainer() {
   const getFollows = async () => {
     const follow = await axios({
       method: "get",
-      url: "https://social-mediasite.herokuapp.com/follows",
+      url: "http://localhost:5000/follows",
       withCredentials: true,
     });
     return follow.data;
@@ -71,7 +71,7 @@ export default function HomepageContainer() {
     } else {
       const res = await axios({
         method: "post",
-        url: "https://social-mediasite.herokuapp.com/newpost",
+        url: "http://localhost:5000/newpost",
         data: {
           body: state.body,
         },

@@ -1,12 +1,27 @@
-import React, { useEffect } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 import Comments from "./Comments";
 import { Link } from "react-router-dom";
-import PostContainer from "./PostContainer";
+import PostContainer, { IProfile } from "./PostContainer";
 import Modal from "react-modal";
 import { DateTime } from "../Reusable/DateTime";
-export default function Post(props) {
+import { IComment, IState, IPost } from "./PostContainer";
+interface IProps {
+  modal: boolean;
+  changeModal: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  deleteComment: (index: number) => void;
+  deletePost: () => void;
+  comments: IComment[];
+  user: IProfile | undefined;
+  commentChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  createComment: (e: React.SyntheticEvent) => void;
+  data: IState;
+  post: IPost;
+  more: boolean;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+export default function Post(props: IProps) {
   useEffect(() => {});
-  const date = Date.now() / 1000 - props.data.date / 1000;
+  const date = Date.now() / 1000 - Number(props.post.date) / 1000;
   const customStyles = {
     content: {
       top: "50%",
@@ -27,29 +42,29 @@ export default function Post(props) {
           <div>
             <div className="flex items-center mx-2 md:mx-10 justify-between flex-row">
               <div>
-                <Link to={`/user/${props.data.author}`}>
+                <Link to={`/user/${props.user?.username}`}>
                   <img
                     className="w-20 md:w-32 md:m-10 m-2 rounded-full"
                     alt="Profile"
-                    src={props.img}
+                    src={props.user?.photo}
                   />
                 </Link>
               </div>
               <div>
-                <Link to={`/user/${props.data.author}`}>
+                <Link to={`/user/${props.user?.username}`}>
                   <h6 className="text-2xl self-middle align-middle font-bold">
-                    {props.data.author}
+                    {props.user?.username}
                   </h6>
                 </Link>
               </div>
             </div>
             <div className="break-words text-center my-3 px-10 md:px-20">
-              <p>{props.data.body}</p>
+              <p>{props.post.body}</p>
             </div>
             <div className="flex mt-10 justify-center flex-row">
               <DateTime date={date} />
               <p className="ml-10">{props.data.likes}</p>
-              <label className="flex" htmlFor={props.data._id}>
+              <label className="flex" htmlFor={String(props.post.post_id)}>
                 <svg
                   xmlns="https://www.w3.org/2000/svg"
                   fill={props.data.liked ? "salmon" : "none"}
@@ -66,28 +81,26 @@ export default function Post(props) {
                 </svg>
               </label>
               <input
-                id={props.data._id}
+                id={String(props.post.post_id)}
                 className="hidden"
                 defaultChecked={props.data.liked}
                 type="checkbox"
-                onClick={props.onChange}
+                onChange={props.onChange}
               />
-              <div>{props.data.location}</div>
+              <div>{props.user?.location}</div>
             </div>
-            {props.data.author === props.username && (
-              <button
-                className="bg-salmon py-4 px-8 m-2 rounded-lg"
-                onClick={props.deletePost}
-              >
-                Delete Post
-              </button>
-            )}
+            <button
+              className="bg-salmon py-4 px-8 m-2 rounded-lg"
+              onClick={props.deletePost}
+            >
+              Delete Post
+            </button>
             <form
               className="bg-cream flex flex-col justify-center"
               onSubmit={props.createComment}
             >
               <input
-                maxLength="140"
+                maxLength={140}
                 className="bg-gray-100 p-3 focus:border-blue-300 focus:outline-none focus:ring border-black h-10 shadow-inner border w-full rounded-lg "
                 onChange={props.commentChange}
                 placeholder="Comment"
@@ -101,39 +114,26 @@ export default function Post(props) {
         {props.comments &&
           props.comments
             .slice(0, 3)
-            .map(
-              (e, index) =>
-                e.show && (
-                  <Comments
-                    postAuthor={props.data.author}
-                    deleteComment={() => props.deleteComment(index)}
-                    key={e._id}
-                    data={e}
-                  />
-                )
-            )}
+            .map((e, index) => (
+              <Comments
+                username={props.user?.username}
+                deleteComment={() => props.deleteComment(index)}
+                key={e.comment_id}
+                data={e}
+              />
+            ))}
       </div>
       {props.more && (
-        <button className="w-full" onClick={props.openModal}>
+        <button className="w-full" onClick={props.changeModal}>
           <p className="p-4 bg-lime">See More!</p>
         </button>
       )}
       <Modal
         isOpen={props.modal}
-        onAfterOpen={props.afterModalOpen}
-        onRequestClose={props.closeModal}
+        onRequestClose={props.changeModal}
         style={customStyles}
-        // className="w-full flex mx-auto md:w-6/12 bg-blue-300"
       >
-        <PostContainer
-          deleteComment={(index) => props.deleteComment(index)}
-          onChange={props.onChange}
-          createComment={props.createComment}
-          commentChange={props.commentChange}
-          img={props.img}
-          comments={props.comments}
-          data={props.data}
-        />
+        <PostContainer more={props.more} state={props.user} data={props.post} />
       </Modal>
     </div>
   );

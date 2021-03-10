@@ -1,10 +1,15 @@
 import React from "react";
 
-export const FollowButton = (props) => {
+interface IProps {
+  changeFollow: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  user: string;
+  follow: boolean | undefined;
+}
+export const FollowButton = (props: IProps) => {
   return (
     <div>
       <input
-        onClick={props.changeFollow}
+        onChange={props.changeFollow}
         defaultChecked={props.follow}
         id={props.user}
         className="hidden"

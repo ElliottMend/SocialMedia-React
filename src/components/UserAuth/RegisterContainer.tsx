@@ -2,9 +2,16 @@ import React, { useState } from "react";
 import axios from "axios";
 import Register from "./Register";
 import { Redirect } from "react-router-dom";
-
+export interface IState {
+  username: string;
+  password: string;
+  password2: string;
+  email: string;
+  redirect: boolean;
+  errors: string;
+}
 export default function RegisterContainer() {
-  const [state, setState] = useState({
+  const [state, setState] = useState<IState>({
     username: "",
     password: "",
     password2: "",
@@ -12,7 +19,7 @@ export default function RegisterContainer() {
     redirect: false,
     errors: "",
   });
-  const Submit = async (e) => {
+  const Submit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setState({
       ...state,
@@ -42,20 +49,18 @@ export default function RegisterContainer() {
       axios({
         method: "post",
         withCredentials: true,
-        url: "https://social-mediasite.herokuapp.com/register",
+        url: "http://localhost:5000/register",
         data: {
           username: state.username,
           password: state.password,
           email: state.email,
         },
-      })
-        .then(() => {
-          setState({ redirect: true });
-        })
-        .catch((err) => {});
+      }).then(() => {
+        setState({ ...state, redirect: true });
+      });
     }
   };
-  const handleChange = (e) => {
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setState({
       ...state,
       [e.target.id]: e.target.value,
