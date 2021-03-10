@@ -4,7 +4,7 @@ import Modal from "react-modal";
 import UserPage from "./UserPage";
 import { usernameContext } from "../Context/usernameContext";
 export interface IState {
-  user_profile: {
+  profile: {
     user_id: number;
     photo: string;
     bio: string;

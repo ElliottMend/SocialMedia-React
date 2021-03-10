@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Routes from "./Routes";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { usernameContext } from "../Context/usernameContext";
 export const RoutesContainer = () => {
-  const history = useHistory();
   const [user, setUser] = useState();
   const [state, setState] = useState(true);
   useEffect(() => {

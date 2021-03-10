@@ -11,6 +11,7 @@ export interface IState {
 }
 interface IProps {
   login: () => void;
+  data: boolean;
 }
 export default function LoginContainer(props: IProps) {
   const [state, setState] = useState<IState>({

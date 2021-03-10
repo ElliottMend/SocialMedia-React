@@ -2,7 +2,10 @@ import React, { useContext, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
 import { usernameContext } from "../Context/usernameContext";
-export default function Header(props) {
+interface IProps {
+  logout: () => void;
+}
+export default function Header(props: IProps) {
   const [redirect, setRedirect] = useState(false);
   const DeleteToken = async () => {
     await axios({

@@ -49,7 +49,7 @@ export default function RegisterContainer() {
       axios({
         method: "post",
         withCredentials: true,
-        url: "http://localhost:5000//register",
+        url: "http://localhost:5000/register",
         data: {
           username: state.username,
           password: state.password,

@@ -1,6 +1,8 @@
 import React from "react";
-
-export const DateTime = (props) => {
+interface IProps {
+  date: number;
+}
+export const DateTime = (props: IProps) => {
   return (
     <div>
       {props.date < 60 ? (

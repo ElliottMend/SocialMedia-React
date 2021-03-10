@@ -21,7 +21,7 @@ export default function UserPage(props: IProps) {
         <div className="flex md:mx-6 justify-between items-center flex-col md:flex-row">
           <img
             className="m-4 w-64"
-            src={props.state?.user_profile.photo}
+            src={props.state?.profile.photo}
             alt="Profile"
           />
           <div className="flex my-10  flex-col">
@@ -32,11 +32,11 @@ export default function UserPage(props: IProps) {
                 onClick={props.modalStatus}
                 className="md:mx-4 cursor-pointer rounded-lg py-3 px-6 bg-gray-300"
               >
-                Followers: {props.state?.user_profile.followers}
+                Followers: {props.state?.profile.followers}
               </p>
               <Modal isOpen={props.modal.isOpen} style={props.customStyles}>
                 <UserFollowContainer
-                  user={props.state?.user_profile.username}
+                  user={props.state?.profile.username}
                   follow={props.state?.follows}
                   data={props.modal}
                 />
@@ -46,13 +46,13 @@ export default function UserPage(props: IProps) {
                 onClick={props.modalStatus}
                 className="md:mx-4 cursor-pointer rounded-lg py-3 px-6 bg-gray-300"
               >
-                Following: {props.state?.user_profile.following}
+                Following: {props.state?.profile.following}
               </p>
             </div>
-            <p className="my-12">{props.state?.user_profile.bio}</p>
-            <p>{props.state?.user_profile.location}</p>
+            <p className="my-12">{props.state?.profile.bio}</p>
+            <p>{props.state?.profile.location}</p>
           </div>
-          {props.state?.user_profile.username === props.username ? (
+          {props.state?.profile.username === props.username ? (
             <Link to={`/user/${props.username}/edit`}>
               <button className="bg-seafoam h-20 w-40 rounded-full">
                 Edit
@@ -69,7 +69,7 @@ export default function UserPage(props: IProps) {
             id="0"
             onClick={() => (display = 0)}
             className={
-              display != 0
+              display !== 0
                 ? "bg-white inline-block py-2 px-4 text-blue-300 font-semibold"
                 : "bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-white bg-blue-300 font-semibold"
             }
@@ -82,7 +82,7 @@ export default function UserPage(props: IProps) {
             onClick={() => (display = 1)}
             id="1"
             className={
-              display != 1
+              display !== 1
                 ? "bg-white inline-block py-2 px-4 text-blue-300 font-semibold"
                 : "bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-white bg-blue-300 font-semibold"
             }
@@ -95,7 +95,7 @@ export default function UserPage(props: IProps) {
             onClick={() => (display = 2)}
             id="2"
             className={
-              display != 2
+              display !== 2
                 ? "bg-white inline-block py-2 px-4 text-blue-300 font-semibold"
                 : "bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-white bg-blue-300 font-semibold"
             }
@@ -108,11 +108,21 @@ export default function UserPage(props: IProps) {
         {
           display === 0
             ? props.state?.post.map((e: any) => (
-                <PostContainer more={more} key={e.post_id} data={e} />
+                <PostContainer
+                  more={more}
+                  state={props.state?.profile}
+                  key={e.post_id}
+                  data={e}
+                />
               ))
             : display === 1 &&
               props.state?.likes.map((e) => (
-                <PostContainer more={more} key={e} data={e} />
+                <PostContainer
+                  more={more}
+                  state={props.state?.profile}
+                  key={e}
+                  data={e}
+                />
               ))
           // : display === 2 &&
           //   props.sstate.map((e) => (
