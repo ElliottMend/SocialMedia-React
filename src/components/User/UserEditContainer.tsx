@@ -28,13 +28,13 @@ export default function UserEditContainer() {
   const [redirect, setRedirect] = useState(false);
   useEffect(() => {
     if (currUser === user) {
-      axios({
-        method: "get",
-        url: "http://localhost:5000/getUserEdit",
-        withCredentials: true,
-      }).then((res) => {
-        setState(res.data);
-      });
+      axios
+        .get<IState>("http://localhost:5000/getUserEdit", {
+          withCredentials: true,
+        })
+        .then((res) => {
+          setState(res.data);
+        });
     } else {
       setRedirect(true);
     }

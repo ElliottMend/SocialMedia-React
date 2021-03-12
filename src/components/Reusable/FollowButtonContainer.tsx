@@ -13,6 +13,7 @@ export const FollowButtonContainer = (props: IProps) => {
     let isCancelled = false;
     checkFollow();
     return () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       isCancelled = true;
     };
   }, []);
@@ -36,7 +37,6 @@ export const FollowButtonContainer = (props: IProps) => {
       }
     );
     setFollow(items.data);
-    return;
   };
   return (
     <div>

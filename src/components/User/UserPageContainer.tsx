@@ -3,16 +3,17 @@ import axios from "axios";
 import Modal from "react-modal";
 import UserPage from "./UserPage";
 import { usernameContext } from "../Context/usernameContext";
+export interface IProfile {
+  user_id: number;
+  photo: string;
+  bio: string;
+  followers: number;
+  following: number;
+  location: string;
+  username: string;
+}
 export interface IState {
-  profile: {
-    user_id: number;
-    photo: string;
-    bio: string;
-    followers: number;
-    following: number;
-    location: string;
-    username: string;
-  };
+  profile: IProfile;
   likes: [];
   follows: [];
   post: [];
@@ -39,12 +40,13 @@ export default function UserPageContainer() {
   useEffect(() => {
     let isCancelled = false;
     Modal.setAppElement("body");
-    axios({
-      method: "get",
-      url: `localhost:5000/users/${userProfile}`,
-    }).then((res) => {
-      setState(res.data);
-    });
+    axios
+      .get<IState>(`http://localhost:5000/users/${userProfile}`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setState(res.data);
+      });
     return () => {
       isCancelled = true;
     };

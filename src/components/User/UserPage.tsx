@@ -105,30 +105,20 @@ export default function UserPage(props: IProps) {
         </li>
       </ul>
       <div className="container mx-auto">
-        {
+        {/* {
           display === 0
             ? props.state?.post.map((e: any) => (
-                <PostContainer
-                  more={more}
-                  state={props.state?.profile}
-                  key={e.post_id}
-                  data={e}
-                />
+                <PostContainer more={more} key={e.post_id} postData={e} />
               ))
             : display === 1 &&
               props.state?.likes.map((e) => (
-                <PostContainer
-                  more={more}
-                  state={props.state?.profile}
-                  key={e}
-                  data={e}
-                />
+                <PostContainer more={more} key={e} postData={e} />
               ))
           // : display === 2 &&
           //   props.sstate.map((e) => (
           //     <PostContainer more={more} key={e._id} data={e} />
           //   ))
-        }
+        } */}
       </div>
     </div>
   );

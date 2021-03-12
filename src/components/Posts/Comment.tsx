@@ -1,14 +1,12 @@
-import React, { useContext } from "react";
-import { usernameContext } from "../Context/usernameContext";
 import { Link } from "react-router-dom";
 import { DateTime } from "../Reusable/DateTime";
-import { IComment } from "./PostContainer";
+import { IComment } from "./CommentContainer";
 interface IProps {
-  username: string | undefined;
+  username: number | undefined;
   deleteComment: () => void;
   data: IComment;
 }
-export default function Comments(props: IProps) {
+export const Comment = (props: IProps) => {
   const date = Date.now() / 1000 - Number(props.data.date) / 1000;
   return (
     <div className="border-b flex text-center text-navy text-lg flex-col justify-center py-3 bg-seafoam">
@@ -20,14 +18,12 @@ export default function Comments(props: IProps) {
       </Link>
 
       <DateTime date={date} />
-      {props.username === useContext(usernameContext) && (
-        <button
-          className="bg-salmon py-2 px-4 m-2 rounded-lg"
-          onClick={props.deleteComment}
-        >
-          Delete Comment
-        </button>
-      )}
+      <button
+        className="bg-salmon py-2 px-4 m-2 rounded-lg"
+        onClick={props.deleteComment}
+      >
+        Delete Comment
+      </button>
     </div>
   );
-}
+};

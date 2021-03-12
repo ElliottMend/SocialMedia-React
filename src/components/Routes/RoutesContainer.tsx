@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Routes from "./Routes";
 import axios from "axios";
 import { usernameContext } from "../Context/usernameContext";
 export const RoutesContainer = () => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<string>("");
   const [state, setState] = useState(true);
   useEffect(() => {
     loggedIn();
@@ -11,20 +11,19 @@ export const RoutesContainer = () => {
   }, []);
 
   const getUserName = () => {
-    axios({
-      method: "get",
-      url: "http://localhost:5000/checkJWT",
-      withCredentials: true,
-    }).then((res) => {
-      setUser(res.data);
-    });
+    axios
+      .get<string>("http://localhost:5000/checkJWT", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUser(res.data);
+      });
   };
   const loggedIn = () => {
-    axios({
-      method: "get",
-      url: "http://localhost:5000/verify",
-      withCredentials: true,
-    })
+    axios
+      .get<boolean>("http://localhost:5000/verify", {
+        withCredentials: true,
+      })
       .then((res) => {
         setState(true);
       })
@@ -41,7 +40,7 @@ export const RoutesContainer = () => {
   return (
     <div>
       <usernameContext.Provider value={user}>
-        <Routes login={login} logout={logout} state={state} />
+        <Routes logout={logout} state={state} />
       </usernameContext.Provider>
     </div>
   );

@@ -18,13 +18,14 @@ export default function UserFollowContainer(props: IProps) {
     followData();
   }, []);
   const followData = async () => {
-    const res = await axios({
-      method: "get",
-      url: `http://localhost:5000/users/${props.user}/${
+    const res = await axios.get<IFollowData[]>(
+      `http://localhost:5000/users/${props.user}/${
         props.data.element === "0" ? "followers" : "following"
       }`,
-      withCredentials: true,
-    });
+      {
+        withCredentials: true,
+      }
+    );
     setState(res.data);
   };
   return (

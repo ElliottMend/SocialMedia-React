@@ -25,26 +25,18 @@ export default function RegisterContainer() {
       ...state,
       errors: "",
     });
+    let errors = "";
     if (state.username.length < 5) {
-      setState({
-        ...state,
-        errors: "The username must be at least 5 characters",
-      });
+      errors = "The username must be at least 5 characters";
     } else if (!state.email.includes("@") || !state.email.includes(".")) {
-      setState({
-        ...state,
-        errors: "The email must contain '@' and '.' symbols",
-      });
+      errors = "The email must contain '@' and '.' symbols";
     } else if (state.password.length < 5) {
-      setState({
-        ...state,
-        errors: "The password must be at least 5 characters",
-      });
+      errors = "The password must be at least 5 characters";
     } else if (state.password2 !== state.password) {
-      setState({
-        ...state,
-        errors: "The passwords do not match",
-      });
+      errors = "The passwords do not match";
+    }
+    if (errors !== "") {
+      setState({ ...state, errors });
     } else {
       axios({
         method: "post",
