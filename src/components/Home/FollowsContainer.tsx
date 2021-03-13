@@ -5,17 +5,22 @@ import axios from "axios";
 
 export const FollowsContainer = () => {
   useEffect(() => {
-    followSuggestions();
-  });
+    let isCancelled = false;
+    followSuggestions().then((res) => {
+      if (!isCancelled) setFollow(res.data);
+    });
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
   const [follow, setFollow] = useState<IProfile[]>([]);
   const followSuggestions = async () => {
-    const res = await axios.get<IProfile[]>(
+    return await axios.get<IProfile[]>(
       "http://localhost:5000/followsuggestions",
       {
         withCredentials: true,
       }
     );
-    setFollow(res.data);
   };
   return (
     <div>

@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Modal from "react-modal";
-import UserPage from "./UserPage";
+import { UserPage } from "./UserPage";
 import { usernameContext } from "../Context/usernameContext";
+import { IPost } from "../Home/HomepageContainer";
 export interface IProfile {
   user_id: number;
   photo: string;
@@ -12,25 +13,39 @@ export interface IProfile {
   location: string;
   username: string;
 }
+export interface IData {
+  Likes: IPost[];
+  Posts: IPost[];
+  [key: string]: IPost[];
+}
 export interface IState {
   profile: IProfile;
-  likes: [];
-  follows: [];
-  post: [];
+  data: IData;
 }
 interface IModal {
   isOpen: boolean;
   element: string | null;
 }
 export default function UserPageContainer() {
-  const [state, setState] = useState<IState>();
+  const [state, setState] = useState<IData>({
+    Posts: [],
+    Likes: [],
+  });
+  const [profile, setProfile] = useState<IProfile>({
+    user_id: 0,
+    photo: "",
+    bio: "",
+    location: "",
+    username: "",
+    followers: 0,
+    following: 0,
+  });
   const [username] = useState(useContext(usernameContext));
   const [modal, setModal] = React.useState<IModal>({
     isOpen: false,
     element: null,
   });
   const userProfile = window.location.pathname.split("/")[2];
-
   const modalStatus = (e: React.MouseEvent<HTMLElement>) => {
     modal.element
       ? setModal({ ...modal, isOpen: false })
@@ -40,17 +55,21 @@ export default function UserPageContainer() {
   useEffect(() => {
     let isCancelled = false;
     Modal.setAppElement("body");
-    axios
-      .get<IState>(`http://localhost:5000/users/${userProfile}`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setState(res.data);
-      });
+    getUserProfile().then((res) => {
+      if (!isCancelled) {
+        setProfile(res.data.profile);
+        setState(res.data.data);
+      }
+    });
     return () => {
       isCancelled = true;
     };
   }, []);
+  const getUserProfile = async () => {
+    return axios.get<IState>(`http://localhost:5000/users/${userProfile}`, {
+      withCredentials: true,
+    });
+  };
   const customStyles = {
     content: {
       top: "50%",
@@ -67,6 +86,7 @@ export default function UserPageContainer() {
       <UserPage
         username={username}
         customStyles={customStyles}
+        profile={profile}
         modal={modal}
         modalStatus={modalStatus}
         state={state}

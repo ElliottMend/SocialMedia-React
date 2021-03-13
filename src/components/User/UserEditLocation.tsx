@@ -15,7 +15,11 @@ export default function UserEditLocation(props: IProps) {
     setState(address);
   };
   useEffect(() => {
-    setState(props.data.location);
+    let isCancelled = false;
+    if (!isCancelled) setState(props.data.location);
+    return () => {
+      isCancelled = true;
+    };
   }, [props.data.location]);
 
   const handleSelect = (address: string) => {

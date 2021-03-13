@@ -11,7 +11,9 @@ export const FollowButtonContainer = (props: IProps) => {
   const [follow, setFollow] = useState<boolean | undefined>();
   useEffect(() => {
     let isCancelled = false;
-    checkFollow();
+    checkFollow().then((items) => {
+      setFollow(items.data);
+    });
     return () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       isCancelled = true;
@@ -30,13 +32,12 @@ export const FollowButtonContainer = (props: IProps) => {
     });
   };
   const checkFollow = async () => {
-    const items = await axios.get<boolean>(
+    return await axios.get<boolean>(
       `http://localhost:5000/checkFollow/${props.user}`,
       {
         withCredentials: true,
       }
     );
-    setFollow(items.data);
   };
   return (
     <div>

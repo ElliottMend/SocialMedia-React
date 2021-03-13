@@ -23,14 +23,10 @@ export const CreatePost = (props: IProps) => {
       return;
     } else {
       const res = await axios.post<IPost>("http://localhost:5000/newpost", {
-        data: {
-          body: state,
-        },
-        withCredentials: true,
+        body: state,
       });
-      const data = res.data;
       setTimeout(() => {
-        props.setPosts([data, ...props.posts]);
+        props.setPosts([res.data, ...props.posts]);
       }, 100);
     }
   };

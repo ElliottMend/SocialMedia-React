@@ -6,30 +6,31 @@ export const RoutesContainer = () => {
   const [user, setUser] = useState<string>("");
   const [state, setState] = useState(true);
   useEffect(() => {
-    loggedIn();
-    getUserName();
+    let isCancelled = false;
+    loggedIn()
+      .then((res) => {
+        if (!isCancelled) setState(true);
+      })
+      .catch((err) => {
+        if (!isCancelled) setState(false);
+      });
+    getUserName().then((res) => {
+      if (!isCancelled) setUser(res.data);
+    });
+    return () => {
+      isCancelled = true;
+    };
   }, []);
 
   const getUserName = () => {
-    axios
-      .get<string>("http://localhost:5000/checkJWT", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setUser(res.data);
-      });
+    return axios.get<string>("http://localhost:5000/checkJWT", {
+      withCredentials: true,
+    });
   };
   const loggedIn = () => {
-    axios
-      .get<boolean>("http://localhost:5000/verify", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setState(true);
-      })
-      .catch((err) => {
-        setState(false);
-      });
+    return axios.get<boolean>("http://localhost:5000/verify", {
+      withCredentials: true,
+    });
   };
   const login = () => {
     setState(true);

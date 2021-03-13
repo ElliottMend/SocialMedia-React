@@ -3,7 +3,6 @@ import axios from "axios";
 import UserFollow from "./UserFollow";
 interface IProps {
   user: string | undefined;
-  follow: [] | undefined;
   data: { isOpen: boolean; element: string | null };
 }
 export interface IFollowData {
@@ -15,10 +14,16 @@ export interface IFollowData {
 export default function UserFollowContainer(props: IProps) {
   const [state, setState] = useState<IFollowData[]>([]);
   useEffect(() => {
-    followData();
+    let isCancelled = false;
+    followData().then((res) => {
+      if (!isCancelled) setState(res.data);
+    });
+    return () => {
+      isCancelled = true;
+    };
   }, []);
   const followData = async () => {
-    const res = await axios.get<IFollowData[]>(
+    return await axios.get<IFollowData[]>(
       `http://localhost:5000/users/${props.user}/${
         props.data.element === "0" ? "followers" : "following"
       }`,
@@ -26,7 +31,6 @@ export default function UserFollowContainer(props: IProps) {
         withCredentials: true,
       }
     );
-    setState(res.data);
   };
   return (
     <div>

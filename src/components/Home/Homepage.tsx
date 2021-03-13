@@ -5,7 +5,6 @@ import { IPost } from "./HomepageContainer";
 import { SortPost } from "./SortPost";
 import { CreatePost } from "./CreatePost";
 interface IProps {
-  more: boolean;
   setState: React.Dispatch<React.SetStateAction<number>>;
   setPosts: React.Dispatch<React.SetStateAction<IPost[]>>;
   posts: IPost[];
@@ -23,10 +22,7 @@ export default function Homepage(props: IProps) {
           />
         </section>
         <div className="w-full">
-          {props.posts &&
-            props.posts.map((e) => (
-              <PostContainer more={props.more} key={e.post_id} postData={e} />
-            ))}
+          <PostContainer postData={props.posts} />
         </div>
         <div className="mt-1 inset-x-0 top-0 left-0 rounded-lg md:sticky mx-2">
           <p className="text-2xl font-semibold">Who to Follow</p>

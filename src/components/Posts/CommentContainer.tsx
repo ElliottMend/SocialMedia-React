@@ -17,8 +17,12 @@ interface IProps {
 export const CommentContainer = (props: IProps) => {
   const [comments, setComments] = useState<IComment[]>([]);
   useEffect(() => {
+    let isCancelled = false;
     displayComments();
-  });
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
   const deleteComment = async (index: number) => {
     let arr = [...comments];
     arr.splice(index, 1);

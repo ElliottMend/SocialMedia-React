@@ -2,28 +2,24 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import UserFollowContainer from "./UserFollowContainer";
-import PostContainer from "../Posts/PostContainer";
-import { IState } from "./UserPageContainer";
+import { UserPageTabs } from "./UserPageTabs";
+import { IProfile, IData } from "./UserPageContainer";
 import { FollowButtonContainer } from "../Reusable/FollowButtonContainer";
 interface IProps {
   username: string;
   customStyles: object;
   modal: { element: string | null; isOpen: boolean };
   modalStatus: (e: React.MouseEvent<HTMLElement>) => void;
-  state: IState | undefined;
+  state: IData;
+  profile: IProfile;
 }
-export default function UserPage(props: IProps) {
+export const UserPage = (props: IProps) => {
   const more = true;
-  let display = 0;
   return (
     <div>
       <div className="font-semibold bg-blue-100 my-2 rounded-lg container mx-auto">
         <div className="flex md:mx-6 justify-between items-center flex-col md:flex-row">
-          <img
-            className="m-4 w-64"
-            src={props.state?.profile.photo}
-            alt="Profile"
-          />
+          <img className="m-4 w-64" src={props.profile.photo} alt="Profile" />
           <div className="flex my-10  flex-col">
             <h1 className="text-3xl font-semibold">{props.username}</h1>
             <div className="flex flex-row">
@@ -32,12 +28,11 @@ export default function UserPage(props: IProps) {
                 onClick={props.modalStatus}
                 className="md:mx-4 cursor-pointer rounded-lg py-3 px-6 bg-gray-300"
               >
-                Followers: {props.state?.profile.followers}
+                Followers: {props.profile.followers}
               </p>
               <Modal isOpen={props.modal.isOpen} style={props.customStyles}>
                 <UserFollowContainer
-                  user={props.state?.profile.username}
-                  follow={props.state?.follows}
+                  user={props.profile.username}
                   data={props.modal}
                 />
               </Modal>
@@ -46,13 +41,13 @@ export default function UserPage(props: IProps) {
                 onClick={props.modalStatus}
                 className="md:mx-4 cursor-pointer rounded-lg py-3 px-6 bg-gray-300"
               >
-                Following: {props.state?.profile.following}
+                Following: {props.profile.following}
               </p>
             </div>
-            <p className="my-12">{props.state?.profile.bio}</p>
-            <p>{props.state?.profile.location}</p>
+            <p className="my-12">{props.profile.bio}</p>
+            <p>{props.profile.location}</p>
           </div>
-          {props.state?.profile.username === props.username ? (
+          {props.profile.username === props.username ? (
             <Link to={`/user/${props.username}/edit`}>
               <button className="bg-seafoam h-20 w-40 rounded-full">
                 Edit
@@ -63,63 +58,7 @@ export default function UserPage(props: IProps) {
           )}
         </div>
       </div>
-      <ul className="list-reset flex justify-center container flex mx-auto border-b">
-        <li className="-mb-px mr-1">
-          <button
-            id="0"
-            onClick={() => (display = 0)}
-            className={
-              display !== 0
-                ? "bg-white inline-block py-2 px-4 text-blue-300 font-semibold"
-                : "bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-white bg-blue-300 font-semibold"
-            }
-          >
-            Posts
-          </button>
-        </li>
-        <li className="mr-1">
-          <button
-            onClick={() => (display = 1)}
-            id="1"
-            className={
-              display !== 1
-                ? "bg-white inline-block py-2 px-4 text-blue-300 font-semibold"
-                : "bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-white bg-blue-300 font-semibold"
-            }
-          >
-            Likes
-          </button>
-        </li>
-        <li className="mr-1">
-          <button
-            onClick={() => (display = 2)}
-            id="2"
-            className={
-              display !== 2
-                ? "bg-white inline-block py-2 px-4 text-blue-300 font-semibold"
-                : "bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-white bg-blue-300 font-semibold"
-            }
-          >
-            Comments
-          </button>
-        </li>
-      </ul>
-      <div className="container mx-auto">
-        {/* {
-          display === 0
-            ? props.state?.post.map((e: any) => (
-                <PostContainer more={more} key={e.post_id} postData={e} />
-              ))
-            : display === 1 &&
-              props.state?.likes.map((e) => (
-                <PostContainer more={more} key={e} postData={e} />
-              ))
-          // : display === 2 &&
-          //   props.sstate.map((e) => (
-          //     <PostContainer more={more} key={e._id} data={e} />
-          //   ))
-        } */}
-      </div>
+      <UserPageTabs more={more} data={props.state} />
     </div>
   );
-}
+};

@@ -27,17 +27,23 @@ export default function UserEditContainer() {
   const currUser = window.location.pathname.split("/")[2];
   const [redirect, setRedirect] = useState(false);
   useEffect(() => {
+    let isCancelled = false;
     if (currUser === user) {
       axios
         .get<IState>("http://localhost:5000/getUserEdit", {
           withCredentials: true,
         })
         .then((res) => {
-          setState(res.data);
+          if (!isCancelled) setState(res.data);
         });
     } else {
-      setRedirect(true);
+      if (isCancelled === false) {
+        setRedirect(true);
+      }
     }
+    return () => {
+      isCancelled = true;
+    };
   }, []);
 
   const fileSelectedHandler = async (
