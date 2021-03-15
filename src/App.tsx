@@ -1,9 +1,12 @@
-import "./App.css";
 import { RoutesContainer } from "./components/Routes/RoutesContainer";
 import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
+export const axiosInstance = axios.create({
+  baseURL: "http://localhost:5000",
+  withCredentials: true,
+});
 axios.defaults.withCredentials = true;
-
+axios.defaults.baseURL = "http:/localhost:5000/";
 function App() {
   return (
     <div className="bg-grey-200 App">

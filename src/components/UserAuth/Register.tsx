@@ -45,10 +45,12 @@ export default function Register(props: IProps) {
               onChange={props.onChange}
             ></input>
           </div>
-          <button className="bg-salmon text-semibold text-xl rounded-full my-10 py-6 px-10">
-            Submit
-          </button>
-          <Link to="/login">
+          <div className="flex justify-center">
+            <button className="bg-salmon text-semibold text-xl rounded-full my-10 py-6 px-10">
+              Submit
+            </button>
+          </div>
+          <Link className="flex justify-center" to="/login">
             <p className="font-bold text-2xl">
               Already have an account? Log in!
             </p>

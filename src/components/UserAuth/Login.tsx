@@ -9,9 +9,9 @@ interface IProps {
 export default function Login(props: IProps) {
   return (
     <div>
-      <div className="bg-white shadow-2xl rounded-lg text-navy text-xl font-semibold md:m-20">
+      <div className="bg-white shadow-2xl flex justify-center flex-col rounded-lg text-navy text-xl font-semibold md:m-20">
         <LoginForm />
-        <Link to="/register">
+        <Link className="justify-center flex" to="/register">
           <p className="my-6 text-2xl font-bold">
             Don't have an account? Register now!
           </p>

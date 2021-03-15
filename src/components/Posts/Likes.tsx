@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IPost } from "./PostContainer";
-import axios from "axios";
+import { axiosInstance } from "../../App";
 interface IProps {
   data: IPost;
 }
@@ -8,26 +8,42 @@ interface IState {
   liked: boolean;
   likes: number;
 }
+
 export const Likes = (props: IProps) => {
-  const [state, setState] = useState<IState>({ liked: false, likes: 0 });
+  const [state, setState] = useState<IState>({
+    liked: false,
+    likes: props.data.likes,
+  });
+  useEffect(() => {
+    let isCancelled = false;
+    checkLiked().then((res) => {
+      if (!isCancelled && res.data === "liked")
+        setState({ ...state, liked: true });
+    });
+    console.log(props.data);
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
+  const checkLiked = () => {
+    return axiosInstance.get(`checkliked/${props.data.post_id}`);
+  };
   const handleLike = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const check = e.target.checked;
-    setState({ ...state, liked: e.target.checked });
-    await axios({
-      method: "put",
-      url: `http://localhost:5000/${check ? "like" : "unlike"}`,
-      data: { id: props.data.post_id },
-      withCredentials: true,
-    });
     setState((prevState) => ({
-      ...prevState,
+      liked: check,
       likes: check ? prevState.likes + 1 : prevState.likes - 1,
     }));
+    await axiosInstance({
+      method: "put",
+      url: `/${check ? "addlikes" : "removelikes"}`,
+      data: { id: props.data.post_id },
+    });
   };
   return (
-    <div>
-      <p className="ml-10">{state.likes}</p>
-      <label className="flex" htmlFor={String(props.data.post_id)}>
+    <div className="flex">
+      <p className="flex items-center">{state.likes}</p>
+      <label htmlFor={"post-" + String(props.data.post_id)}>
         <svg
           xmlns="https://www.w3.org/2000/svg"
           fill={state.liked ? "salmon" : "none"}
@@ -44,7 +60,7 @@ export const Likes = (props: IProps) => {
         </svg>
       </label>
       <input
-        id={String(props.data.post_id)}
+        id={"post-" + String(props.data.post_id)}
         className="hidden"
         defaultChecked={state.liked}
         type="checkbox"

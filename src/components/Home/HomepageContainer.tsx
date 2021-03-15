@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { axiosInstance } from "../../App";
 import Homepage from "./Homepage";
 export interface IPost {
   body: string;
@@ -29,9 +29,7 @@ export default function HomepageContainer() {
     };
   }, [state]);
   const getPosts = async () => {
-    return axios.get<IPost[]>(`http://localhost:5000/getposts/${state}`, {
-      withCredentials: true,
-    });
+    return axiosInstance.get<IPost[]>(`/getposts/${state}`, {});
   };
 
   return (

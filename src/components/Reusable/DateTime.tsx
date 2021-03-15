@@ -1,10 +1,10 @@
-import React from "react";
 interface IProps {
   date: number;
 }
 export const DateTime = (props: IProps) => {
   return (
     <div>
+      {console.log(props)}
       {props.date < 60 ? (
         <p>{Math.round(props.date)} seconds ago</p>
       ) : props.date < 3600 ? (

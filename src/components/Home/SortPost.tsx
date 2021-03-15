@@ -28,24 +28,22 @@ export const SortPost = (props: IProps) => {
     props.setPosts([...arr]);
   };
   return (
-    <div>
-      <div className="text-xl bg-lime ">
-        <p className="text-2xl font-semibold">Sort Posts</p>
-        <select className=" w-32 rounded-lg h-16 m-4" onChange={changeRadius}>
-          <option className="" value="Local">
-            Local
-          </option>
-          <option className="flex justify-center" value="Global">
-            Global
-          </option>
+    <div className="text-xl  bg-lime ">
+      <p className="text-2xl flex justify-center font-semibold">Sort Posts</p>
+      <div className="flex p-4 justify-center">
+        <select
+          className=" w-32 flex mr-1 justify-center rounded-lg h-16"
+          onChange={changeRadius}
+        >
+          <option value="Local">Local</option>
+          <option value="Global">Global</option>
         </select>
-        <select className="w-32 h-16 rounded-lg" onChange={postSort}>
-          <option className="flex justify-center" value="recent">
-            Recent
-          </option>
-          <option className="flex justify-center" value="liked">
-            Liked
-          </option>
+        <select
+          className=" w-32 flex ml-1 justify-center rounded-lg h-16"
+          onChange={postSort}
+        >
+          <option value="recent">Recent</option>
+          <option value="liked">Liked</option>
         </select>
       </div>
     </div>

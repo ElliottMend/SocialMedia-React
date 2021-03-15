@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { axiosInstance } from "../../App";
 import Register from "./Register";
 import { Redirect } from "react-router-dom";
 export interface IState {
@@ -38,10 +38,10 @@ export default function RegisterContainer() {
     if (errors !== "") {
       setState({ ...state, errors });
     } else {
-      axios({
+      axiosInstance({
         method: "post",
-        withCredentials: true,
-        url: "http://localhost:5000/register",
+
+        url: "/register",
         data: {
           username: state.username,
           password: state.password,

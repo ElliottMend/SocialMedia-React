@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { axiosInstance } from "../../App";
 import { CreateComment } from "./CreateComment";
 import { Comment } from "./Comment";
 import { IPost } from "./PostContainer";
@@ -27,20 +27,17 @@ export const CommentContainer = (props: IProps) => {
     let arr = [...comments];
     arr.splice(index, 1);
     setComments(arr);
-    await axios({
+    await axiosInstance({
       method: "put",
-      url: "http://localhost:5000/removeComment",
+      url: "/removeComment",
       data: { id: comments[index].post_id },
-      withCredentials: true,
     });
   };
 
   const displayComments = async () => {
-    const res = await axios.get<IComment[]>(
-      `http://localhost:5000/getComments/${props.data.post_id}`,
-      {
-        withCredentials: true,
-      }
+    const res = await axiosInstance.get<IComment[]>(
+      `/getComments/${props.data.post_id}`,
+      {}
     );
     setComments(res.data);
   };

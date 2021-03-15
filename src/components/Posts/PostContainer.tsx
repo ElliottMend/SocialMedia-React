@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Post from "./Post";
-import axios from "axios";
+import { axiosInstance } from "../../App";
 import Modal from "react-modal";
 
 export interface IPost {
@@ -22,13 +22,17 @@ export interface IState {
   liked: boolean | undefined;
   likes: number;
 }
+interface IModal {
+  isOpen: boolean;
+  element: string | null;
+}
 export default function PostContainer(props: IProps) {
   const [state, setState] = useState<IPost[]>(props.postData);
-  const [modal, setModal] = useState(false);
-  const changeModal = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    setModal(modal ? false : true);
+  const [modal, setModal] = useState<IModal>({ isOpen: false, element: null });
+  const changeModal = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    modal.isOpen
+      ? setModal({ ...modal, isOpen: false })
+      : setModal({ element: (e.target as Element).id, isOpen: true });
   };
 
   useEffect(() => {
@@ -41,11 +45,10 @@ export default function PostContainer(props: IProps) {
   }, [props.postData]);
 
   const deletePost = async (index: number, post_id: number) => {
-    await axios({
+    await axiosInstance({
       method: "put",
-      url: "http://localhost:5000/removePost",
+      url: "/removePost",
       data: { id: post_id },
-      withCredentials: true,
     });
     let arr = [...state];
     arr.splice(index, 1);
@@ -68,16 +71,19 @@ export default function PostContainer(props: IProps) {
     <div>
       {state.map((e, index) => (
         <div key={e.post_id}>
-          <Post
-            changeModal={changeModal}
-            deletePost={() => deletePost(index, e.post_id)}
-            post={e}
-          />
+          <div id={String(e.post_id)}>
+            <Post
+              changeModal={changeModal}
+              deletePost={() => deletePost(index, e.post_id)}
+              post={e}
+            />
+          </div>
           <button className="w-full" onClick={changeModal}>
             <p className="p-4 bg-lime">See More!</p>
           </button>
           <Modal
-            isOpen={modal}
+            id={String(modal.element)}
+            isOpen={modal.isOpen}
             onRequestClose={changeModal}
             style={customStyles}
           >

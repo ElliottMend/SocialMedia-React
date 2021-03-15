@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Login from "./Login";
-import axios from "axios";
+import { axiosInstance } from "../../App";
 import { Redirect } from "react-router-dom";
 export interface IState {
   email: string;
@@ -28,21 +28,19 @@ export default function LoginContainer() {
     const password =
       Math.random().toString(36).substring(2, 15) +
       Math.random().toString(36).substring(2, 15);
-    await axios({
+    await axiosInstance({
       method: "post",
-      url: "http://localhost:5000/login",
+      url: "/login",
       data: {
         username: username,
         password: password,
         email: email,
       },
-      withCredentials: true,
     });
-    await axios({
+    await axiosInstance({
       method: "post",
-      url: "http://localhost:5000/login",
+      url: "/login",
       data: { email: email, password: password },
-      withCredentials: true,
     });
     setState({ ...state, redirectEdit: true });
   };

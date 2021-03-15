@@ -30,7 +30,12 @@ export const UserPage = (props: IProps) => {
               >
                 Followers: {props.profile.followers}
               </p>
-              <Modal isOpen={props.modal.isOpen} style={props.customStyles}>
+              <Modal
+                id={String(props.modal.element)}
+                isOpen={props.modal.isOpen}
+                onRequestClose={props.modalStatus}
+                style={props.customStyles}
+              >
                 <UserFollowContainer
                   user={props.profile.username}
                   data={props.modal}

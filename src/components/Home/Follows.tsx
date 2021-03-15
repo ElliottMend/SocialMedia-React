@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FollowButtonContainer } from "../Reusable/FollowButtonContainer";
-import { IProfile } from "../User/UserPageContainer";
+import { IProfile } from "../UserProfile/UserPageContainer";
 interface IProps {
   data: IProfile;
 }

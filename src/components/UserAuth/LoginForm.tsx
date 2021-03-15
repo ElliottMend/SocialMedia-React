@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { axiosInstance } from "../../App";
 import { IState } from "./LoginContainer";
 export const LoginForm = () => {
   const [state, setState] = useState<IState>({
@@ -23,11 +23,10 @@ export const LoginForm = () => {
       redirectEdit: false,
     });
     try {
-      await axios({
+      await axiosInstance({
         method: "post",
-        url: "http://localhost:5000/login",
+        url: "/login",
         data: state,
-        withCredentials: true,
       });
       setState({ ...state, redirectHome: true });
     } catch (err) {}
@@ -35,7 +34,7 @@ export const LoginForm = () => {
   return (
     <div>
       <form onSubmit={submitLogin}>
-        <div className="flex py-6 items-center mb-10 flex-col">
+        <div className="flex py-6 items-center justify-center mb-10 flex-col">
           <label htmlFor="email">Email:</label>
           <input
             className="bg-gray-100 p-3 focus:border-blue-300 focus:outline-none focus:ring border-black h-10 shadow-inner border w-64 rounded-lg "
@@ -54,9 +53,11 @@ export const LoginForm = () => {
             id="password"
           />
         </div>
-        <button className="text-xl bg-salmon h-16 w-40 rounded-lg">
-          Submit
-        </button>
+        <div className="flex justify-center">
+          <button className="text-xl bg-salmon h-16 w-40 rounded-lg">
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   );

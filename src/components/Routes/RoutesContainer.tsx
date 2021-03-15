@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Routes from "./Routes";
-import axios from "axios";
+import { axiosInstance } from "../../App";
 import { usernameContext } from "../Context/usernameContext";
 export const RoutesContainer = () => {
   const [user, setUser] = useState<string>("");
@@ -23,14 +23,10 @@ export const RoutesContainer = () => {
   }, []);
 
   const getUserName = () => {
-    return axios.get<string>("http://localhost:5000/checkJWT", {
-      withCredentials: true,
-    });
+    return axiosInstance.get<string>("/checkJWT", {});
   };
   const loggedIn = () => {
-    return axios.get<boolean>("http://localhost:5000/verify", {
-      withCredentials: true,
-    });
+    return axiosInstance.get<boolean>("/verify", {});
   };
   const login = () => {
     setState(true);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IPost } from "./HomepageContainer";
-import axios from "axios";
+import { axiosInstance } from "../../App";
 interface IProps {
   setPosts: React.Dispatch<React.SetStateAction<IPost[]>>;
   posts: IPost[];
@@ -22,9 +22,10 @@ export const CreatePost = (props: IProps) => {
       setError("The maximum length of a post is 140 characters");
       return;
     } else {
-      const res = await axios.post<IPost>("http://localhost:5000/newpost", {
+      const res = await axiosInstance.post<IPost>("/newpost", {
         body: state,
       });
+      setState("");
       setTimeout(() => {
         props.setPosts([res.data, ...props.posts]);
       }, 100);
@@ -43,6 +44,7 @@ export const CreatePost = (props: IProps) => {
           maxLength={140}
           className="h-20 md:h-40 bg-gray-100 text-center bg-gray-100 p-3 focus:border-blue-300 focus:outline-none focus:ring border-black shadow-inner border w-8/12 rounded-lg "
           id="body"
+          value={state}
           onChange={handleChange}
         />
         {error && <p className="text-red-500">{error}</p>}

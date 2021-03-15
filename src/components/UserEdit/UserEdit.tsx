@@ -1,13 +1,12 @@
-import React from "react";
-import UserEditLocation from "./UserEditLocation";
-import { IState, ILatLng } from "./UserEditContainer";
+import React, { SetStateAction } from "react";
+import { IState } from "./UserEditContainer";
+import { UserEditPhoto } from "./UserEditPhoto";
+import UserEditLocationContainer from "./UserEditLocationContainer";
 export interface IProps {
   editSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-  getLatLng: (e: ILatLng) => Promise<void>;
-  getLocation: (e: string) => Promise<void>;
-  fileSelectedHandler: React.ChangeEventHandler<HTMLInputElement>;
   handleChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   data: IState;
+  setState: React.Dispatch<SetStateAction<IState>>;
 }
 export default function UserEdit(props: IProps) {
   return (
@@ -26,18 +25,9 @@ export default function UserEdit(props: IProps) {
             required
           />
           <div className="mx-auto">
-            <input
-              name="image"
-              className="border-2 border-black bg-white m-10"
-              onChange={props.fileSelectedHandler}
-              type="file"
-            />
+            <UserEditPhoto setState={props.setState} />
           </div>
-          <UserEditLocation
-            data={props.data}
-            getLatLng={props.getLatLng}
-            getLocation={props.getLocation}
-          />
+          <UserEditLocationContainer data={props.data} />
 
           <button className="my-4 border-black border-2 w-20 h-12">
             Submit

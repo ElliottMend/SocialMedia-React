@@ -1,7 +1,7 @@
-import { IProfile } from "../User/UserPageContainer";
+import { IProfile } from "../UserProfile/UserPageContainer";
 import Follows from "./Follows";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { axiosInstance } from "../../App";
 
 export const FollowsContainer = () => {
   useEffect(() => {
@@ -15,12 +15,7 @@ export const FollowsContainer = () => {
   }, []);
   const [follow, setFollow] = useState<IProfile[]>([]);
   const followSuggestions = async () => {
-    return await axios.get<IProfile[]>(
-      "http://localhost:5000/followsuggestions",
-      {
-        withCredentials: true,
-      }
-    );
+    return await axiosInstance.get<IProfile[]>("/followsuggestions", {});
   };
   return (
     <div>

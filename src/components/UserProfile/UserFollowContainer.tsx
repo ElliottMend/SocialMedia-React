@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import { axiosInstance } from "../../App";
 import UserFollow from "./UserFollow";
 interface IProps {
   user: string | undefined;
@@ -23,20 +23,15 @@ export default function UserFollowContainer(props: IProps) {
     };
   }, []);
   const followData = async () => {
-    return await axios.get<IFollowData[]>(
-      `http://localhost:5000/users/${props.user}/${
+    return await axiosInstance.get<IFollowData[]>(
+      `/users/${props.user}/${
         props.data.element === "0" ? "followers" : "following"
-      }`,
-      {
-        withCredentials: true,
-      }
+      }`
     );
   };
   return (
     <div>
-      <div>
-        {state && state.map((e, index) => <UserFollow key={index} data={e} />)}
-      </div>
+      {state && state.map((e, index) => <UserFollow key={index} data={e} />)}
     </div>
   );
 }

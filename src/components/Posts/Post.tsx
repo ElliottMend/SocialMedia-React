@@ -41,16 +41,19 @@ export default function Post(props: IProps) {
           <div className="flex mt-10 justify-center flex-row">
             <DateTime date={date} />
             <Likes data={props.post} />
-            <div>{props.post?.location}</div>
           </div>
-          {props.post.username === useContext(usernameContext) && (
-            <button
-              className="bg-salmon py-4 px-8 m-2 rounded-lg"
-              onClick={props.deletePost}
-            >
-              Delete Post
-            </button>
-          )}
+          <div className="justify-center flex">{props.post?.location}</div>
+
+          <div className="flex justify-center">
+            {props.post.username === useContext(usernameContext) && (
+              <button
+                className="bg-salmon py-4 px-8 m-2 rounded-lg"
+                onClick={props.deletePost}
+              >
+                Delete Post
+              </button>
+            )}
+          </div>
         </div>
         <CommentContainer data={props.post} />
       </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import { axiosInstance } from "../../App";
 import Modal from "react-modal";
 import { UserPage } from "./UserPage";
 import { usernameContext } from "../Context/usernameContext";
@@ -47,7 +47,7 @@ export default function UserPageContainer() {
   });
   const userProfile = window.location.pathname.split("/")[2];
   const modalStatus = (e: React.MouseEvent<HTMLElement>) => {
-    modal.element
+    modal.isOpen
       ? setModal({ ...modal, isOpen: false })
       : setModal({ element: (e.target as Element).id, isOpen: true });
   };
@@ -66,9 +66,7 @@ export default function UserPageContainer() {
     };
   }, []);
   const getUserProfile = async () => {
-    return axios.get<IState>(`http://localhost:5000/users/${userProfile}`, {
-      withCredentials: true,
-    });
+    return axiosInstance.get<IState>(`/users/${userProfile}`, {});
   };
   const customStyles = {
     content: {

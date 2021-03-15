@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { axiosInstance } from "../../App";
 import { IComment } from "./CommentContainer";
 import { IPost } from "./PostContainer";
 interface IProps {
@@ -15,16 +15,12 @@ export const CreateComment = (props: IProps) => {
 
   const createComment = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const res = await axios.post<IComment>(
-      "http://localhost:5000/createComment",
-      {
-        data: {
-          id: props.data.post_id,
-          text: state,
-        },
-        withCredentials: true,
-      }
-    );
+    const res = await axiosInstance.post<IComment>("/createComment", {
+      data: {
+        id: props.data.post_id,
+        text: state,
+      },
+    });
     setTimeout(async () => {
       props.setComments([res.data, ...props.comments]);
     }, 100);
