@@ -29,11 +29,12 @@ export default function HomepageContainer() {
     };
   }, [state]);
   const getPosts = async () => {
-    return axiosInstance.get<IPost[]>(`/getposts/${state}`, {});
+    return axiosInstance.get<IPost[]>(`/getposts/${state}`);
   };
 
   return (
     <div>
+      {console.log(posts)}
       <Homepage posts={posts} setState={setState} setPosts={setPosts} />
     </div>
   );

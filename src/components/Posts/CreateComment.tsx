@@ -15,11 +15,10 @@ export const CreateComment = (props: IProps) => {
 
   const createComment = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+    console.log(state, props.data.post_id);
     const res = await axiosInstance.post<IComment>("/createComment", {
-      data: {
-        id: props.data.post_id,
-        text: state,
-      },
+      id: props.data.post_id,
+      text: state,
     });
     setTimeout(async () => {
       props.setComments([res.data, ...props.comments]);
@@ -28,16 +27,18 @@ export const CreateComment = (props: IProps) => {
   return (
     <div>
       <form
-        className="bg-cream flex flex-col justify-center"
+        className="bg-cream flex flex-col justify-center "
         onSubmit={createComment}
       >
         <input
           maxLength={140}
-          className="bg-gray-100 p-3 focus:border-blue-300 focus:outline-none focus:ring border-black h-10 shadow-inner border w-full rounded-lg "
+          className="bg-gray-100 p-3 border-2 border-gray-400 focus:border-blue-300 focus:outline-none focus:ring border-black h-10 shadow-inner border w-full rounded-lg "
           onChange={commentChange}
           placeholder="Comment"
-        ></input>
-        <button className="m-2 md:m-4 text-2xl">Submit</button>
+        />
+        <button className="p-2 md:p-4 border-2 border-gray-500 text-2xl">
+          Submit
+        </button>
       </form>
     </div>
   );

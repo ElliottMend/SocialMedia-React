@@ -16,18 +16,12 @@ export default function UserEditLocationContainer(props: IProps) {
   useEffect(() => {
     let isCancelled = false;
     if (!isCancelled) setState(props.data.location);
-    // const loader = new Loader({
-    //   apiKey: apiKey,
-    //   version: "weekly",
-    // });
 
     return () => {
       isCancelled = true;
     };
-  }, [state]);
-  const getApiKey = () => {
-    axiosInstance.get("");
-  };
+  }, []);
+
   const handleSelect = (address: string) => {
     geocodeByAddress(address)
       .then((results) => {
@@ -41,10 +35,13 @@ export default function UserEditLocationContainer(props: IProps) {
   };
 
   return (
-    <UserEditLocation
-      handleSelect={handleSelect}
-      handleChange={handleChange}
-      data={props.data}
-    />
+    <div>
+      <UserEditLocation
+        handleSelect={handleSelect}
+        handleChange={handleChange}
+        data={props.data}
+        location={state}
+      />
+    </div>
   );
 }

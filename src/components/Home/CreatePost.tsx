@@ -3,7 +3,6 @@ import { IPost } from "./HomepageContainer";
 import { axiosInstance } from "../../App";
 interface IProps {
   setPosts: React.Dispatch<React.SetStateAction<IPost[]>>;
-  posts: IPost[];
 }
 export const CreatePost = (props: IProps) => {
   const [error, setError] = useState<string>("");
@@ -27,7 +26,7 @@ export const CreatePost = (props: IProps) => {
       });
       setState("");
       setTimeout(() => {
-        props.setPosts([res.data, ...props.posts]);
+        props.setPosts((prevState) => [res.data, ...prevState]);
       }, 100);
     }
   };

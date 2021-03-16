@@ -1,23 +1,19 @@
-import { Link } from "react-router-dom";
-import { DateTime } from "../Reusable/DateTime";
 import { IComment } from "./CommentContainer";
+import { PostLayout } from "./PostLayout";
+import { DateTime } from "../Reusable/DateTime";
+import { Likes } from "./Likes";
 interface IProps {
   username: number | undefined;
   deleteComment: () => void;
   data: IComment;
 }
 export const Comment = (props: IProps) => {
-  const date = Date.now() / 1000 - Number(props.data.date) / 1000;
   return (
-    <div className="border-b flex text-center text-navy text-lg flex-col justify-center py-3 bg-seafoam">
-      <Link className="" to={`/user/${props.username}`}>
-        <p className="text-center font-bold">{props.username}</p>
-        <div className="break-words text-center my-3 px-10 md:px-20">
-          <p>{props.data.body}</p>
-        </div>
-      </Link>
-
-      <DateTime date={date} />
+    <div className="my-1 flex text-center text-navy text-lg flex-col justify-center py-3 bg-seafoam">
+      <PostLayout post={props.data} />
+      <div className="flex mt-2 justify-center flex-row">
+        <DateTime date={props.data.date} />
+      </div>
       <button
         className="bg-salmon py-2 px-4 m-2 rounded-lg"
         onClick={props.deleteComment}

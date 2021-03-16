@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Post from "./Post";
 import { axiosInstance } from "../../App";
 import Modal from "react-modal";
-
 export interface IPost {
   body: string;
   date: string;
@@ -34,7 +33,6 @@ export default function PostContainer(props: IProps) {
       ? setModal({ ...modal, isOpen: false })
       : setModal({ element: (e.target as Element).id, isOpen: true });
   };
-
   useEffect(() => {
     let isCancelled = false;
     Modal.setAppElement("body");
@@ -70,13 +68,9 @@ export default function PostContainer(props: IProps) {
   return (
     <div>
       {state.map((e, index) => (
-        <div key={e.post_id}>
+        <div className="container mx-auto" key={e.post_id}>
           <div id={String(e.post_id)}>
-            <Post
-              changeModal={changeModal}
-              deletePost={() => deletePost(index, e.post_id)}
-              post={e}
-            />
+            <Post deletePost={() => deletePost(index, e.post_id)} post={e} />
           </div>
           <button className="w-full" onClick={changeModal}>
             <p className="p-4 bg-lime">See More!</p>
@@ -87,11 +81,7 @@ export default function PostContainer(props: IProps) {
             onRequestClose={changeModal}
             style={customStyles}
           >
-            <Post
-              changeModal={changeModal}
-              deletePost={() => deletePost(index, e.post_id)}
-              post={e}
-            />
+            <Post deletePost={() => deletePost(index, e.post_id)} post={e} />
           </Modal>
         </div>
       ))}

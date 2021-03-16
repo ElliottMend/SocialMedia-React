@@ -80,15 +80,13 @@ export default function UserPageContainer() {
     },
   };
   return (
-    <div>
-      <UserPage
-        username={username}
-        customStyles={customStyles}
-        profile={profile}
-        modal={modal}
-        modalStatus={modalStatus}
-        state={state}
-      />
-    </div>
+    <UserPage
+      username={username}
+      customStyles={customStyles}
+      profile={profile}
+      modal={modal}
+      modalStatus={modalStatus}
+      state={state}
+    />
   );
 }

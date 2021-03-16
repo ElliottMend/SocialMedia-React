@@ -14,13 +14,14 @@ export const Likes = (props: IProps) => {
     liked: false,
     likes: props.data.likes,
   });
+
   useEffect(() => {
     let isCancelled = false;
     checkLiked().then((res) => {
       if (!isCancelled && res.data === "liked")
         setState({ ...state, liked: true });
     });
-    console.log(props.data);
+
     return () => {
       isCancelled = true;
     };
@@ -30,6 +31,7 @@ export const Likes = (props: IProps) => {
   };
   const handleLike = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const check = e.target.checked;
+    console.log(check);
     setState((prevState) => ({
       liked: check,
       likes: check ? prevState.likes + 1 : prevState.likes - 1,

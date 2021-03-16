@@ -40,7 +40,6 @@ export default function RegisterContainer() {
     } else {
       axiosInstance({
         method: "post",
-
         url: "/register",
         data: {
           username: state.username,

@@ -36,11 +36,26 @@ export default function UserEditContainer() {
         setRedirect(true);
       }
     }
+    getApiKey().then((res) => {
+      if (!isCancelled) {
+        injectScript(res.data);
+      }
+    });
     return () => {
       isCancelled = true;
     };
   }, []);
-
+  const injectScript = (apiKey: string) => {
+    return (
+      <script
+        async={true}
+        src={`https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`}
+      ></script>
+    );
+  };
+  const getApiKey = async () => {
+    return await axiosInstance.get<string>("userEditLocation");
+  };
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setState({ ...state, bio: e.target.value });
   };

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { axiosInstance } from "../../App";
 
 export const FollowsContainer = () => {
+  const [follow, setFollow] = useState<IProfile[]>([]);
   useEffect(() => {
     let isCancelled = false;
     followSuggestions().then((res) => {
@@ -13,14 +14,13 @@ export const FollowsContainer = () => {
       isCancelled = true;
     };
   }, []);
-  const [follow, setFollow] = useState<IProfile[]>([]);
   const followSuggestions = async () => {
-    return await axiosInstance.get<IProfile[]>("/followsuggestions", {});
+    return await axiosInstance.get<IProfile[]>("/followsuggestions");
   };
   return (
     <div>
       {follow.map((e) => (
-        <Follows data={e} />
+        <Follows key={e.user_id} data={e} />
       ))}
     </div>
   );

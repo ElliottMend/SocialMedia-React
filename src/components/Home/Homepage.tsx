@@ -14,7 +14,7 @@ export default function Homepage(props: IProps) {
     <div className="text-navy">
       <div className="container mx-auto">
         <section className="shadow-xl my-2 border-black">
-          <CreatePost posts={props.posts} setPosts={props.setPosts} />
+          <CreatePost setPosts={props.setPosts} />
           <SortPost
             posts={props.posts}
             setPosts={props.setPosts}
@@ -24,7 +24,7 @@ export default function Homepage(props: IProps) {
         <div className="w-full">
           <PostContainer postData={props.posts} />
         </div>
-        <div className="mt-1 inset-x-0 top-0 left-0 rounded-lg md:sticky mx-2">
+        <div className="mt-1 inset-x-0 flex flex-col items-center top-0 left-0 rounded-lg md:sticky mx-2">
           <p className="text-2xl font-semibold">Who to Follow</p>
           <FollowsContainer />
         </div>

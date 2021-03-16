@@ -17,10 +17,14 @@ export const UserPage = (props: IProps) => {
   const more = true;
   return (
     <div>
-      <div className="font-semibold bg-blue-100 my-2 rounded-lg container mx-auto">
+      <div className="font-semibold bg-blue-100 my-2 rounded-lg mx-auto">
         <div className="flex md:mx-6 justify-between items-center flex-col md:flex-row">
-          <img className="m-4 w-64" src={props.profile.photo} alt="Profile" />
-          <div className="flex my-10  flex-col">
+          <img
+            className="mt-4 md:w-48 w-64"
+            src={props.profile.photo}
+            alt="Profile"
+          />
+          <div className="flex my-10 items-center  flex-col">
             <h1 className="text-3xl font-semibold">{props.username}</h1>
             <div className="flex flex-row">
               <p
@@ -49,8 +53,10 @@ export const UserPage = (props: IProps) => {
                 Following: {props.profile.following}
               </p>
             </div>
-            <p className="my-12">{props.profile.bio}</p>
-            <p>{props.profile.location}</p>
+            <div className="flex flex-col items-center">
+              <p className="my-12">{props.profile.bio}</p>
+              <p>{props.profile.location}</p>
+            </div>
           </div>
           {props.profile.username === props.username ? (
             <Link to={`/user/${props.username}/edit`}>
