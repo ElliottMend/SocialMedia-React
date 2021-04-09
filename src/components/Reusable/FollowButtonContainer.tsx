@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { FollowButton } from "./FollowButton";
-import axios from "axios";
+import { axiosInstance } from "../../App";
 import { usernameContext } from "../Context/usernameContext";
 interface IProps {
   user: string;
@@ -11,32 +11,27 @@ export const FollowButtonContainer = (props: IProps) => {
   const [follow, setFollow] = useState<boolean | undefined>();
   useEffect(() => {
     let isCancelled = false;
-    checkFollow();
+    checkFollow().then((items) => {
+      setFollow(items.data);
+    });
     return () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       isCancelled = true;
     };
   }, []);
   const changeFollow = (e: React.ChangeEvent<HTMLInputElement>) => {
     let check = e.target.checked;
     setFollow(e.target.checked);
-    axios({
+    axiosInstance({
       method: "put",
-      url: `http://localhost:5000/${check ? "addfollow" : "removeFollow"}`,
+      url: `/${check ? "addfollow" : "removeFollow"}`,
       data: {
         author: e.target.id,
       },
-      withCredentials: true,
     });
   };
   const checkFollow = async () => {
-    const items = await axios.get<boolean>(
-      `http://localhost:5000/checkFollow/${props.user}`,
-      {
-        withCredentials: true,
-      }
-    );
-    setFollow(items.data);
-    return;
+    return await axiosInstance.get<boolean>(`/checkFollow/${props.user}`, {});
   };
   return (
     <div>

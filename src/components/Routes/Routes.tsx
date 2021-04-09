@@ -4,12 +4,13 @@ import Loading from "./Loading";
 import Header from "../Views/Header";
 const LoginContainer = lazy(() => import("../UserAuth/LoginContainer"));
 const RegisterContainer = lazy(() => import("../UserAuth/RegisterContainer"));
-const UserPageContainer = lazy(() => import("../User/UserPageContainer"));
+const UserPageContainer = lazy(
+  () => import("../UserProfile/UserPageContainer")
+);
 const PostContainer = lazy(() => import("../Posts/PostContainer"));
 const HomepageContainer = lazy(() => import("../Home/HomepageContainer"));
-const UserEditContainer = lazy(() => import("../User/UserEditContainer"));
+const UserEditContainer = lazy(() => import("../UserEdit/UserEditContainer"));
 interface IProps {
-  login: () => void;
   logout: () => void;
   state: boolean;
 }
@@ -45,13 +46,7 @@ export default function Routes(props: IProps) {
             exact
             component={() => <RegisterContainer />}
           />
-          <Route
-            path="/login"
-            exact
-            component={() => (
-              <LoginContainer login={props.login} data={props.state} />
-            )}
-          />
+          <Route path="/login" exact component={() => <LoginContainer />} />
           <Route render={() => <Redirect to="/login" />} />
         </Switch>
       )}

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import { axiosInstance } from "../../App";
 import UserFollow from "./UserFollow";
 interface IProps {
   user: string | undefined;
-  follow: [] | undefined;
   data: { isOpen: boolean; element: string | null };
 }
 export interface IFollowData {
@@ -15,23 +14,24 @@ export interface IFollowData {
 export default function UserFollowContainer(props: IProps) {
   const [state, setState] = useState<IFollowData[]>([]);
   useEffect(() => {
-    followData();
+    let isCancelled = false;
+    followData().then((res) => {
+      if (!isCancelled) setState(res.data);
+    });
+    return () => {
+      isCancelled = true;
+    };
   }, []);
   const followData = async () => {
-    const res = await axios({
-      method: "get",
-      url: `http://localhost:5000/users/${props.user}/${
+    return await axiosInstance.get<IFollowData[]>(
+      `/users/${props.user}/${
         props.data.element === "0" ? "followers" : "following"
-      }`,
-      withCredentials: true,
-    });
-    setState(res.data);
+      }`
+    );
   };
   return (
     <div>
-      <div>
-        {state && state.map((e, index) => <UserFollow key={index} data={e} />)}
-      </div>
+      {state && state.map((e, index) => <UserFollow key={index} data={e} />)}
     </div>
   );
 }
