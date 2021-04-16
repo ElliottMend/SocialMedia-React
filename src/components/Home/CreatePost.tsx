@@ -10,21 +10,22 @@ export const CreatePost = (props: IProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length === 140) {
       setError("The maximum length of a post is 140 characters");
-    } else {
-      setError("");
-      setState(e.target.value);
     }
+    setError("");
+    setState(e.target.value);
   };
   const newPost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (state.length > 140) {
-      setError("The maximum length of a post is 140 characters");
-      return;
+      return setError("The maximum length of a post is 140 characters");
+    } else if (state.length === 0) {
+      return setError("The post cannot be empty");
     } else {
       const res = await axiosInstance.post<IPost>("/newpost", {
-        body: state,
+        text: state,
       });
       setState("");
+      setError("");
       setTimeout(() => {
         props.setPosts((prevState) => [res.data, ...prevState]);
       }, 100);

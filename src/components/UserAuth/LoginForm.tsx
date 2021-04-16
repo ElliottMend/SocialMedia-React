@@ -1,38 +1,44 @@
 import React, { useState } from "react";
 import { axiosInstance } from "../../App";
-import { IState } from "./LoginContainer";
+import { Redirect } from "react-router-dom";
+interface IState {
+  email: string;
+  password: string;
+}
 export const LoginForm = () => {
   const [state, setState] = useState<IState>({
     email: "",
     password: "",
-    error: "",
-    redirectHome: false,
-    redirectEdit: false,
   });
+  const [error, setError] = useState<string>("");
+  const [redirect, setRedirect] = useState<boolean>(false);
+
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setState({
       ...state,
       [e.target.id]: e.target.value,
     });
   };
+
   const submitLogin = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    setState({
-      ...state,
-      redirectHome: false,
-      redirectEdit: false,
-    });
-    try {
-      await axiosInstance({
-        method: "post",
-        url: "/login",
-        data: state,
+    console.log(state);
+    await axiosInstance
+      .post("/login", {
+        email: state.email,
+        password: state.password,
+      })
+      .then(() => {
+        setRedirect(true);
+      })
+      .catch((err) => {
+        setError("The email or password is incorrect");
       });
-      setState({ ...state, redirectHome: true });
-    } catch (err) {}
   };
+
   return (
     <div>
+      {redirect && <Redirect to="/" />}
       <form onSubmit={submitLogin}>
         <div className="flex py-6 items-center justify-center mb-10 flex-col">
           <label htmlFor="email">Email:</label>
@@ -59,6 +65,11 @@ export const LoginForm = () => {
           </button>
         </div>
       </form>
+      <div className="flex flex-col items-center">
+        {error && (
+          <div className=" text-red-700 bg-red-300 py-10 my-4">{error}</div>
+        )}
+      </div>
     </div>
   );
 };

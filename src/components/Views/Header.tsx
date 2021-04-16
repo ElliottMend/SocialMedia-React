@@ -8,10 +8,7 @@ interface IProps {
 export default function Header(props: IProps) {
   const [redirect, setRedirect] = useState(false);
   const DeleteToken = async () => {
-    await axiosInstance({
-      method: "get",
-      url: `/logout`,
-    }).then(async () => {
+    await axiosInstance.get(`/logout`).then(async () => {
       await props.logout();
       setRedirect(true);
     });

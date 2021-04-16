@@ -25,7 +25,7 @@ export const UserPage = (props: IProps) => {
             alt="Profile"
           />
           <div className="flex my-10 items-center  flex-col">
-            <h1 className="text-3xl font-semibold">{props.username}</h1>
+            <h1 className="text-3xl font-semibold">{props.profile.username}</h1>
             <div className="flex flex-row">
               <p
                 id="0"
@@ -65,7 +65,7 @@ export const UserPage = (props: IProps) => {
               </button>
             </Link>
           ) : (
-            <FollowButtonContainer user={props.username} />
+            <FollowButtonContainer user={props.profile.username} />
           )}
         </div>
       </div>

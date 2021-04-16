@@ -56,9 +56,9 @@ export default function Register(props: IProps) {
             </p>
           </Link>
           <div className="flex py-10 justify-center">
-            {props.data.errors && (
-              <h6 className="bg-red-200 w-2/3 py-6 text-red-700">
-                {props.data.errors}
+            {props.data.error && (
+              <h6 className="bg-red-200 p-6 text-red-700">
+                {props.data.error}
               </h6>
             )}
           </div>

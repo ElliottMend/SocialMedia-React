@@ -1,0 +1,95 @@
+@startuml
+split
+    -[hidden]->
+    :Index.tsx;
+    :App.tsx;
+    :RoutesContainer.tsx;
+split again
+   -[hidden]->
+    :UsernameContext.tsx;
+split again
+    -[hidden]->
+    :VerifyContext.tsx;
+split again
+    -[hidden]->
+    :Loading.tsx;
+split again
+    -[hidden]->
+    :Header.tsx;
+end split
+:Routes.tsx;
+split
+    :HomepageContainer.tsx;
+    :Homepage;
+    split
+        :CreatePost.tsx;
+        detach
+    split again
+        :SortPost.tsx;
+        detach
+    split again
+        :FollowsContainer.tsx;
+        :Follows.tsx;
+        :FollowButtonContainer.tsx;
+        :FollowButton.tsx;
+        detach
+    split again
+        :PostContainer;
+        split
+            :Post.tsx;
+            split
+                :Date.tsx;
+                detach
+            split again
+                :Likes.tsx;
+                detach
+            end split
+        split again
+            :Modal;
+            :Post;
+        split
+            :Date.tsx;
+            detach
+        split again
+            :Likes.tsx;
+            detach
+        end split
+    end split
+    detach
+split again
+    :LoginContainer.tsx;
+    :LoginForm.tsx;
+    detach
+split again
+    :RegisterContainer.tsx;
+    :Register.tsx;
+    detach
+split again
+    :UserPageContainer;
+    :UserPage.tsx;
+    split
+        :Modal;
+        :UserFollowContainer.tsx;
+        :UserFollow.tsx;
+        detach
+    split again
+        :UserPageTabs.tsx;
+        detach
+    split again
+        :FollowButtonContainer.tsx;
+        detach
+    split again
+        :UserEditContainer.tsx;
+        :UserEdit.tsx;
+        split
+            :UserEditPhoto.tsx;
+            detach
+        split again
+            :UserEditLocationContainer.tsx;
+            :UserEditLocation;
+            :PlacesAutoComplete;
+            detach
+
+    
+    detach
+@enduml

@@ -61,15 +61,11 @@ export default function UserEditContainer() {
   };
   const editSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    axiosInstance({
-      method: "put",
-      url: "userEdit",
-      data: {
-        bio: state.bio,
-        image: state.photo,
-        location: state.location,
-        latlng: state.latlng,
-      },
+    axiosInstance.put("userEdit", {
+      bio: state.bio,
+      image: state.photo,
+      location: state.location,
+      latlng: state.latlng,
     });
     setTimeout(() => {
       history.push(`/user/${user}`);

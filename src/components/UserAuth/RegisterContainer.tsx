@@ -8,7 +8,7 @@ export interface IState {
   password2: string;
   email: string;
   redirect: boolean;
-  errors: string;
+  error: string;
 }
 export default function RegisterContainer() {
   const [state, setState] = useState<IState>({
@@ -17,38 +17,39 @@ export default function RegisterContainer() {
     password2: "",
     email: "",
     redirect: false,
-    errors: "",
+    error: "",
   });
   const Submit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setState({
       ...state,
-      errors: "",
+      error: "",
     });
-    let errors = "";
+    let error = "";
+    const regex = /\d/g;
     if (state.username.length < 5) {
-      errors = "The username must be at least 5 characters";
+      error = "The username must be at least 5 characters";
     } else if (!state.email.includes("@") || !state.email.includes(".")) {
-      errors = "The email must contain '@' and '.' symbols";
+      error = "The email must contain '@' and '.' symbols";
     } else if (state.password.length < 5) {
-      errors = "The password must be at least 5 characters";
+      error = "The password must be at least 5 characters";
+    } else if (!regex.test(state.password)) {
+      error = "The password must contain a number";
     } else if (state.password2 !== state.password) {
-      errors = "The passwords do not match";
+      error = "The passwords do not match";
     }
-    if (errors !== "") {
-      setState({ ...state, errors });
+    if (error !== "") {
+      setState({ ...state, error });
     } else {
-      axiosInstance({
-        method: "post",
-        url: "/register",
-        data: {
+      axiosInstance
+        .post("/register", {
           username: state.username,
           password: state.password,
           email: state.email,
-        },
-      }).then(() => {
-        setState({ ...state, redirect: true });
-      });
+        })
+        .then(() => {
+          setState({ ...state, redirect: true });
+        });
     }
   };
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {

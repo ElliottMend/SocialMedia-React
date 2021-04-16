@@ -26,21 +26,17 @@ export const Likes = (props: IProps) => {
       isCancelled = true;
     };
   }, []);
+
   const checkLiked = () => {
     return axiosInstance.get(`checkliked/${props.data.post_id}`);
   };
+
   const handleLike = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const check = e.target.checked;
-    console.log(check);
     setState((prevState) => ({
-      liked: check,
-      likes: check ? prevState.likes + 1 : prevState.likes - 1,
+      liked: !state.liked,
+      likes: state.liked ? prevState.likes - 1 : prevState.likes + 1,
     }));
-    await axiosInstance({
-      method: "put",
-      url: `/${check ? "addlikes" : "removelikes"}`,
-      data: { id: props.data.post_id },
-    });
+    await axiosInstance.put("/changeLike", { id: props.data.post_id });
   };
   return (
     <div className="flex">
