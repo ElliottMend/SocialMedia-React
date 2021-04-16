@@ -1,23 +1,13 @@
 import React, { useState } from "react";
-import Login from "./Login";
+import { Link } from "react-router-dom";
+import { LoginForm } from "./LoginForm";
 import { axiosInstance } from "../../App";
-import { Redirect } from "react-router-dom";
 export interface IState {
-  email: string;
-  password: string;
+  redirect: boolean;
   error: string;
-  redirectHome: boolean;
-  redirectEdit: boolean;
 }
 export default function LoginContainer() {
-  const [state, setState] = useState<IState>({
-    email: "",
-    password: "",
-    error: "",
-    redirectHome: false,
-    redirectEdit: false,
-  });
-
+  const [state, setState] = useState<IState>({ redirect: false, error: "" });
   const guestLogin = async () => {
     const username = Math.random().toString(36).substring(2, 15);
     const email =
@@ -28,27 +18,39 @@ export default function LoginContainer() {
     const password =
       Math.random().toString(36).substring(2, 15) +
       Math.random().toString(36).substring(2, 15);
-    await axiosInstance({
-      method: "post",
-      url: "/login",
-      data: {
-        username: username,
-        password: password,
-        email: email,
-      },
+    await axiosInstance.post("/login", {
+      username: username,
+      password: password,
+      email: email,
     });
-    await axiosInstance({
+    await axiosInstance.post("/login", {
       method: "post",
-      url: "/login",
+      url: "http://localhost:5000/login",
       data: { email: email, password: password },
+      withCredentials: true,
     });
-    setState({ ...state, redirectEdit: true });
+    setState({ ...state, redirect: true });
   };
-
   return (
     <div>
-      <Login data={state} guestLogin={guestLogin} />
-      {state.redirectHome && <Redirect to={"/"} />}
+      <div className="bg-white shadow-2xl flex justify-center flex-col rounded-lg text-navy text-xl font-semibold md:m-20">
+        <LoginForm />
+        <Link className="justify-center flex" to="/register">
+          <p className="my-6 text-2xl font-bold">
+            Don't have an account? Register now!
+          </p>
+        </Link>
+        <button className="text-2xl" onClick={guestLogin}>
+          Log in as Guest?
+        </button>
+        <div className="flex py-10 justify-center">
+          {state.error && (
+            <h6 className="bg-red-200 w-2/3 py-6 text-red-700">
+              {state.error}
+            </h6>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

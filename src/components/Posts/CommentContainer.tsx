@@ -13,7 +13,7 @@ export const CommentContainer = (props: IProps) => {
   const [comments, setComments] = useState<IComment[]>([]);
   useEffect(() => {
     let isCancelled = false;
-    displayComments();
+    if (!isCancelled) displayComments();
     return () => {
       isCancelled = true;
     };
@@ -22,10 +22,8 @@ export const CommentContainer = (props: IProps) => {
     let arr = [...comments];
     arr.splice(index, 1);
     setComments(arr);
-    await axiosInstance({
-      method: "put",
-      url: "/removeComment",
-      data: { id: comments[index].comment_id },
+    await axiosInstance.put("/removeComment", {
+      commentId: comments[index].comment_id,
     });
   };
 

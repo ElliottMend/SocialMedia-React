@@ -34,7 +34,6 @@ export default function HomepageContainer() {
 
   return (
     <div>
-      {console.log(posts)}
       <Homepage posts={posts} setState={setState} setPosts={setPosts} />
     </div>
   );

@@ -36,18 +36,14 @@ export default function PostContainer(props: IProps) {
   useEffect(() => {
     let isCancelled = false;
     Modal.setAppElement("body");
-    setState(props.postData);
+    if (!isCancelled) setState(props.postData);
     return () => {
       isCancelled = true;
     };
   }, [props.postData]);
 
   const deletePost = async (index: number, post_id: number) => {
-    await axiosInstance({
-      method: "put",
-      url: "/removePost",
-      data: { id: post_id },
-    });
+    await axiosInstance.put("/removePost", { id: post_id });
     let arr = [...state];
     arr.splice(index, 1);
     setState(arr);
