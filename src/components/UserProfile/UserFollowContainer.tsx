@@ -22,6 +22,7 @@ export default function UserFollowContainer(props: IProps) {
       isCancelled = true;
     };
   }, []);
+
   const followData = async () => {
     return await axiosInstance.get<IFollowData[]>(
       `/users/${props.user}/${
@@ -29,6 +30,7 @@ export default function UserFollowContainer(props: IProps) {
       }`
     );
   };
+
   return (
     <div>
       {state && state.map((e, index) => <UserFollow key={index} data={e} />)}

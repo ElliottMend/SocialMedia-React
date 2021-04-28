@@ -9789,7 +9789,7 @@ video {
 }
 
 .h-screen {
-  height: 100vh;
+  height: 98vh;
 }
 
 .text-xs {
@@ -20638,6 +20638,10 @@ video {
   animation: bounce 1s infinite;
 }
 
+.content-area {
+  height: calc(100vh - 3rem);
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
@@ -29889,7 +29893,7 @@ video {
   }
 
   .sm\:h-screen {
-    height: 100vh;
+    height: 98vh;
   }
 
   .sm\:text-xs {
@@ -49946,7 +49950,7 @@ video {
   }
 
   .md\:h-screen {
-    height: 100vh;
+    height: 98vh;
   }
 
   .md\:text-xs {
@@ -70003,7 +70007,7 @@ video {
   }
 
   .lg\:h-screen {
-    height: 100vh;
+    height: 98vh;
   }
 
   .lg\:text-xs {
@@ -90060,7 +90064,7 @@ video {
   }
 
   .xl\:h-screen {
-    height: 100vh;
+    height: 98vh;
   }
 
   .xl\:text-xs {

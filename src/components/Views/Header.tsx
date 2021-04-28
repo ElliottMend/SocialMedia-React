@@ -16,13 +16,19 @@ export default function Header(props: IProps) {
   return (
     <div className="text-navy">
       <div className="mx-auto">
-        <div className="w-full px-8 rounded-lg text-3xl bg-seafoam">
+        <div className="w-full h-12 rounded-lg text-3xl bg-seafoam">
           <div className="flex md:mx-32 justify-between flex-row">
             <Link to="/">
               <p className="">Home</p>
             </Link>
             <Link to={`/user/${useContext(usernameContext)}`}>
               <p className="">Account</p>
+            </Link>
+            <Link to={`/notifications`}>
+              <p className="">Notifications</p>
+            </Link>
+            <Link to={`/messages`}>
+              <p className="">Messages</p>
             </Link>
             <p className="cursor-pointer" onClick={DeleteToken}>
               Logout

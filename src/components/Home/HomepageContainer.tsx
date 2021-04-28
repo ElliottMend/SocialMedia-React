@@ -19,15 +19,20 @@ export interface IState {
 export default function HomepageContainer() {
   const [state, setState] = useState<number>(1);
   const [posts, setPosts] = useState<IPost[]>([]);
+
   useEffect(() => {
     let isCancelled = false;
     getPosts().then((res) => {
-      if (!isCancelled) setPosts(res.data);
+      if (!isCancelled) {
+        setPosts(res.data);
+        console.log(res.data);
+      }
     });
     return () => {
       isCancelled = true;
     };
   }, [state]);
+
   const getPosts = async () => {
     return axiosInstance.get<IPost[]>(`/getposts/${state}`);
   };

@@ -24,7 +24,7 @@ module.exports = {
       navy: "#4a536b",
       cream: "#FFFFCF",
       lime: " #D9FFDF",
-      
+
       black: "#000",
       white: "#fff",
 
@@ -315,7 +315,7 @@ module.exports = {
       auto: "auto",
       ...theme("spacing"),
       full: "100%",
-      screen: "100vh",
+      screen: "98vh",
     }),
     inset: {
       0: "0",

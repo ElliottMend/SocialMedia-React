@@ -1,8 +1,9 @@
+import moment from "moment";
 interface IProps {
   date: string;
 }
 export const DateTime = (props: IProps) => {
-  const date = Date.now() / 1000 - Number(props.date) / 1000;
+  const date = moment().unix() - moment(props.date).unix();
 
   return (
     <div>

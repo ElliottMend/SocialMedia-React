@@ -2,6 +2,8 @@ import React, { lazy, Suspense } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Loading from "./Loading";
 import Header from "../Views/Header";
+import { MessageRoomListContainer } from "../Messages/MessageRoomListContainer";
+import { MessageRoomContainer } from "../Messages/MessageRoomContainer";
 const LoginContainer = lazy(() => import("../UserAuth/LoginContainer"));
 const RegisterContainer = lazy(() => import("../UserAuth/RegisterContainer"));
 const UserPageContainer = lazy(
@@ -21,10 +23,6 @@ export default function Routes(props: IProps) {
         <React.Fragment>
           <Header logout={props.logout} />
           <Switch>
-            {/* <Route
-              path="/posts/:id"
-              component={() => <PostContainer key={window.location.pathname} />}
-            /> */}
             <Route path="/" exact component={() => <HomepageContainer />} />
             <Route
               path="/user/:id/edit"
@@ -35,6 +33,14 @@ export default function Routes(props: IProps) {
               component={() => (
                 <UserPageContainer key={window.location.pathname} />
               )}
+            />
+            <Route
+              path="/messages/:room_id"
+              component={() => <MessageRoomContainer />}
+            />
+            <Route
+              path="/messages"
+              component={() => <MessageRoomListContainer />}
             />
             <Route render={() => <Redirect to="/" />} />
           </Switch>
